@@ -22,6 +22,10 @@ const ChallengeSchema = new Schema({
     type: Date,
     default: new Date(Date.now() + (24 * 60 * 60 * 1000))
   },
+  startDate: {
+    type: Date,
+    default: Date.now
+  },
   date: {
     type: Date,
     default: Date.now
