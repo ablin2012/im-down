@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/user/:user_id', (req, res) => {
-    Challenge.find({user: req.params.user_id})
+    Challenge.find({creator: req.params.user_id})
         .then(challenges => res.json(challenges))
         .catch(err =>
             res.status(404).json({ nochallengesfound: 'No challenges found from that user' }
