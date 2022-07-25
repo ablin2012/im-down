@@ -8,7 +8,10 @@ class ChallengeForm extends React.Component {
         this.state = {
             title: "",
             description: "",
-            newChallenge: ""
+            newChallenge: "",
+            category: "",
+            startDate: Date.now,
+            endDate: Date.now
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
