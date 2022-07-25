@@ -60,6 +60,7 @@ router.post('/challenge/:challenge_id',
   
       const newPost = new Post({
         text: req.body.text,
+        type: req.body.type,
         user: req.user.id,
         challenge: req.params.challenge_id
       });
