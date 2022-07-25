@@ -7,6 +7,7 @@ const passport = require('passport');
 
 const users = require("./routes/api/users");
 const challenges = require("./routes/api/challenges");
+const posts = require("./routes/api/posts")
 
 
 mongoose
@@ -23,6 +24,7 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => res.send("I'm Down!"));
 app.use("/api/users", users);
 app.use("/api/challenges", challenges);
+app.use("/api/posts", posts);
 
 
 const port = process.env.PORT || 5000;

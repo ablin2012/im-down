@@ -14,18 +14,57 @@ router.get('/', (req, res) => {
 });
 
 router.get('/user/:user_id', (req, res) => {
-    Tweet.find({user: req.params.user_id})
-        .then(tweets => res.json(tweets))
+    Post.find({user: req.params.user_id})
+        .then(posts => res.json(posts))
         .catch(err =>
-            res.status(404).json({ notweetsfound: 'No tweets found from that user' }
+            res.status(404).json({ nopostsfound: 'No posts found from that user' }
+        )
+    );
+});
+
+router.get('/challenge/:challenge_id', (req, res) => {
+    Post.find({challenge: req.params.challenge_id})
+        .then(posts => res.json(posts))
+        .catch(err =>
+            res.status(404).json({ nopostsfound: 'No posts for this challenge' }
+        )
+    );
+});
+
+router.get('/user/:user_id/challenge/:challenge_id', (req, res) => {
+    Post.find({user: req.params.user_id, challenge: req.params.challenge_id})
+        .then(posts => res.json(posts))
+        .catch(err =>
+            res.status(404).json({ nopostsfound: 'No posts for this challenge from user' }
         )
     );
 });
 
 router.get('/:id', (req, res) => {
-    Tweet.findById(req.params.id)
-        .then(tweet => res.json(tweet))
+    Post.findById(req.params.id)
+        .then(post => res.json(post))
         .catch(err =>
-            res.status(404).json({ notweetfound: 'No tweet found with that ID' })
+            res.status(404).json({ nopostfound: 'No post found with that ID' })
         );
 });
+
+router.post('/challenge/:challenge_id',
+    passport.authenticate('jwt', { session: false }),
+    (req, res) => {
+      const { errors, isValid } = validatePostInput(req.body);
+  
+      if (!isValid) {
+        return res.status(400).json(errors);
+      }
+  
+      const newPost = new Post({
+        text: req.body.text,
+        user: req.user.id,
+        challenge: req.params.challenge_id
+      });
+  
+      newPost.save().then(post => res.json(post));
+    }
+);
+
+module.exports = router;
