@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const validText = require('./valid-text');
 
-module.exports = function validateUpdateInput(data) {
+module.exports = function validatePostInput(data) {
     let errors = {};
 
     data.text = validText(data.text) ? data.text : '';
