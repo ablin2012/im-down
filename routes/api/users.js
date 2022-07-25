@@ -89,8 +89,10 @@ router.post("/login", (req, res) => {
             });
           });
         } else {
+
           errors.password = "Incorrect password";
           return res.status(400).json(errors);
+
         };
       });
     });
