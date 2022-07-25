@@ -42,7 +42,7 @@ router.post('/',
       const newChallenge = new Challenge({
         title: req.body.title,
         description: req.body.description,
-        user: req.user.id,
+        creator: req.user.id,
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         category: req.body.category

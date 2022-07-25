@@ -25,11 +25,9 @@ const ChallengeSchema = new Schema({
   startDate: {
     type: Date,
     default: Date.now
-  },
-  date: {
-    type: Date,
-    default: Date.now
   }
+}, {
+  timestamps: true
 });
 
 module.exports = Tweet = mongoose.model('challenge', ChallengeSchema);
