@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ChallengeSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'users'
   },
   title: {
     type: String,
