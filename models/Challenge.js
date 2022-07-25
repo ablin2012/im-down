@@ -30,4 +30,4 @@ const ChallengeSchema = new Schema({
   timestamps: true
 });
 
-module.exports = Tweet = mongoose.model('challenge', ChallengeSchema);
+module.exports = Tweet = mongoose.model('Challenge', ChallengeSchema);
