@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchUserchallenges } from '../../actions/challengeActions';
+import { fetchUserChallenges } from '../../actions/challengeActions';
 import Profile from './profile';
 
 const mapStateToProps = (state) => {
