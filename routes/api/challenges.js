@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const Challenge = require('../../models/Challenge');
+const Participation = require('../../models/Participation');
 const validateChallengeInput = require('../../validation/challenges');
 
 router.get('/', (req, res) => {
@@ -17,7 +18,7 @@ router.get('/user/:user_id', (req, res) => {
     Challenge.find({creator: req.params.user_id})
         .then(challenges => res.json(challenges))
         .catch(err =>
-            res.status(404).json({ nochallengesfound: 'No challenges found from that user' }
+            res.status(404).json({ nochallengesfound: 'No challenges found for that user' }
         )
     );
 });
@@ -73,9 +74,18 @@ router.post('/',
         category: req.body.category
       });
   
-      newChallenge.save().then(challenge => res.json(challenge));
+      newChallenge.save().then(challenge => {
+        const newParticipation = new Participation({
+          challenge: challenge.id,
+          participant: req.user.id
+        })
+
+        newParticipation.save()
+        .then(res.json(challenge))
+      });
+
     }
-  );
+);
 
   router.patch('/:id', 
   passport.authenticate('jwt', { session: false }),
@@ -102,6 +112,6 @@ router.post('/',
     })
     .catch(err =>
       res.status(422).json({ nochallengefound: 'No editable challenge found with that ID' }))
-  });
+});
 
-  module.exports = router;
+module.exports = router;
