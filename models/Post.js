@@ -19,6 +19,7 @@ const PostSchema = new Schema({
         required: true,
         default: 'update'
     },
+    postImage: { type: String },
     date: {
         type: Date,
         default: Date.now
