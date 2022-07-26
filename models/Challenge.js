@@ -26,7 +26,7 @@ const ChallengeSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  challengeImage: { type: String }
+  imageUrl: { type: String }
 }, {
   timestamps: true
 });
