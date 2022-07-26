@@ -69,13 +69,21 @@ router.post('/',
       });
   
       newChallenge.save().then(challenge => {
-        const newParticipation = new Participation({
-          challenge: challenge.id,
-          participant: req.user.id
+        const newPost = new Post({
+          text: `I just created a challenge!`,
+          type: `create`,
+          user: req.user.id,
+          challenge: challenge.id
         })
 
-        newParticipation.save()
-        .then(res.json(challenge))
+        newPost.save().then(post => {
+          const newParticipation = new Participation({
+            challenge: post.challenge,
+            participant: req.user.id
+          })
+  
+          newParticipation.save().then(participation => res.json(challenge))
+        })
       });
 
     }
