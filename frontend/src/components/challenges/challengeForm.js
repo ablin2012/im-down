@@ -1,4 +1,5 @@
 import React from 'react';
+import axios, { post } from 'axios';
 // import ChallengesIndexItem from './challengesIndexItem';
 import './challengeModal.css'
 
@@ -15,6 +16,7 @@ class ChallengeForm extends React.Component {
             endDate: Date.now,
             imageFile: null,
             imageUrl: null,
+            url: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,23 +29,39 @@ class ChallengeForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let challenge = {
-            title: this.state.title,
-            description: this.state.description,
-            category: this.state.category,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            imageUrl: this.state.imageFile
-        };
+        const formData = new FormData();
+        formData.append('file', this.state.imageFile);
+        formData.append('title', this.state.title);
+        formData.append('description', this.state.description);
+        formData.append('category', this.state.category);
+        formData.append('startDate', this.state.startDate);
+        formData.append('endDate', this.state.endDate);
+        // const config = {
+        //     headers: {
+        //         'content-type': 'multipart/form-data'
+        //     }
+        // }
+        // post(this.state.imageUrl, formData, config)
+        // let challenge = {
+        //     title: this.state.title,
+        //     description: this.state.description,
+        //     category: this.state.category,
+        //     startDate: this.state.startDate,
+        //     endDate: this.state.endDate,
+        //     imageUrl: this.state.imageFile
+        // };
 
-        this.props.createChallenge(challenge);
-        this.setState({ title: '', description: '', category: '' })
+        this.props.createChallenge(formData);
+            // .then(() =>  post(this.state.url, formData, config));
+        // this.setState({ title: '', description: '', category: '' })
     }
 
     handleFile(e) {
         // events has built in currentTarget and files methods
         const file = e.currentTarget.files[0]
-        const fileReader = new FileReader()
+        console.log(file)
+        const fileReader = new FileReader();
+        console.log(fileReader);
         fileReader.onloadend = () => {
             this.setState({imageFile: file, imageUrl: fileReader.result})
         }
@@ -98,7 +116,7 @@ class ChallengeForm extends React.Component {
                                 onChange={this.update('title')}
                                 placeholder="Name your challenge"
                             />
-                            <select className='challenge-categories'>
+                            <select className='challenge-categories' onChange={this.update('category')}>
                                 <option value="">--Choose a Category--</option>
                                 <option value="Fitness">Fitness</option>
                                 <option value="Learning">Learning</option>
@@ -119,11 +137,11 @@ class ChallengeForm extends React.Component {
                                 <div className='challenge-inputs'>
                                     <div>
                                         <label>Start</label>
-                                        <input type="date"/>
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('startDate')}/>
                                     </div>
                                     <div>
                                         <label>End</label>
-                                        <input type="date" />
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('endDate')}/>
                                     </div>
                                 </div>
                             </div>
