@@ -83,7 +83,7 @@ router.get('/user/:user_id/challenge/:challenge_id', (req, res) => {
 router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-      console.log("initial");
+      // console.log("initial");
       const { errors, isValid } = validatePostInput(req.body);
   
       if (!isValid) {
@@ -97,9 +97,9 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
         challenge: req.params.challenge_id,
       }); 
 
-      console.log("before", req.file)
+      // console.log("before", req.file)
       if (req.file) {
-        console.log("after", req.file)
+        // console.log("after", req.file)
         const params = {
           Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
           Key:req.file.originalname,               // Name of the image
@@ -115,12 +115,15 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
         }
   
       newPost.imageUrl = data.Location
-      
-    })}
+      // console.log("new post after image", newPost)
+      newPost.save();
+    }
+    
+    )}
     newPost.save().then(post => res.json(post));
 });
 
-router.patch('/:id',
+router.patch('/:id', upload.single('imageUrl'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
         Post.findOne({_id: req.params.id, user: req.user.id})
@@ -133,6 +136,29 @@ router.patch('/:id',
 
             post.text = req.body.text
             
+            // console.log("before", req.file)
+            if (req.file) {
+              // console.log("after", req.file)
+              const params = {
+                Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+                Key:req.file.originalname,               // Name of the image
+                Body:req.file.buffer,                    // Body which will contain the image in buffer format
+                ACL:"public-read-write",                 // defining the permissions to get the public link
+                ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+              };
+            
+
+            s3.upload(params,(error,data) => {
+              if(error){
+                  res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+              }
+        
+            post.imageUrl = data.Location
+            // console.log("new post after image", post)
+            post.save();
+          }
+          
+          )}
 
             post.save().then(post => res.json(post));
         })

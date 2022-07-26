@@ -96,28 +96,35 @@ router.post("/register", upload.single('imageUrl'), (req, res) => {
           email: req.body.email,
           password: req.body.password,
         }); 
-  
-        if (req.file) {
-          const params = {
-            Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
-            Key:req.file.originalname,               // Name of the image
-            Body:req.file.buffer,                    // Body which will contain the image in buffer format
-            ACL:"public-read-write",                 // defining the permissions to get the public link
-            ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
-          };
-          
-          s3.upload(params,(error,data)=>{
-            if(error){
-              res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
-            }
-            newUser.imageUrl = data.Location
-          })
-        }
-  
+        
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err;
             newUser.password = hash;
+            // console.log("newUser", newUser)
+
+            // console.log("req.file", req.file)
+            if (req.file) {
+              const params = {
+                Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+                Key:req.file.originalname,               // Name of the image
+                Body:req.file.buffer,                    // Body which will contain the image in buffer format
+                ACL:"public-read-write",                 // defining the permissions to get the public link
+                ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+              };
+              
+              s3.upload(params,(error,data)=>{
+                if(error){
+                  res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                }
+
+                // console.log("data.location", data.Location)
+                newUser.imageUrl = data.Location
+                newUser.save()
+                // console.log("newUser.imageUrl", newUser.imageUrl)
+              })
+            }
+            
             newUser
               .save()
               .then(user => {
@@ -133,10 +140,7 @@ router.post("/register", upload.single('imageUrl'), (req, res) => {
               .catch(err => res.status(400).json(err));
           });
         });
-          
-      })
-          
-          
+      })   
     })
 });
   
@@ -176,9 +180,12 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.patch('/current', 
+router.patch('/current', upload.single('imageUrl'),
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    // console.log(req)
+    // console.log(req.file)
+
     User.findOne({_id: req.user.id})
     .then( updateUser => {
         const { errors, isValid } = validateRegisterInput(req.body);
@@ -208,6 +215,28 @@ router.patch('/current',
               bcrypt.hash(updateUser.password, salt, (err, hash) => {
                 if (err) throw err;
                 updateUser.password = hash;
+
+                if (req.file) {
+                  const params = {
+                    Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+                    Key:req.file.originalname,               // Name of the image
+                    Body:req.file.buffer,                    // Body which will contain the image in buffer format
+                    ACL:"public-read-write",                 // defining the permissions to get the public link
+                    ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+                  };
+                  
+                  s3.upload(params,(error,data)=>{
+                    if(error){
+                      res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                    }
+    
+                    // console.log("data.location", data.Location)
+                    updateUser.imageUrl = data.Location
+                    updateUser.save()
+                    // console.log("updateUser.imageUrl", updateUser.imageUrl)
+                  })
+                }
+
                 updateUser
                   .save()
                   .then(user => {
@@ -229,40 +258,32 @@ router.patch('/current',
 router.delete('/current', 
     passport.authenticate('jwt', { session: false }),
       (req, res) => {
-        const challenge = Challenge.findById(req.params.id);
-        console.log('challenge', challenge);
-        const keyName = path.basename(challenge.imageUrl)
-        Challenge.findById(req.params.id)
-        .then(challenge => {
-          if (challenge.creator.toString() === req.user.id){
-            Challenge.findByIdAndRemove(req.params.id)
-              .then(data => {
-                if (!data) {
-                  return res.status(404).send({
-                    success: false,
-                    message: "Challenge not found with id " + req.params.id
-                  });
-                }
-              }).then(() => {
-                //Deleting the Image from the S3 bucket
-                deleteFileStream(keyName, (error, data) => {
-                  if (error) {
-                    return res.status(500).send({
-                      success: false,
-                      message: error.message
-                    });
-                  } 
-                  res.send({
-                    success: true,
-                    message: "successfully deleted"
-                  });
-                })
-              })
+        User.findByIdAndRemove(req.user.id)
+        .then(user => {
+          // console.log(user)
+
+          if (user.imageUrl) {
+            const keyName = path.basename(user.imageUrl)
+            //Deleting the Image from the S3 bucket
+            deleteFileStream(keyName, (error, data) => {
+              if (error) {
+                return res.status(500).send({
+                  success: true,
+                  message: "User sucessfully deleted, but issue with deleting image",
+                  error: error.message
+                });
+              } 
+            })
           }
+
+          res.send({
+            success: true,
+            message: "successfully deleted user"
+          })
         })
-        .catch(err => {
-          return res.status(422).json({ nochallengefound: `No challenge found with that ID` })
-        })
+      .catch(err => {
+        return res.status(422).json({ nouserfound: `No user found` })
+      })
 });
 
 module.exports = router;

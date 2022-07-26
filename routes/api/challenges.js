@@ -81,7 +81,7 @@ router.delete('/:id',
     passport.authenticate('jwt', { session: false }),
       (req, res) => {
         const challenge = Challenge.findById(req.params.id);
-        console.log('challenge', challenge);
+        // console.log('challenge', challenge);
         const keyName = path.basename(challenge.imageUrl)
         Challenge.findById(req.params.id)
         .then(challenge => {
