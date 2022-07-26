@@ -18,6 +18,7 @@ class ChallengeForm extends React.Component {
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleFile = this.handleFile.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,11 +30,27 @@ class ChallengeForm extends React.Component {
         let challenge = {
             title: this.state.title,
             description: this.state.description,
-            category: this.state.category
+            category: this.state.category,
+            startDate: this.state.startDate,
+            endDate: this.state.endDate,
+            imageUrl: this.state.imageFile
         };
 
         this.props.createChallenge(challenge);
         this.setState({ title: '', description: '', category: '' })
+    }
+
+    handleFile(e) {
+        // events has built in currentTarget and files methods
+        const file = e.currentTarget.files[0]
+        const fileReader = new FileReader()
+        fileReader.onloadend = () => {
+            this.setState({imageFile: file, imageUrl: fileReader.result})
+        }
+
+        if (file) {
+            fileReader.readAsDataURL(file) //the readAsDataURL initiates the beginning of reading of the file
+        }
     }
 
     update(field) {
