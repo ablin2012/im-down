@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import './login.css'
+import './session.css'
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -41,12 +41,12 @@ class LoginForm extends React.Component {
         this.props.login(user);
     }
 
-    renderErrors() {
+    renderErrors(field) {
         return (
-            <ul>
+            <ul className='session-errors'>
                 {Object.keys(this.state.errors).map((error, i) => (
                     <li key={`error-${i}`}>
-                        {this.state.errors[error]}
+                        {error === field ? this.state.errors[error] : null}
                     </li>
                 ))}
             </ul>
@@ -55,24 +55,29 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <div>
+            <div className='session-background'>
+                <form className='session-form' onSubmit={this.handleSubmit}>
+                    <div className='session-form-body'>
+                        <h1>Log In</h1>
                         <br />
-                        <input type="text"
+                        <input className='session-input' 
+                            type="text"
                             value={this.state.email}
                             onChange={this.update('email')}
                             placeholder="Email"
                         />
+                        {this.renderErrors("email")}
                         <br />
-                        <input type="password"
+                        <input className='session-input'
+                             type="password"
                             value={this.state.password}
                             onChange={this.update('password')}
                             placeholder="Password"
                         />
+                        {this.renderErrors("password")}
                         <br />
-                        <input type="submit" value="Submit" />
-                        {this.renderErrors()}
+                        <input className='session-button' type="submit" value="Log In" />
+                        {/* {this.renderErrors()} */}
                     </div>
                 </form>
             </div>

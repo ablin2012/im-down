@@ -1,0 +1,87 @@
+.session-background {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgb(34, 37, 41);
+    vertical-align: middle;
+}
+
+.session-form {
+    width: 360px;
+    height: 480px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    vertical-align: middle;
+    margin-top: 50px;
+    
+}
+
+.session-form-body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-form-body h1 {
+    font-size: 28px;
+    font-weight: 800;
+    padding-bottom: 20px;
+}
+
+.session-input {
+    width: 270px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    vertical-align: middle;
+    height: 50px;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 6px;
+    color: white;
+}
+
+.session-input:focus {
+    background-color: rgba(255, 255, 255, 0.200);
+    outline: none;
+}
+
+.session-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 200px;
+    border: none;
+    vertical-align: middle;
+    height: 40px;
+    color: white;
+    font-weight: 600;
+    border-radius: 18px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.session-button:hover {
+    background-color: rgba(255, 255, 255, 0.200);
+}
+
+.session-errors {
+    width: 270px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 35px;
+    
+}
+
+.session-errors li{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: red;
+}
