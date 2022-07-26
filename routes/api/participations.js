@@ -80,7 +80,14 @@ router.post('/challenge/:challenge_id',
             challenge: participation.participant
         })
   
-        newPost.save().then(post => res.json(participation));
+        newPost.save()
+        .then(post => res.json(participation))
+        .catch(err => {
+            if (err.code = 11000) {
+                return res.status(422).send("already participating in this challenge");
+            }
+            return res.status(400).send(err)
+        })
     })
 });
 
