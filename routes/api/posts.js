@@ -80,7 +80,7 @@ router.get('/user/:user_id/challenge/:challenge_id', (req, res) => {
     );
 });
 
-router.post('/challenge/:challenge_id',  upload.single('postImage'),
+router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
 
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
@@ -108,7 +108,7 @@ router.post('/challenge/:challenge_id',  upload.single('postImage'),
             type: req.body.type,
             user: req.user.id,
             challenge: req.params.challenge_id,
-            postImage: data.Location
+            imageUrl: data.Location
         });
     
         newPost.save().then(post => res.json(post));

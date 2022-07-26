@@ -4,6 +4,7 @@ const multer = require('multer');              // multer will be used to handle 
 const Aws = require('aws-sdk');                // aws-sdk library will used to upload image to s3 bucket. 
 const mongoose = require('mongoose');
 const passport = require('passport');
+const path = require('path');
 require("dotenv/config");
 
 const Challenge = require('../../models/Challenge');
@@ -57,18 +58,57 @@ router.get('/:id', (req, res) => {
         );
 });
 
+// router.delete('/:id', 
+//     passport.authenticate('jwt', { session: false }),
+//       (req, res) => {
+//         Challenge.findById(req.params.id)
+//         .then(challenge => {
+//           if (challenge.creator.toString() === req.user.id){
+//             Challenge.findByIdAndRemove(req.params.id, (err, challenge) => {
+//               return res.status(200).json(`sucessfully deleted`)
+//             })
+//           } else 
+//           {
+//             return res.status(422).json({ invalidcredentials: `invalid credentials for deleting challenge` })
+//           }
+//         })
+//         .catch(err => {
+//           return res.status(422).json({ nochallengefound: `No challenge found with that ID` })
+//         })
+// });
+
 router.delete('/:id', 
     passport.authenticate('jwt', { session: false }),
       (req, res) => {
+        const challenge = Challenge.findById(req.params.id);
+        console.log('challenge', challenge);
+        const keyName = path.basename(challenge.imageUrl)
         Challenge.findById(req.params.id)
         .then(challenge => {
           if (challenge.creator.toString() === req.user.id){
-            Challenge.findByIdAndRemove(req.params.id, (err, challenge) => {
-              return res.status(200).json(`sucessfully deleted`)
-            })
-          } else 
-          {
-            return res.status(422).json({ invalidcredentials: `invalid credentials for deleting challenge` })
+            Challenge.findByIdAndRemove(req.params.id)
+              .then(data => {
+                if (!data) {
+                  return res.status(404).send({
+                    success: false,
+                    message: "Challenge not found with id " + req.params.id
+                  });
+                }
+              }).then(() => {
+                //Deleting the Image from the S3 bucket
+                deleteFileStream(keyName, (error, data) => {
+                  if (error) {
+                    return res.status(500).send({
+                      success: false,
+                      message: error.message
+                    });
+                  } 
+                  res.send({
+                    success: true,
+                    message: "successfully deleted"
+                  });
+                })
+              })
           }
         })
         .catch(err => {
@@ -76,10 +116,9 @@ router.delete('/:id',
         })
 });
 
-router.post('/', upload.single('challengeImage'),
+router.post('/', upload.single('imageUrl'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-      console.log(req);
       const { errors, isValid } = validateChallengeInput(req.body);
   
       if (!isValid) {
@@ -107,7 +146,7 @@ router.post('/', upload.single('challengeImage'),
           startDate: req.body.startDate,
           endDate: req.body.endDate,
           category: req.body.category,
-          challengeImage: data.Location
+          imageUrl: data.Location
         });
     
         newChallenge.save().then(challenge => {

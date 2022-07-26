@@ -42,11 +42,11 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
       id: req.user.id,
       username: req.user.username,
       email: req.user.email,
-      userImage: req.user.userImage
+      imageUrl: req.user.imageUrl
     });
 })
 
-router.post("/register", upload.single('userImage'), (req, res) => {
+router.post("/register", upload.single('imageUrl'), (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
   
     if (!isValid) {
@@ -77,7 +77,7 @@ router.post("/register", upload.single('userImage'), (req, res) => {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
-            userImage: data.Location
+            imageUrl: data.Location
           }); 
     
           bcrypt.genSalt(10, (err, salt) => {
