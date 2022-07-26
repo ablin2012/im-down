@@ -1,6 +1,6 @@
 import React from 'react';
 import { AuthRoute, ProtectedRoute } from '../util/routeUtil';
-import { Switch } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import NavBarContainer from './nav/navBarContainer';
 
 import MainPage from './main/mainPage';
@@ -10,18 +10,23 @@ import ChallengesIndexContainer from './challenges/challengesIndexContainer';
 import ProfileContainer from './profile/profileContainer';
 import ChallengeForm from './challenges/challengeForm';
 
+import Modal from './modal/modal';
+
 
 const App = () => (
-    <div>
-        <NavBarContainer />
+    <div className='main-wrap'>
+        <Modal />
+        <header>
+            <NavBarContainer />
+        </header>
         <Switch>
             <AuthRoute exact path="/" component={MainPage} />
             <AuthRoute exact path="/login" component={LoginFormContainer} />
             <AuthRoute exact path="/signup" component={SignupFormContainer} />
 
-            <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
+            <Route exact path="/challenges" component={ChallengesIndexContainer}/>
             <ProtectedRoute exact path="/profile" component={ProfileContainer} />
-            <ProtectedRoute exact path="/profile" component={ChallengeForm} />
+            {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
         </Switch>
     </div>
 );

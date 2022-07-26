@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import './challenge.css'
 
 import ChallengesIndexItem from './challengesIndexItem';
 
 class ChallengesIndex extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             challenges: []
         }
@@ -25,10 +25,15 @@ class ChallengesIndex extends React.Component {
             return (<div>There are no Challenges</div>)
         } else {
             return (
-                <div>
+                <div className='challenge-cards-container'>
                     <h2>All Challenges</h2>
+                    
                     {this.state.challenges.map(challenge => (
-                        <ChallengesIndexItem key={challenge._id} text={challenge.title} />
+                        <ChallengesIndexItem 
+                            key={challenge._id} 
+                            title={challenge.title}
+                            description={challenge.description}
+                            category={challenge.category} />
                     ))}
                 </div>
             );

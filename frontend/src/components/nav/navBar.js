@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './navbar.css'
 
+
 class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -17,18 +18,23 @@ class NavBar extends React.Component {
     getLinks() {
         if (this.props.loggedIn) {
             return (
-                <div>
+                <div className='session-links-current'>
                     <Link to={'/challenges'}>All Challenges</Link>
                     <Link to={'/profile'}>Profile</Link>
-                    <Link to={'/new_challenge'}>Create a Challenge</Link>
-                    <button onClick={this.logoutUser}>Logout</button>
+                    {/* <Link to={'/new_challenge'}>Create a Challenge</Link> */}
+                    <button onClick={() => this.props.openModal('createChallenge')}>Create Challenge</button>
+                    <button className='logout-button' onClick={this.logoutUser}>Logout</button>
                 </div>
             );
         } else {
             return (
-                <div>
-                    <Link to={'/signup'}>Signup</Link>
+                <div className='session-links'>
+                    <button className='nav-button'>
+                        <Link to={'/signup'}>Signup</Link>
+                    </button>
+                    <button className='nav-button'>
                     <Link to={'/login'}>Login</Link>
+                    </button>
                 </div>
             );
         }
@@ -36,7 +42,7 @@ class NavBar extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className='nav-bar'>
                 <h1>ImDown!</h1>
                 {this.getLinks()}
             </div>

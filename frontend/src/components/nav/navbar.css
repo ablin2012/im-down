@@ -1,18 +1,72 @@
-.NavBar {
+.nav-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    height: 75px;
+    align-items: center;
+    padding-left: 25px;
+    padding-right: 25px;
+    background-color: rgb(34, 37, 41);
+
 }
 
-.NavBar button {
-    height: 20px;
+.nav-bar h1 {
+    font-size: 27px;
+    font-family: roboto;
+    font-weight: 600;
 }
 
-.Links1 {
-    width: 100px;
+.session-links {
+    width: 230px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 16px;
 }
+
+.session-links-current {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 16px;
+}
+
+.logout-button {
+    width: 120px;
+    height: 40px;
+    border-radius: 12px;
+    background-image: linear-gradient(to right, #7b2cbf, #5a189a);
+    outline: none;
+    border-style: none;
+    font-size: 15px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-image: linear-gradient(to right, #5a189a, #3c096c);
+}
+
+.nav-button {
+    width: 90px;
+    height: 40px;
+    border-radius: 12px;
+    background-image: linear-gradient(to right, #7b2cbf, #5a189a);
+    outline: none;
+    border-style: none;
+    font-size: 15px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    
+}
+
+.nav-button:hover {
+    background-image: linear-gradient(to right, #5a189a, #3c096c);
+}
+/* ---------------- logged in nav --------------- */
 
 .Links2 {
     width: 400px;
