@@ -19,8 +19,10 @@ const PostSchema = new Schema({
         required: true,
         default: 'update'
     },
+
 }, {
     timestamps: true
+
 });
 
 module.exports = Post = mongoose.model('Post', PostSchema);
