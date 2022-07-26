@@ -14,4 +14,6 @@ const ParticipationSchema = new Schema({
   timestamps: true
 });
 
+ParticipationSchema.index({ participant: 1, challenge: 1 },{ unique: true, dropDups: true });
+
 module.exports = Participation = mongoose.model('Participation', ParticipationSchema);
