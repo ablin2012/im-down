@@ -4,7 +4,7 @@ const multer = require('multer');              // multer will be used to handle 
 const Aws = require('aws-sdk');                // aws-sdk library will used to upload image to s3 bucket. 
 const mongoose = require('mongoose');
 const passport = require('passport');
-require("dotenv/config")
+require("dotenv/config");
 
 const Challenge = require('../../models/Challenge');
 const Participation = require('../../models/Participation');
@@ -31,8 +31,6 @@ const s3 = new Aws.S3({
   accessKeyId:process.env.AWS_ACCESS_KEY_ID,              // accessKeyId that is stored in .env file
   secretAccessKey:process.env.AWS_ACCESS_KEY_SECRET       // secretAccessKey is also store in .env file
 })
-
-
 
 // Routes
 router.get('/', (req, res) => {
@@ -78,7 +76,7 @@ router.delete('/:id',
         })
 });
 
-router.post('/', upload.single('challengeimage'),
+router.post('/', upload.single('challengeImage'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
       console.log(req);
@@ -133,27 +131,27 @@ router.post('/', upload.single('challengeimage'),
     }
 );
 
-  router.patch('/:id', 
-    passport.authenticate('jwt', { session: false }),
-    (req, res) => {
-      Challenge.findOne({_id: req.params.id, creator: req.user.id})
-      .then( challenge => {
-          const { errors, isValid } = validateChallengeInput(req.body);
+router.patch('/:id', 
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Challenge.findOne({_id: req.params.id, creator: req.user.id})
+    .then( challenge => {
+        const { errors, isValid } = validateChallengeInput(req.body);
 
-          if (!isValid) {
-            return res.status(400).json(errors);
-          }
+        if (!isValid) {
+          return res.status(400).json(errors);
+        }
 
-          challenge.title = req.body.title
-          challenge.description = req.body.description
-          challenge.startDate = req.body.startDate
-          challenge.endDate = req.body.endDate
-          challenge.category = req.body.category
+        challenge.title = req.body.title
+        challenge.description = req.body.description
+        challenge.startDate = req.body.startDate
+        challenge.endDate = req.body.endDate
+        challenge.category = req.body.category
 
-        challenge.save().then(challenge => res.json(challenge));
-    })
-    .catch(err =>
-      res.status(422).json({ nochallengefound: 'No editable challenge found with that ID' }))
+      challenge.save().then(challenge => res.json(challenge));
+  })
+  .catch(err =>
+    res.status(422).json({ nochallengefound: 'No editable challenge found with that ID' }))
 });
 
 
