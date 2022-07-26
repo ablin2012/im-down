@@ -14,6 +14,6 @@ export const createChallenge = data => {
         method: 'post',
         url: '/api/challenges/',
         data: data,
-        headers: { "Content-Type": "multipart/form-data"}
+        config: { headers: { "content-type": "multipart/form-data"}}
     })
 }
