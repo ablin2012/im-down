@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './session.css'
+import NavBarContainer from '../nav/navBarContainer';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -55,32 +56,39 @@ class LoginForm extends React.Component {
 
     render() {
         return (
-            <div className='session-background'>
-                <form className='session-form' onSubmit={this.handleSubmit}>
-                    <div className='session-form-body'>
-                        <h1>Log In</h1>
-                        <br />
-                        <input className='session-input' 
-                            type="text"
-                            value={this.state.email}
-                            onChange={this.update('email')}
-                            placeholder="Email"
-                        />
-                        {this.renderErrors("email")}
-                        <br />
-                        <input className='session-input'
-                             type="password"
-                            value={this.state.password}
-                            onChange={this.update('password')}
-                            placeholder="Password"
-                        />
-                        {this.renderErrors("password")}
-                        <br />
-                        <input className='session-button' type="submit" value="Log In" />
-                        {/* {this.renderErrors()} */}
-                    </div>
-                </form>
+            <div>
+            <header>
+                <NavBarContainer />
+            </header>
+            <div className='body-wrap'>
+                <div className='session-background'>
+                    <form className='session-form' onSubmit={this.handleSubmit}>
+                        <div className='session-form-body'>
+                            <h1>Log In</h1>
+                            <br />
+                            <input className='session-input' 
+                                type="text"
+                                value={this.state.email}
+                                onChange={this.update('email')}
+                                placeholder="Email"
+                            />
+                            {this.renderErrors("email")}
+                            <br />
+                            <input className='session-input'
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.update('password')}
+                                placeholder="Password"
+                            />
+                            {this.renderErrors("password")}
+                            <br />
+                            <input className='session-button' type="submit" value="Log In" />
+                            {/* {this.renderErrors()} */}
+                        </div>
+                    </form>
+                </div>
             </div>
+        </div>
         );
     }
 }

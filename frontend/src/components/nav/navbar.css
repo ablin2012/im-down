@@ -1,19 +1,44 @@
+
+
 .nav-bar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    top: 0px;
+    overflow: hidden;
     height: 75px;
     align-items: center;
     padding-left: 25px;
     padding-right: 25px;
     background-color: rgb(34, 37, 41);
-
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    /* box-shadow: 10px white; */
+    box-shadow: rgba(170, 170, 170, 0.423) 0px 1px 20px 0px;
 }
 
 .nav-bar h1 {
     font-size: 27px;
     font-family: roboto;
     font-weight: 600;
+}
+
+.nav-main-wrap {
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 45px;
+}
+
+.challenge-button-container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-items: center;
 }
 
 .session-links {
@@ -29,10 +54,59 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-items: center;
     font-size: 16px;
 }
 
-.logout-button {
+.session-links-current a {
+    margin-left: 15px;
+    font-weight: 600;
+    
+}
+
+.session-links-current a:hover {
+    color: #7b2cbf;
+}
+
+.search-bar-container,
+.search-bar {
+    flex: 1 1 auto;
+    height: 48px;
+    border-radius: 24px;
+    font-size: 18px;
+    border: none;
+    box-sizing: border-box;
+    margin-left: 20px;
+}
+
+.search-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.search-bar {
+    background-color: transparent;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    padding-left: 4px;
+}
+
+#search-icon {
+    height: 30px;
+    width: 30px;
+    padding-left: 17px;
+    font-weight: bold;
+    color: #767676;
+}
+
+
+.logout-button, .challenge-button-container > button {
     width: 120px;
     height: 40px;
     border-radius: 12px;
@@ -43,6 +117,7 @@
     color: white;
     font-weight: 700;
     cursor: pointer;
+    margin-left: 15px;
 }
 
 .logout-button:hover {
