@@ -25,4 +25,6 @@ const PostSchema = new Schema({
 
 });
 
+PostSchema.index({ user: 1, challenge: 1, type: "complete" },{ unique: true, dropDups: true });
+
 module.exports = Post = mongoose.model('Post', PostSchema);

@@ -81,38 +81,43 @@ router.get('/user/:user_id/challenge/:challenge_id', (req, res) => {
 });
 
 router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
-
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
+      console.log("initial");
       const { errors, isValid } = validatePostInput(req.body);
   
       if (!isValid) {
         return res.status(400).json(errors);
       }
 
-      const params = {
-        Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
-        Key:req.file.originalname,               // Name of the image
-        Body:req.file.buffer,                    // Body which will contain the image in buffer format
-        ACL:"public-read-write",                 // defining the permissions to get the public link
-        ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
-      };
+      const newPost = new Post({
+        text: req.body.text,
+        type: req.body.type,
+        user: req.user.id,
+        challenge: req.params.challenge_id,
+      }); 
+
+      console.log("before", req.file)
+      if (req.file) {
+        console.log("after", req.file)
+        const params = {
+          Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+          Key:req.file.originalname,               // Name of the image
+          Body:req.file.buffer,                    // Body which will contain the image in buffer format
+          ACL:"public-read-write",                 // defining the permissions to get the public link
+          ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+        };
+      
 
       s3.upload(params,(error,data) => {
         if(error){
             res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
         }
   
-        const newPost = new Post({
-            text: req.body.text,
-            type: req.body.type,
-            user: req.user.id,
-            challenge: req.params.challenge_id,
-            imageUrl: data.Location
-        });
-    
-        newPost.save().then(post => res.json(post));
-    })
+      newPost.imageUrl = data.Location
+      
+    })}
+    newPost.save().then(post => res.json(post));
 });
 
 router.patch('/:id',
@@ -127,6 +132,7 @@ router.patch('/:id',
             }
 
             post.text = req.body.text
+            
 
             post.save().then(post => res.json(post));
         })
