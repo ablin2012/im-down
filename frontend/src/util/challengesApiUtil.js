@@ -9,5 +9,11 @@ export const getUserChallenges = id => {
 };
 
 export const createChallenge = data => {
-    return axios.post('/api/challenges/', data)
+    console.log(data)
+    return axios({
+        method: 'post',
+        url: '/api/challenges/',
+        data: data,
+        config: { headers: { "content-type": "multipart/form-data"}}
+    })
 }
