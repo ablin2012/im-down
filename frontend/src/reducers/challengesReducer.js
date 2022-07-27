@@ -1,6 +1,6 @@
-import { RECEIVE_CHALLENGES, RECEIVE_USER_CHALLENGES, RECEIVE_NEW_CHALLENGE } from "../actions/challengeActions";
+import { RECEIVE_CHALLENGES, RECEIVE_USER_CHALLENGES, RECEIVE_NEW_CHALLENGE, RECEIVE_CHALLENGE, CLEAR_CHALLENGES} from "../actions/challengeActions";
 
-const ChallengesReducer = (state = { all: {}, user: {}, new: undefined }, action) => {
+const ChallengesReducer = (state = { all: {}, user: {}, new: undefined, index: {} }, action) => {
     Object.freeze(state);
     let newState = Object.assign({}, state);
     switch (action.type) {
@@ -11,7 +11,13 @@ const ChallengesReducer = (state = { all: {}, user: {}, new: undefined }, action
             newState.user = action.challenges.data;
             return newState;
         case RECEIVE_NEW_CHALLENGE:
-            newState.new = action.challenge.data
+            newState.new = action.challenge.data;
+            return newState;
+        case RECEIVE_CHALLENGE:
+            newState.index[action.challenge.data._id] = action.challenge.data;
+            return newState;
+        case CLEAR_CHALLENGES:
+            newState.index = {};
             return newState;
         default:
             return state;
