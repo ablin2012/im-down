@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import NavBarContainer from '../nav/navBarContainer';
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -56,48 +57,55 @@ class SignupForm extends React.Component {
 
     render() {
         return (
-            <div className="session-background">
-                <form className='session-form' onSubmit={this.handleSubmit}>
-                    <div className="session-form-body">
-                        <h1>Sign up!</h1>
-                        <br />
-                        <input className='session-input'
-                            type="text"
-                            value={this.state.email}
-                            onChange={this.update('email')}
-                            placeholder="Email"
-                        />
-                        {this.renderErrors("email")}
-                        <br />
-                        <input className='session-input'
-                             type="text"
-                            value={this.state.username}
-                            onChange={this.update('username')}
-                            placeholder="Username"
-                        />
-                        {this.renderErrors("username")}
-                        <br />
-                        <input className='session-input'
-                             type="password"
-                            value={this.state.password}
-                            onChange={this.update('password')}
-                            placeholder="Password"
-                        />
-                        {this.renderErrors("password")}
-                        <br />
-                        <input className='session-input'
-                            type="password"
-                            value={this.state.password2}
-                            onChange={this.update('password2')}
-                            placeholder="Confirm Password"
-                        />
-                        {this.renderErrors("password2")}
-                        <br />
-                        <input className='session-button' type="submit" value="Submit" />
-                        
-                    </div>
-                </form>
+            <div>
+            <header>
+                <NavBarContainer />
+            </header>
+            <div className='body-wrap'>
+                <div className="session-background">
+                    <form className='session-form' onSubmit={this.handleSubmit}>
+                        <div className="session-form-body">
+                            <h1>Sign up!</h1>
+                            <br />
+                            <input className='session-input'
+                                type="text"
+                                value={this.state.email}
+                                onChange={this.update('email')}
+                                placeholder="Email"
+                            />
+                            {this.renderErrors("email")}
+                            <br />
+                            <input className='session-input'
+                                type="text"
+                                value={this.state.username}
+                                onChange={this.update('username')}
+                                placeholder="Username"
+                            />
+                            {this.renderErrors("username")}
+                            <br />
+                            <input className='session-input'
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.update('password')}
+                                placeholder="Password"
+                            />
+                            {this.renderErrors("password")}
+                            <br />
+                            <input className='session-input'
+                                type="password"
+                                value={this.state.password2}
+                                onChange={this.update('password2')}
+                                placeholder="Confirm Password"
+                            />
+                            {this.renderErrors("password2")}
+                            <br />
+                            <input className='session-button' type="submit" value="Submit" />
+                            
+                        </div>
+                    </form>
+                </div>
             </div>
+        </div>
         );
     }
 }

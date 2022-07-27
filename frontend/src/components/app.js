@@ -17,20 +17,19 @@ import Modal from './modal/modal';
 const App = () => (
     <div className='main-wrap'>
         <Modal />
-        <header>
-            <NavBarContainer />
-        </header>
-        <Switch>
-            <AuthRoute exact path="/" component={MainPage} />
-            <AuthRoute exact path="/login" component={LoginFormContainer} />
-            <AuthRoute exact path="/signup" component={SignupFormContainer} />
+            <Switch>
+                <AuthRoute exact path="/" component={MainPage} />
+                <AuthRoute exact path="/login" component={LoginFormContainer} />
+                <AuthRoute exact path="/signup" component={SignupFormContainer} />
 
-            <Route exact path="/challenges" component={ChallengesIndexContainer}/>
-            <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
-            <ProtectedRoute exact path="/profile" component={ProfileContainer} />
-            {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
-        </Switch>
+                <Route exact path="/challenges" component={ChallengesIndexContainer}/>
+                <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
+                <ProtectedRoute exact path="/profile" component={ProfileContainer} />
+                {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
+            </Switch>
+
     </div>
+
 );
 
 export default App;
