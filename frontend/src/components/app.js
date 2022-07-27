@@ -8,6 +8,7 @@ import LoginFormContainer from './session/loginFormContainer';
 import SignupFormContainer from './session/signupFormContainer';
 import ChallengesIndexContainer from './challenges/challengesIndexContainer';
 import ProfileContainer from './profile/profileContainer';
+import UserShowContainer from './profile/userShowContainer'
 import ChallengeForm from './challenges/challengeForm';
 import PostsIndexContainer from './posts/postsIndexContainer';
 import HomePageContainer from './home/homePageContainer';

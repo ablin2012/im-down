@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { fetchUserChallenges } from '../../actions/challengeActions';
-import { fetchUser, fetchUserAchievements } from '../../actions/userActions';
+// import { fetchUser, fetchUserAchievements } from '../../actions/userActions';
 import UserShow from './userShow';
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,8 +16,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchUserChallenges: id => dispatch(fetchUserChallenges(id)),
-        fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
-        fetchUser: id => dispatch(fetchUser(id)),
+        // fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
+        // fetchUser: id => dispatch(fetchUser(id)),
     };
 };
 
