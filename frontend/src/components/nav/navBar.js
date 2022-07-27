@@ -43,6 +43,7 @@ class NavBar extends React.Component {
                     </div>
                     <div className='session-links-current'>
                         
+                        <Link to={'/posts'}>Home</Link>
                         <Link to={'/challenges'}>Challenges</Link>
                         <Link to={'/profile'}>Profile</Link>
                         {/* <Link to={'/new_challenge'}>Create a Challenge</Link> */}
