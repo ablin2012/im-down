@@ -29,31 +29,18 @@ class ChallengeForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', this.state.imageFile);
-        formData.append('title', this.state.title);
-        formData.append('description', this.state.description);
-        formData.append('category', this.state.category);
-        formData.append('startDate', this.state.startDate);
-        formData.append('endDate', this.state.endDate);
-        // const config = {
-        //     headers: {
-        //         'content-type': 'multipart/form-data'
-        //     }
-        // }
-        // post(this.state.imageUrl, formData, config)
-        // let challenge = {
-        //     title: this.state.title,
-        //     description: this.state.description,
-        //     category: this.state.category,
-        //     startDate: this.state.startDate,
-        //     endDate: this.state.endDate,
-        //     imageUrl: this.state.imageFile
-        // };
 
-        this.props.createChallenge(formData);
-            // .then(() =>  post(this.state.url, formData, config));
-        // this.setState({ title: '', description: '', category: '' })
+        const formData = new FormData() 
+        formData.append("imageUrl",this.state.imageFile)
+        formData.append("title",this.state.title)
+        formData.append("description",this.state.description)
+        formData.append("category",this.state.category)
+        formData.append("startDate",this.state.startDate)
+        formData.append("endDate",this.state.endDate)
+        this.props.createChallenge(formData)
+
+        this.setState({ title: '', description: '', category: '' })
+
     }
 
     handleFile(e) {
