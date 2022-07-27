@@ -35,6 +35,7 @@ class PostIndex extends React.Component {
                             type={post.type}
                             userId={post.user} 
                             challengeId={post.challenge}
+                            imageUrl={post.imageUrl}
                             fetchChallenge={this.props.fetchChallenge}
                             fetchUser={this.props.fetchUser}
                             challenge={this.state.challenges[post.challenge]}

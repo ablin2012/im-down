@@ -165,7 +165,7 @@ router.post("/login", (req, res) => {
   
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
-          const payload = { id: user.id, username: user.username };
+          const payload = { id: user.id, username: user.username, imageUrl: user.imageUrl };
   
           jwt.sign(payload, keys.secretOrKey, { expiresIn: SESSION_EXPIRE_TIMER }, (err, token) => {
             res.json({
