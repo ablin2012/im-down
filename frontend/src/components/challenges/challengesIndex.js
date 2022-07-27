@@ -14,6 +14,7 @@ class ChallengesIndex extends React.Component {
         }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
+        this.categorizeChallenge = this.categorizeChallenge.bind(this)
     }
 
     componentWillMount() {
@@ -22,7 +23,7 @@ class ChallengesIndex extends React.Component {
 
     componentWillReceiveProps(newState) {
         this.setState({ challenges: newState.challenges });
-        // this.handleCallback()
+        
     }
 
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -31,14 +32,29 @@ class ChallengesIndex extends React.Component {
         if(this.state.filter === "") {
             return this.state.challenges
         } else {
-            return this.state.challenges.filter(card => card.title.match(new RegExp(this.state.filter, "i")) || card.description.match(new RegExp(this.state.filter, "i")))
+            return this.state.challenges.filter(challenge => challenge.title.match(new RegExp(this.state.filter, "i")) || challenge.description.match(new RegExp(this.state.filter, "i")))
         }
     }
 
-    render() {
+    categorizeChallenge(category) {
+        const categorizedArr = this.handleSearch().filter(challenge => challenge.category.match(new RegExp(category, "i")))
         
+        return (
+            categorizedArr.map(challenge => (
+                <ChallengesIndexItem
+                    key={challenge._id}
+                    title={challenge.title}
+                    description={challenge.description}
+                    category={challenge.category} />
+            ))
+        )
+    }
+
+    render() {
+        const categories = ["fitness", "learning", "travel", "cooking", "fun", "self-care", "creative"]
         if (this.state.challenges.length === 0) {
-            return (<div className='body-wrap'>
+            return (
+                <div className='body-wrap'>
                     <div>There are no Challenges</div>
                 </div>
                 )
@@ -50,14 +66,30 @@ class ChallengesIndex extends React.Component {
                     </header>
                     <div className='body-wrap'>
                         <div className='challenge-cards-container'>
-                            <h2>All Challenges</h2>
-                            {this.handleSearch().map(challenge => (
-                                <ChallengesIndexItem 
-                                    key={challenge._id} 
-                                    title={challenge.title}
-                                    description={challenge.description}
-                                    category={challenge.category} />
-                            ))}
+                            <div className='challenges-header'>
+                                <h2>Discover your next challenge!</h2>
+                                
+                            </div>
+                            {/* carousel */}
+                            <div className='categorized-challenges-container'> 
+                                {categories.map((category, idx) => (
+                                    <div className="category-wrap" key={idx}>
+                                        <div>
+                                            <h1>{`${category}`[0].toUpperCase() + `${category}`.substring(1)}</h1>
+                                        </div>
+                                        <div className='categorized-challenges' id={`${category}`} >
+                                            { this.categorizeChallenge(`${category}`)}
+                                        </div>
+                                        {/* <a className='switchLeft sliderButton'>
+                                            <span class="material-symbols-outlined">
+                                                arrow_back_ios
+                                            </span>
+                                        </a>
+                                        <a className='switchRight sliderButton'></a> */}
+                                    </div>
+                                ))}
+
+                            </div>
                         </div>
                     </div>
                 </>
