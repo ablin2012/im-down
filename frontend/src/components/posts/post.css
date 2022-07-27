@@ -1,0 +1,32 @@
+.post-index {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.post-item {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width: 40vw;
+    border-radius: 3px;
+    background-color: rgb(46, 51, 56);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.post-item-header {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.header-info {
+    padding-left: 20px;
+}
+
+.user-icon{
+    height: 64px;
+    width: 64px;
+    background-color: bisque;
+    border-radius: 32px;
+}
