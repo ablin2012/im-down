@@ -6,8 +6,11 @@ class ChallengesIndexItem extends React.Component {
         return (
             <div className='challenge-card'>
                 <div className='challenge-img-container'>
-
+                    <img src={this.props.imageUrl}></img>
                 </div>
+                {/* <div className='hidden-details'>
+                    <p>{this.props.description}</p>
+                </div> */}
                 <div className='challenge-card-details'>
                     <div className='challenge-card-header'>
                         <h3 className='card-title'>{this.props.title}</h3>

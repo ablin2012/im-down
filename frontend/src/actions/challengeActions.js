@@ -4,6 +4,7 @@
 import * as APIUtil from "../util/challengesApiUtil";
 
 export const RECEIVE_CHALLENGES = "RECEIVE_CHALLENGES";
+export const RECEIVE_CHALLENGE = "RECEIVE_CHALLENGE"; 
 export const RECEIVE_USER_CHALLENGES = "RECEIVE_USER_CHALLENGES";
 export const RECEIVE_NEW_CHALLENGE = "RECEIVE_NEW_CHALLENGE";
 
@@ -11,6 +12,11 @@ export const receiveChallenges = challenges => ({
     type: RECEIVE_CHALLENGES,
     challenges
 });
+
+export const receiveChallenge = challenge => ({
+    type: RECEIVE_CHALLENGE,
+    challenge
+})
 
 export const receiveUserChallenges = challenges => ({
     type: RECEIVE_USER_CHALLENGES,
@@ -27,6 +33,12 @@ export const fetchChallenges = () => dispatch => (
         .then(challenges => dispatch(receiveChallenges(challenges)))
         .catch(err => console.log(err))
 );
+
+export const fetchChallenge = (challengeId) => dispatch => (
+    APIUtil.getChallenge(challengeId)
+        .then(challenge => dispatch(receiveChallenge(challenge)))
+        .catch(err => console.log(err))
+)
 
 export const fetchUserChallenges = id => dispatch => (
     APIUtil.getUserChallenges(id)

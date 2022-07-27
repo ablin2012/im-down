@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import './challenge.css'
 import NavBarContainer from '../nav/navBarContainer';
+import { Link } from 'react-router-dom';
 
 import ChallengesIndexItem from './challengesIndexItem';
 
@@ -32,7 +33,10 @@ class ChallengesIndex extends React.Component {
         if(this.state.filter === "") {
             return this.state.challenges
         } else {
-            return this.state.challenges.filter(challenge => challenge.title.match(new RegExp(this.state.filter, "i")) || challenge.description.match(new RegExp(this.state.filter, "i")))
+            return this.state.challenges.filter(challenge => 
+                challenge.title.match(new RegExp(this.state.filter, "i")) || 
+                challenge.description.match(new RegExp(this.state.filter, "i")) ||
+                challenge.category.match(new RegExp(this.state.filter, "i")))
         }
     }
 
@@ -41,11 +45,13 @@ class ChallengesIndex extends React.Component {
         
         return (
             categorizedArr.map(challenge => (
-                <ChallengesIndexItem
-                    key={challenge._id}
-                    title={challenge.title}
-                    description={challenge.description}
-                    category={challenge.category} />
+                <Link to={`/challenges/${challenge._id}`} key={challenge._id} >
+                    <ChallengesIndexItem
+                        title={challenge.title}
+                        description={challenge.description}
+                        category={challenge.category}
+                        imageUrl={challenge.challengeImage} />
+                </Link>
             ))
         )
     }
@@ -80,12 +86,7 @@ class ChallengesIndex extends React.Component {
                                         <div className='categorized-challenges' id={`${category}`} >
                                             { this.categorizeChallenge(`${category}`)}
                                         </div>
-                                        {/* <a className='switchLeft sliderButton'>
-                                            <span class="material-symbols-outlined">
-                                                arrow_back_ios
-                                            </span>
-                                        </a>
-                                        <a className='switchRight sliderButton'></a> */}
+                                        
                                     </div>
                                 ))}
 
