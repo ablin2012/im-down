@@ -27,6 +27,7 @@ const App = () => (
                 <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
                 <ProtectedRoute exact path="/profile" component={ProfileContainer} />
+                <Route exact path="/users/:user_id" component={UserShowContainer} />
                 {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
             </Switch>
 
