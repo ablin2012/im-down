@@ -1,0 +1,34 @@
+.home-page {
+    padding-top: 75px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.sticky-bar {
+    height: 100vh;
+    position: sticky;
+    top: 105px;
+}
+
+.category-links {
+    margin-top: 20px;
+    height: 30vh;
+    width: 20vw;
+    background-color: rgb(46, 51, 56);
+    border-radius: 8px;
+}
+
+.category-links-body {
+    padding: 20px;
+}
+
+.category-links-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.link-item {
+    margin-top: 5px;
+    font-size: 14px;
+}

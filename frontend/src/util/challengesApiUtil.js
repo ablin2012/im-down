@@ -13,6 +13,6 @@ export const createChallenge = data => {
     return axios.post('/api/challenges/', data)
 }
 
-export const getChallenge = challengeId => {
-    return axios.get(`/api/challenges/${challengeId}`)
+export const getChallenge = (id) => {
+    return axios.get(`/api/challenges/${id}`)
 }

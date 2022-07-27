@@ -8,9 +8,14 @@ import LoginFormContainer from './session/loginFormContainer';
 import SignupFormContainer from './session/signupFormContainer';
 import ChallengesIndexContainer from './challenges/challengesIndexContainer';
 import ProfileContainer from './profile/profileContainer';
+import UserShowContainer from './profile/userShowContainer'
 import ChallengeForm from './challenges/challengeForm';
 import PostsIndexContainer from './posts/postsIndexContainer';
+
 import ChallengeShowContainer from './challenges/challengeShowContainer';
+
+import HomePageContainer from './home/homePageContainer';
+
 
 import Modal from './modal/modal';
 
@@ -23,10 +28,15 @@ const App = () => (
                 <AuthRoute exact path="/login" component={LoginFormContainer} />
                 <AuthRoute exact path="/signup" component={SignupFormContainer} />
 
+
                 <ProtectedRoute exact path="/challenges/:challengeId" component={ChallengeShowContainer} />
+
+                <ProtectedRoute exact path="/home" component={HomePageContainer} />
+
                 <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
                 <ProtectedRoute exact path="/profile" component={ProfileContainer} />
+                <Route exact path="/users/:user_id" component={UserShowContainer} />
                 {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
             </Switch>
 

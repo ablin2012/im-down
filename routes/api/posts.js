@@ -115,7 +115,6 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
         }
   
       newPost.imageUrl = data.Location
-      // console.log("new post after image", newPost)
       newPost.save();
     }
     

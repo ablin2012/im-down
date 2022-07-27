@@ -1,0 +1,88 @@
+.post-index {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.post-item {
+    display: flex;
+    flex-direction: column;
+    width: 45vw;
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgb(46, 51, 56);
+    margin-top: 20px;
+}
+
+.post-item.photo {
+    height: 100%;
+}
+
+.post-item.nophoto {
+    height: 100%;
+}
+
+.post-item-header {
+    display: flex;
+    padding: 20px
+}
+
+.header-info {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-top {
+    display: flex;
+}
+
+.challenge {
+    padding-left: 20px;
+}
+
+.username {
+    padding-right: 20px;
+}
+.post-type {
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    padding: 3px;
+    background-color: #af8fe9;
+    color: #ebebeb;
+    border-radius: 2px;
+    margin-top: 8px;
+    max-width: 60px;
+}
+
+.post-text { 
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+.user-icon{
+    height: 64px;
+    width: 64px;
+    background-color: bisque;
+    border-radius: 32px;
+}
+
+.icon {
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    object-fit: cover;
+}
+
+.post-image-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+.post-image {
+    width: 45vw;
+    height: 300px;
+    object-fit: cover;
+}

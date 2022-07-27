@@ -3,6 +3,7 @@ import session from './sessionReducer';
 import errors from './errorsReducer';
 import challenges from './challengesReducer';
 import posts from './postsReducer';
+import users from './usersReducer';
 import uiReducer from './uiReducer';
 
 
@@ -11,6 +12,7 @@ const RootReducer = combineReducers({
     session,
     challenges,
     posts,
+    users,
     ui: uiReducer
 });
 
