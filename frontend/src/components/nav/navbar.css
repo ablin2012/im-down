@@ -109,7 +109,7 @@
 .logout-button, .challenge-button-container > button {
     width: 120px;
     height: 40px;
-    border-radius: 12px;
+    border-radius: 8px;
     background-image: linear-gradient(to right, #7b2cbf, #5a189a);
     outline: none;
     border-style: none;
@@ -127,7 +127,7 @@
 .nav-button {
     width: 90px;
     height: 40px;
-    border-radius: 12px;
+    border-radius: 8px;
     background-image: linear-gradient(to right, #7b2cbf, #5a189a);
     outline: none;
     border-style: none;

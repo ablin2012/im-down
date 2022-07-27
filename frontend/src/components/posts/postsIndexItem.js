@@ -1,5 +1,6 @@
 import React from "react";
 import './post.css';
+import { Link } from "react-router-dom";
 
 class PostIndexItem extends React.Component {
     constructor(props) {
@@ -20,19 +21,43 @@ class PostIndexItem extends React.Component {
     }
 
     render() {
+        let {imageUrl, challengeId, userId} = this.props;
         if (this.state.challenge && this.state.user) {
+
+            const profilePic = (this.state.user.imageUrl) ? (
+                <img className="icon" src={this.state.user.imageUrl} />
+            ) : (null)
+            const image = (imageUrl) ? (
+                <div className="post-image-container">
+                    <img className="post-image" src={this.props.imageUrl} />
+                </div>
+            ) : (null)
+
             return (
-                <div className="post-item">
+                <div className="post-item photo">
                     <div className="post-item-header">
-                        <div className="user-icon"></div>
+                        <div className="user-icon">
+                            {profilePic}
+                        </div>
                         <div className="header-info">
-                            <p>{this.state.user.username}</p>
-                            <p>{this.props.type}</p>
-                            <p>{this.state.challenge.title}</p>
+                            <div className="header-top">
+                                <Link to={`/users/${userId}`} >
+                                    <div className="username">{this.state.user.username}</div>
+                                </Link>
+                                <i className="fas fa-caret-right"></i>
+                                <Link to={`/challenges/${challengeId}`} >
+                                    <div className="challenge">{this.state.challenge.title}</div>
+                                </Link>
+                            </div>
+                            <div className="header-bottom">
+                                <p className="post-type">{this.props.type.toUpperCase()}</p>
+                            </div>
                         </div>
                     </div>
-                    <h3>{this.props.text}</h3>
-                    <div className="post-image"></div>
+                    <div className="post-text">
+                        <h3>{this.props.text}</h3>
+                    </div>
+                    {image}
                 </div>
             )
         } else {
