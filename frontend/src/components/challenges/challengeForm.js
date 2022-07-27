@@ -27,16 +27,43 @@ class ChallengeForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let challenge = {
-            title: this.state.title,
-            description: this.state.description,
-            category: this.state.category,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            imageUrl: this.state.imageFile
-        };
 
-        this.props.createChallenge(challenge);
+        // //ORIGINAL
+        // let challenge = {
+        //     title: this.state.title,
+        //     description: this.state.description,
+        //     category: this.state.category,
+        //     startDate: this.state.startDate,
+        //     endDate: this.state.endDate,
+        //     imageUrl: this.state.imageFile
+        // };
+        // this.props.createChallenge(challenge);
+
+        // //ATTEMPT 1
+        const formData = new FormData() 
+        formData.append("imageUrl",this.state.imageFile)
+        formData.append("title",this.state.title)
+        formData.append("description",this.state.description)
+        formData.append("category",this.state.category)
+        formData.append("startDate",this.state.startDate)
+        formData.append("endDate",this.state.endDate)
+        this.props.createChallenge(formData)
+
+        // //ATTEMPT 2
+        // const formData = new FormData() 
+        // formData.append("imageUrl",this.state.imageFile)
+        // debugger
+        // let challenge = {
+        //     title: this.state.title,
+        //     description: this.state.description,
+        //     category: this.state.category,
+        //     startDate: this.state.startDate,
+        //     endDate: this.state.endDate,
+        //     imageUrl: this.state.imageFile
+        // };
+        // this.props.createChallenge(challenge);
+
+
         this.setState({ title: '', description: '', category: '' })
     }
 
@@ -98,7 +125,7 @@ class ChallengeForm extends React.Component {
                                 onChange={this.update('title')}
                                 placeholder="Name your challenge"
                             />
-                            <select className='challenge-categories'>
+                            <select className='challenge-categories' onChange={this.update('category')}>
                                 <option value="">--Choose a Category--</option>
                                 <option value="Fitness">Fitness</option>
                                 <option value="Learning">Learning</option>
@@ -118,12 +145,12 @@ class ChallengeForm extends React.Component {
                                 <p>Set the dates of your challenge</p>
                                 <div className='challenge-inputs'>
                                     <div>
-                                        <label>Start</label>
-                                        <input type="date"/>
+                                        <label >Start</label>
+                                        <input type="date" onChange={this.update('startDate')}/>
                                     </div>
                                     <div>
-                                        <label>End</label>
-                                        <input type="date" />
+                                        <label >End</label>
+                                        <input type="date" onChange={this.update('endDate')} />
                                     </div>
                                 </div>
                             </div>

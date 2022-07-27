@@ -119,6 +119,8 @@ router.delete('/:id',
 router.post('/', upload.single('imageUrl'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
+      console.log(req)
+      debugger
       const { errors, isValid } = validateChallengeInput(req.body);
   
       if (!isValid) {
