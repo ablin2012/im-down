@@ -5,33 +5,29 @@ class PostIndexItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            challenge: {}
+            challenge: {},
+            user: {}
         }
     }
 
     componentWillMount() {
-        console.log(this.props.challengeId);
         this.props.fetchChallenge(this.props.challengeId);
+        this.props.fetchUser(this.props.userId);
     }
 
     componentWillReceiveProps(newState) {
-        console.log('butt', newState);
-        this.setState({challenge: newState.challenge})
+        this.setState({challenge: newState.challenge, user: newState.user})
     }
 
     render() {
-        // console.log('state', this.state)
-        // console.log(this.props);
-        if (this.state.challenge) {
+        if (this.state.challenge && this.state.user) {
             return (
                 <div className="post-item">
                     <div className="post-item-header">
                         <div className="user-icon"></div>
                         <div className="header-info">
-                            <p>username</p>
-                            <p>{this.props.userId}</p>
+                            <p>{this.state.user.username}</p>
                             <p>{this.props.type}</p>
-                            <p>{this.props.challengeId}</p>
                             <p>{this.state.challenge.title}</p>
                         </div>
                     </div>

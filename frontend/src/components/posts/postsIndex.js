@@ -15,16 +15,10 @@ class PostIndex extends React.Component {
     
     componentWillMount() {
         this.props.fetchPosts();
-        // this.props.fetchChallenges();
     }
 
     componentWillReceiveProps(newState) {
-        // console.log('newstate', newState)
-        // newState.challenges.map(challenge => {
-        //     this.state.challenges[challenge._id] = challenge
-        // })
-        this.setState({ posts: newState.posts, challenges: newState.challenges});
-        // this.setState({ challenges: newState.challenges});
+        this.setState({ posts: newState.posts, challenges: newState.challenges, users: newState.users});
     }
 
     render() {
@@ -42,7 +36,9 @@ class PostIndex extends React.Component {
                             userId={post.user} 
                             challengeId={post.challenge}
                             fetchChallenge={this.props.fetchChallenge}
+                            fetchUser={this.props.fetchUser}
                             challenge={this.state.challenges[post.challenge]}
+                            user={this.state.users[post.user]}
                             />
                     ))}
                 </div>
