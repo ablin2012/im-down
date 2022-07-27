@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require('./../../models/User');
 const Post = require('./../../models/Post');
+const Friendship = require('./../../models/Friendship');
+const FriendshipRequest = require('./../../models/FriendshipRequest');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
@@ -61,6 +63,7 @@ router.get('/:id', (req, res) => {
             res.status(404).json({ nouserfound: 'No user found with that ID' })
         );
 });
+
 
 router.get('/:id/achievements', (req, res) => {
   Post.find({user: req.params.id, type: "complete"})
@@ -275,7 +278,6 @@ router.delete('/current',
               } 
             })
           }
-
           res.send({
             success: true,
             message: "successfully deleted user"
@@ -284,6 +286,131 @@ router.delete('/current',
       .catch(err => {
         return res.status(422).json({ nouserfound: `No user found` })
       })
+});
+
+
+router.get('/:id/friendships', (req, res) => {
+  Friendship.find({$or: [{ requester: req.params.id }, { receiver: req.params.id }] })
+      .then(friendships => res.json(friendships))
+      .catch(err =>
+          res.status(404).json({ nofriendshipsfound: 'No friends found for this user' })
+      );
+});
+
+router.get('/current/friendships', 
+  passport.authenticate('jwt', { session: false }), (req, res) => {
+    Friendship.find({$or: [{ requester: req.user.id }, { receiver: req.user.id }] })
+        .then(friendships => res.json(friendships))
+        .catch(err =>
+            res.status(404).json({ nofriendshipsfound: 'No friends found for this user' })
+        );
+});
+
+//tested
+router.get('/current/friendshipRequests/incoming', 
+  passport.authenticate('jwt', { session: false }), (req, res) => {
+    FriendshipRequest.find({ receiver: req.user.id })
+    .then(friendshipRequests => res.json(friendshipRequests))
+    .catch(err =>
+        res.status(404).json({ nofriendshiprequestsfound: 'No pending friendship requests' })
+    );
+});
+
+//tested
+router.get('/current/friendshipRequests/outgoing', 
+  passport.authenticate('jwt', { session: false }), (req, res) => {
+    FriendshipRequest.find({ requester: req.user.id })
+    .then(friendshipRequests => {
+      return res.json(friendshipRequests)})
+    .catch(err =>
+        res.status(404).json({ nofriendshiprequestsfound: 'No pending friendship requests' })
+    );
+});
+
+//tested
+router.post('/:id/friendshipRequests',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+
+    FriendshipRequest.findOne({requester: req.user.id, receiver: req.params.id})
+    .then(friendshipRequest => {
+
+      if (friendshipRequest) {
+        return res.status(400).json("friend request already sent");
+      }
+
+      const newFriendshipRequest = new FriendshipRequest({
+        requester: req.user.id,
+        receiver: req.params.id 
+      });
+  
+      newFriendshipRequest.save()
+      .then(friendshipRequest => res.json(friendshipRequest))
+      .catch(err => {
+          return res.status(400).send(err)
+      })
+    })
+});
+
+//tested
+router.delete('/current/friendshipRequest/outgoing/:friendshipRequest_id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    FriendshipRequest.findOne({_id: req.params.friendshipRequest_id, requester: req.user.id})
+    .then(friendshipRequest => {
+      FriendshipRequest.findByIdAndRemove(friendshipRequest.id)
+      .then(friendshipRequest => res.status(200).json("successfully unsent friend request"))
+      .catch(err => res.status(400).json(err));
+    })
+    .catch(err => {
+        return res.status(400).send("no outgoing requests to this user")
+    })
+  }
+);
+
+router.patch('/current/friendshipRequest/incoming/:friendshipRequest_id/:response',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    // console.log(req.params.response)
+    FriendshipRequest.findOne({_id: req.params.friendshipRequest_id, receiver: req.user.id})
+    .then(friendshipRequest => {
+      // console.log("freindshiprequest", friendshipRequest)
+      FriendshipRequest.findByIdAndRemove(friendshipRequest.id)
+      .then( friendshipRequest => {
+        // console.log("removed")
+        if (req.params.response === "accept") {
+          // console.log("got into accept")
+          let user1;
+          let user2;
+          // console.log(friendshipRequest.requester.toString())
+          // console.log(friendshipRequest.receiver.toString())
+          if (friendshipRequest.requester.toString() < friendshipRequest.receiver.toString()){
+            // console.log("first if start")
+            user1 = friendshipRequest.requester
+            user2 = friendshipRequest.receiver
+            // console.log("first if end")
+          } else {
+            // console.log("second if start")
+            user1 = friendshipRequest.receiver
+            user2 = friendshipRequest.requester
+            // console.log("second if end")
+          } 
+          // console.log(user1)
+          // console.log(user2)
+          // console.log(user1.toString())
+          // console.log(user2.toString())
+          const newFriendship = new Friendship({user1, user2})
+          // console.log("new friendship before save")
+          newFriendship.save()
+          .then(friendship => res.status(200).json("friend request accepted"))
+          .catch(err => res.status(400).json(err))
+        } else{
+          return res.status(200).json("friend request rejected")
+        }
+      })
+      .catch(err => res.status(404).send("something went wrong"))
+    })
+    .catch(err => res.status(404).send("no friendship request found from this user"))
 });
 
 module.exports = router;
