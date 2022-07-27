@@ -1,4 +1,5 @@
 import React from 'react';
+import axios, { post } from 'axios';
 // import ChallengesIndexItem from './challengesIndexItem';
 import './challengeModal.css'
 
@@ -15,6 +16,7 @@ class ChallengeForm extends React.Component {
             endDate: Date.now,
             imageFile: null,
             imageUrl: null,
+            url: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,18 +30,6 @@ class ChallengeForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        // //ORIGINAL
-        // let challenge = {
-        //     title: this.state.title,
-        //     description: this.state.description,
-        //     category: this.state.category,
-        //     startDate: this.state.startDate,
-        //     endDate: this.state.endDate,
-        //     imageUrl: this.state.imageFile
-        // };
-        // this.props.createChallenge(challenge);
-
-        // //ATTEMPT 1
         const formData = new FormData() 
         formData.append("imageUrl",this.state.imageFile)
         formData.append("title",this.state.title)
@@ -49,28 +39,16 @@ class ChallengeForm extends React.Component {
         formData.append("endDate",this.state.endDate)
         this.props.createChallenge(formData)
 
-        // //ATTEMPT 2
-        // const formData = new FormData() 
-        // formData.append("imageUrl",this.state.imageFile)
-        // debugger
-        // let challenge = {
-        //     title: this.state.title,
-        //     description: this.state.description,
-        //     category: this.state.category,
-        //     startDate: this.state.startDate,
-        //     endDate: this.state.endDate,
-        //     imageUrl: this.state.imageFile
-        // };
-        // this.props.createChallenge(challenge);
-
-
         this.setState({ title: '', description: '', category: '' })
+
     }
 
     handleFile(e) {
         // events has built in currentTarget and files methods
         const file = e.currentTarget.files[0]
-        const fileReader = new FileReader()
+        console.log(file)
+        const fileReader = new FileReader();
+        console.log(fileReader);
         fileReader.onloadend = () => {
             this.setState({imageFile: file, imageUrl: fileReader.result})
         }
@@ -145,12 +123,12 @@ class ChallengeForm extends React.Component {
                                 <p>Set the dates of your challenge</p>
                                 <div className='challenge-inputs'>
                                     <div>
-                                        <label >Start</label>
-                                        <input type="date" onChange={this.update('startDate')}/>
+                                        <label>Start</label>
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('startDate')}/>
                                     </div>
                                     <div>
-                                        <label >End</label>
-                                        <input type="date" onChange={this.update('endDate')} />
+                                        <label>End</label>
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('endDate')}/>
                                     </div>
                                 </div>
                             </div>
