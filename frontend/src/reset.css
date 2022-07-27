@@ -67,6 +67,17 @@ input {
 }
 
 .body-wrap {
+	height: 100%;
 	width: 100%;
 	margin-top: 95px;
+}
+
+::-webkit-scrollbar {
+	height: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: rgb(46, 51, 56);
+	border-radius: 8px;
+	
 }

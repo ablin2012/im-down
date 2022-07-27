@@ -1,6 +1,8 @@
 .challenge-cards-container {
     height: 100%;
-    width: 550px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,33 +11,74 @@
     margin-top: 60px;
 }
 
+.challenges-header h2 {
+    font-size: 25px;
+    margin: 50px 0px 50px 0px;
+}
+
+.categorized-challenges-container{
+    height: 90%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-wrap{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.category-wrap h1 {
+    font-size: 25px;
+    font-weight: bold;
+    margin-left: 15px;
+    padding-bottom: 15px;
+}
+
+.categorized-challenges {
+    display: grid;
+    align-items: center;
+    justify-content: flex-start;
+    grid-auto-flow: column;
+    overflow-x: scroll;
+    scrollbar-color: none;
+    padding-bottom: 10px;
+}
+
 .challenge-card {
-    width: 520px;
-    height: 150px;
+    width: 270px;
+    height: 200px;
     background-color: rgb(46, 51, 56);
     margin: 10px;
     border-radius: 6px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+}
+
+.challenge-card:hover {
+    margin: 0 40px;
+    transform: scale(1.1);
 }
 
 .challenge-img-container {
-    height: 115px;
-    width: 135px;
+    height: 70%;
+    width: 95%;
     border: 1px solid white;
     border-radius: 6px;
-    margin-left: 10px;
+    margin: 5px;
 }
 
 .challenge-card-details {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 330px;
-    height: 15px;
-    margin-right: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+    height: 25%;
 }
 
 .challenge-card-header {
@@ -43,17 +86,18 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 8px;
-    margin-bottom: 8px;
     height: 40px;
+    width: 80%;
 }
 
 .card-title {
-    font-size: 20px;
+    font-size: 18px;
+    word-wrap: break-word;
     font-weight: 700;
     width: 79%;
     height: 100%;
     display: flex;
+    align-items: center;
     
 }
 
