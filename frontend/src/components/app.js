@@ -9,6 +9,7 @@ import SignupFormContainer from './session/signupFormContainer';
 import ChallengesIndexContainer from './challenges/challengesIndexContainer';
 import ProfileContainer from './profile/profileContainer';
 import ChallengeForm from './challenges/challengeForm';
+import PostsIndexContainer from './posts/postsIndexContainer';
 
 import Modal from './modal/modal';
 
@@ -22,9 +23,11 @@ const App = () => (
                 <AuthRoute exact path="/signup" component={SignupFormContainer} />
 
                 <Route exact path="/challenges" component={ChallengesIndexContainer}/>
+                <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/profile" component={ProfileContainer} />
                 {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
             </Switch>
+
     </div>
 
 );
