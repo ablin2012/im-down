@@ -6,14 +6,14 @@ const Friendship = require('./../../models/Friendship');
 const FriendshipRequest = require('./../../models/FriendshipRequest');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys');
+const keys = require('./../../config/keys');
 const passport = require('passport');
 const multer = require('multer');         
 const Aws = require('aws-sdk'); 
 require("dotenv/config")
 
-const validateRegisterInput = require('../../validation/register');
-const validateLoginInput = require('../../validation/login');
+const validateUserInput = require('./../../validation/user');
+const validateLoginInput = require('./../../validation/login');
 
 // const SESSION_EXPIRE_TIMER = 3600
 const SESSION_EXPIRE_TIMER = 36000000
@@ -74,7 +74,7 @@ router.get('/:id/achievements', (req, res) => {
 });
 
 router.post("/register", upload.single('imageUrl'), (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body);
+    const { errors, isValid } = validateUserInput(req.body);
   
     if (!isValid) {
       return res.status(400).json(errors);
@@ -191,20 +191,20 @@ router.patch('/current', upload.single('imageUrl'),
 
     User.findOne({_id: req.user.id})
     .then( updateUser => {
-        const { errors, isValid } = validateRegisterInput(req.body);
+        const { errors, isValid } = validateUserInput(req.body, req.user);
 
         if (!isValid) {
           return res.status(400).json(errors);
         }
 
         User.findOne({ email: req.body.email }).then(existingUser => {
-          if (existingUser) {
+          if (existingUser && existingUser.id.toString()!== req.user.id.toString()) {
             errors.email = "Email already exists";
             return res.status(400).json(errors);
           } 
     
           User.findOne({ username: req.body.username }).then(existingUser => {
-            if (existingUser) {
+            if (existingUser && existingUser.id.toString()!== req.user.id.toString()) {
               errors.username = "Username already exists";
               return res.status(400).json(errors);
             }
@@ -214,41 +214,51 @@ router.patch('/current', upload.single('imageUrl'),
             updateUser.email = req.body.email,
             updateUser.password = req.body.password
 
-            bcrypt.genSalt(10, (err, salt) => {
-              bcrypt.hash(updateUser.password, salt, (err, hash) => {
-                if (err) throw err;
-                updateUser.password = hash;
-
-                if (req.file) {
-                  const params = {
-                    Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
-                    Key:req.file.originalname,               // Name of the image
-                    Body:req.file.buffer,                    // Body which will contain the image in buffer format
-                    ACL:"public-read-write",                 // defining the permissions to get the public link
-                    ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
-                  };
-                  
-                  s3.upload(params,(error,data)=>{
-                    if(error){
-                      res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+            bcrypt.compare(req.body.passwordConfirm, req.user.password).then(isMatch => {
+              if (isMatch) {
+                bcrypt.genSalt(10, (err, salt) => {
+                  bcrypt.hash(updateUser.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    updateUser.password = hash;
+    
+                    if (req.file) {
+                      const params = {
+                        Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+                        Key:req.file.originalname,               // Name of the image
+                        Body:req.file.buffer,                    // Body which will contain the image in buffer format
+                        ACL:"public-read-write",                 // defining the permissions to get the public link
+                        ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+                      };
+                      
+                      s3.upload(params,(error,data)=>{
+                        if(error){
+                          res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                        }
+        
+                        // console.log("data.location", data.Location)
+                        updateUser.imageUrl = data.Location
+                        updateUser.save()
+                        // console.log("updateUser.imageUrl", updateUser.imageUrl)
+                      })
                     }
     
-                    // console.log("data.location", data.Location)
-                    updateUser.imageUrl = data.Location
-                    updateUser.save()
-                    // console.log("updateUser.imageUrl", updateUser.imageUrl)
-                  })
-                }
+                    updateUser
+                      .save()
+                      .then(user => {
+                        return res.status(200).json("sucessfully updated user information")
+          
+                      })
+                      .catch(err => res.status(400).json(err));
+                  });
+                });
 
-                updateUser
-                  .save()
-                  .then(user => {
-                    return res.status(200).json("sucessfully updated user information")
-      
-                  })
-                  .catch(err => res.status(400).json(err));
-              });
-            });
+              } else {
+
+                errors.password = "Incorrect password";
+                return res.status(400).json(errors);
+
+              };
+            })
           
           })
         })
