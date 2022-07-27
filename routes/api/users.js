@@ -6,14 +6,14 @@ const Friendship = require('./../../models/Friendship');
 const FriendshipRequest = require('./../../models/FriendshipRequest');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys');
+const keys = require('./../../config/keys');
 const passport = require('passport');
 const multer = require('multer');         
 const Aws = require('aws-sdk'); 
 require("dotenv/config")
 
-const validateRegisterInput = require('../../validation/register');
-const validateLoginInput = require('../../validation/login');
+const validateUserInput = require('./../../validation/user');
+const validateLoginInput = require('./../../validation/login');
 
 // const SESSION_EXPIRE_TIMER = 3600
 const SESSION_EXPIRE_TIMER = 36000000
@@ -74,7 +74,7 @@ router.get('/:id/achievements', (req, res) => {
 });
 
 router.post("/register", upload.single('imageUrl'), (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body);
+    const { errors, isValid } = validateUserInput(req.body);
   
     if (!isValid) {
       return res.status(400).json(errors);
