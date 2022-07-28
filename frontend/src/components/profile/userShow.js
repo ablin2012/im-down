@@ -73,7 +73,7 @@ class UserShow extends React.Component {
                 return (
                     participation.challenge && !participation.complete && new Date(participation.challenge.endDate) > new Date(new Date() - (24+9) * 60 * 60 * 1000)
                 )
-            })
+            }).sort(function(a, b){return new Date(a.challenge.endDate) - new Date(b.challenge.endtDate)})
 
             console.log("effectiveParticipations",effectiveParticipations)
             console.log(currentUser)
