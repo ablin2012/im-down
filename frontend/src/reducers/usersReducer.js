@@ -1,14 +1,14 @@
 import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS } from "../actions/userActions";
 import { JOIN_CHALLENGE } from "../actions/challengeActions";
 
-const UsersReducer = (state = {index: {}}, action) => {
+const UsersReducer = (state = {index: {}, participations: [], achievements: []}, action) => {
     Object.freeze(state);
     let newState = Object.assign({}, state);
     switch (action.type) {
         case RECEIVE_USER:
             newState.index[action.user.data._id] = action.user.data;
-            newState["achievements"] ||= []
-            newState["participations"] ||= []
+            // newState["achievements"] ||= []
+            // newState["participations"] ||= []
             return newState;
         case RECEIVE_ACHIEVEMENTS:
             console.log("this is reducer achievements",action.achievements.data)

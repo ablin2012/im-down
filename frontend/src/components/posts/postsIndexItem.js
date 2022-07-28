@@ -8,8 +8,11 @@ class PostIndexItem extends React.Component {
         super(props);
         this.state = {
             challenge: {},
-            user: {}
+            user: {},
+            participations: [],
+            nullBtn: null,
         }
+        this.handleJoin = this.handleJoin.bind(this);
     }
 
     componentWillMount() {
@@ -18,16 +21,19 @@ class PostIndexItem extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        // console.log('index item',newState)
-        this.setState({challenge: newState.challenge, user: newState.user})
+        this.setState({challenge: newState.challenge, user: newState.user, participations: newState.participations.map(part => (part._id))})
     }
 
     handleJoin() {
-        return () => this.props.addParticipation(this.props.challengeId);
+        return () => {
+            this.setState({nullBtn: <button className="join-btn joined">Joined</button>});
+            this.props.addParticipation(this.props.challengeId);
+        };
     }
 
     render() {
-        let {imageUrl, challengeId, userId} = this.props;
+        console.log('indexitemstate', this.state)
+        let {imageUrl, challengeId, userId, participations} = this.props;
         let joinButton = null;
         if (this.state.challenge && this.state.user) {
             const profilePic = (this.state.user.imageUrl) ? (
@@ -53,7 +59,13 @@ class PostIndexItem extends React.Component {
                 shortenStr(this.state.challenge.title, 30)
             ) : ( null )
             if (this.props.type === 'create') {
-                joinButton = <button onClick={this.handleJoin()} className="join-btn">Join the Challenge!</button>
+                if (this.state.participations.includes(challengeId)) {
+                    joinButton = <button className="join-btn joined">Joined</button>
+                } else if (this.state.nullBtn) {
+                    joinButton = this.state.nullBtn;
+                } else {
+                    joinButton = <button onClick={this.handleJoin()} className="join-btn">Join the Challenge!</button>
+                }
             }
             return (
                 <div className="post-item photo">
