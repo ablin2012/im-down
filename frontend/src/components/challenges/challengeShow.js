@@ -21,12 +21,14 @@ class ChallengeShow extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
+        this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
     componentDidMount() {
         // console.log('show', this.props)
         this.props.fetchChallenge(this.props.match.params.challengeId)
             .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
+            // .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
             // .then(() => {this.props.fetchChallengePosts(this.props.challenge.id)})
         
         this.props.fetchUser(this.props.currentUser.id)
@@ -34,18 +36,20 @@ class ChallengeShow extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        console.log('show', newState)
         let parts = [];
         if (newState.participations) {
             parts = newState.participations.map(part => (part.challenge._id))
         }
         this.setState({participations: parts, challenge: newState.challenge})
+        this.props.getChallengeParticipants(this.props.match.params.challengeId)
     }
 
     componentDidUpdate(prevProps){
         if(prevProps.match.params.challengeId !== this.props.match.params.challengeId) {
             this.props.fetchChallenge(this.props.match.params.challengeId)
                 .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
+                .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
+                .then(this.props.fetchUser(this.props.currentUser.id))
         }
     }
 
@@ -90,8 +94,14 @@ class ChallengeShow extends React.Component {
             this.props.fetchChallenge(this.props.match.params.challengeId)
             .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
         )
-            // .then(res => console.log("this ocnsole?",res))
-            // .then((res) => this.props.history.push(`/challenges/${res.post.data.challenge}`))
+    }
+
+    handleCheckbox(e) {
+        e.preventDefault()
+
+        if (e.target.checked) {
+            this.setState({ ["postType"]: "complete" })
+        }
     }
 
     handleJoin() {
@@ -115,12 +125,11 @@ class ChallengeShow extends React.Component {
         const { challenge, challengePosts, currentUser, users} = this.props
         if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id] || users.index[currentUser.id].imageUrl === undefined) return null;
         
-        console.log(challengePosts)
+        
         const userImgSrc = this.props.users.index[currentUser.id].imageUrl
         const profilePic = (userImgSrc) ? (
             <img className="icon" src={userImgSrc} />
         ) : (null)
-        // console.log("imageFile", this.state.imageUrl)
         const postPreviewImg = this.state.imageUrl ? <div className="img-post-preview">
                     {/* <button className="remove-img-x">X</button> */}
                     <img src={this.state.imageUrl}/>
@@ -173,6 +182,10 @@ class ChallengeShow extends React.Component {
                                         <label>End</label>
                                         <p>{this.dateParser(challenge.endDate)}</p>
                                     </div>
+                                    <div>
+                                        <h2>Participants:</h2>
+                                        <h2>{this.props.challengeParticipants.length}</h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -209,10 +222,7 @@ class ChallengeShow extends React.Component {
                                         </div>
                                         <div className="complete-toggle-container">
                                             <label className="complete-label">Challenge Completed?</label>
-                                            <label className="switch">
-                                                <input type="checkbox"/>
-                                                <span className="slider round"></span>
-                                            </label>
+                                            <input type="checkbox" onChange={this.handleCheckbox} />    
                                         </div>
                                     </div>
                                     <input 
@@ -227,7 +237,6 @@ class ChallengeShow extends React.Component {
 
                         {index}
                     </div>
-                    
                 </div>
             </>
         )

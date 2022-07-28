@@ -6,6 +6,8 @@ export const RECEIVE_ACHIEVEMENTS = "RECEIVE_ACHIEVEMENTS";
 export const REMOVE_USER = "REMOVE_USER";
 export const RECEIVE_FRIENDSHIPS = "RECEIVE_FRIENDSHIPS";
 export const RECEIVE_FRIEND_REQUESTS = "RECEIVE_FRIEND_REQUESTS";
+export const RECEIVE_INCOMING_FRIEND_REQUESTS = "RECEIVE_INCOMING_FRIEND_REQUESTS";
+export const RECEIVE_OUTGOING_FRIEND_REQUESTS = "RECEIVE_OUTGOING_FRIEND_REQUESTS";
 export const RECEIVE_FRIEND_REQUEST = "RECEIVE_FRIEND_REQUEST";
 export const REMOVE_FRIEND_REQUEST = "REMOVE_FRIEND_REQUEST";
 export const RECEIVE_PARTICIPATIONS = "RECEIVE_PARTICIPATIONS";
@@ -37,8 +39,13 @@ export const receiveFriendships = friendships => ({
     friendships
 })
 
-export const receiveFriendRequests = (friendRequests) => ({
-    type: RECEIVE_FRIEND_REQUESTS,
+export const receiveIncomingFriendRequests = (friendRequests) => ({
+    type: RECEIVE_INCOMING_FRIEND_REQUESTS,
+    friendRequests
+})
+
+export const receiveOutgoingFriendRequests = (friendRequests) => ({
+    type: RECEIVE_OUTGOING_FRIEND_REQUESTS,
     friendRequests
 })
 
@@ -65,8 +72,9 @@ export const fetchUser = (id) => dispatch => {
     return (
         usersApiUtil.getUser(id)
             .then(user => {
-                // console.log("returned get user",user)
-                // console.log("trying to get id",user.data._id)
+                console.log("returned get user",user)
+                console.log("trying to get id",user.data._id)
+
                 dispatch(receiveUser(user))
                 dispatch(fetchUserAchievements(user.data._id))
                 dispatch(fetchUserFriendships(user.data._id))
@@ -111,19 +119,23 @@ export const deleteCurrentUser = () => dispatch => (
 
 export const fetchUserFriendships = (id) => dispatch => (
     usersApiUtil.getUserFriendships(id)
-        .then(friendships => dispatch(receiveFriendships(friendships)))
+        .then(friendships => {
+            console.log("fetch User Friendship action from backend", friendships)
+            console.log("user id used", id)
+            dispatch(receiveFriendships(friendships))
+        })
         .catch(err => console.log(err))
 )
 
 export const fetchCUIncomingFR = () => dispatch => (
     usersApiUtil.getCurrentUserIncomingFriendRequests()
-        .then(friendRequests => dispatch(receiveFriendRequest(friendRequests)))
+        .then(friendRequests => dispatch(receiveIncomingFriendRequests(friendRequests)))
         .catch(err => console.log(err))
 )
 
 export const fetchCUOutgoingFR = () => dispatch => (
     usersApiUtil.getCurrentUserOutgoingFriendRequests()
-        .then(friendRequests => dispatch(receiveFriendRequests(friendRequests)))
+        .then(friendRequests => dispatch(receiveOutgoingFriendRequests(friendRequests)))
         .catch(err => console.log(err))
 )
 

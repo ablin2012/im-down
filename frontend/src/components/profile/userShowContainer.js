@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { fetchChallenge } from '../../actions/challengeActions';
-import { fetchUser, fetchUserAchievements, fetchUserParticipations, sendFriendRequest} from '../../actions/userActions';
+import { fetchUser, fetchUserAchievements, fetchUserParticipations, sendFriendRequest, unsendFriendRequest, fetchCUOutgoingFR, fetchCUIncomingFR } from '../../actions/userActions';
 import UserShow from './userShow';
 import "./userShow.scss"
 import { openModal } from './../../actions/modalActions';
@@ -25,7 +25,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         // fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
         fetchUser: id => dispatch(fetchUser(id)),
         openModal: modal => dispatch(openModal(modal)),
-        // sendFriendRequest: id => dispatch(sendFriendRequest(id))
+        sendFriendRequest: id => dispatch(sendFriendRequest(id)),
+        unsendFriendRequest: id => dispatch(unsendFriendRequest(id)),
+        fetchCUOutgoingFR: () => dispatch(fetchCUOutgoingFR()),
+        fetchCUIncomingFR: () => dispatch(fetchCUIncomingFR())
     };
 };
 

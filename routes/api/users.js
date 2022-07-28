@@ -240,17 +240,20 @@ router.patch('/current', upload.single('imageUrl'),
                         // console.log("data.location", data.Location)
                         updateUser.imageUrl = data.Location
                         updateUser.save()
+                        .then(user => res.status(200).json(user))
+                        .catch(err => res.status(400).json(err));
                         // console.log("updateUser.imageUrl", updateUser.imageUrl)
                       })
+                    } else {
+                      updateUser
+                        .save()
+                        .then(user => {
+                          return res.status(200).json(user)
+                        })
+                        .catch(err => res.status(400).json(err));
                     }
     
-                    updateUser
-                      .save()
-                      .then(user => {
-                        return res.status(200).json(user)
           
-                      })
-                      .catch(err => res.status(400).json(err));
                   });
                 });
 
@@ -299,7 +302,8 @@ router.delete('/current',
 
 
 router.get('/:id/friendships', (req, res) => {
-  Friendship.find({$or: [{ requester: req.params.id }, { receiver: req.params.id }] })
+  console.log("backend friendships",req.params.id)
+  Friendship.find({$or: [{ user1: req.params.id }, { user2: req.params.id }] })
       .then(friendships => res.json(friendships))
       .catch(err =>
           res.status(404).json({ nofriendshipsfound: 'No friends found for this user' })

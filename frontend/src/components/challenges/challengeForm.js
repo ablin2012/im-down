@@ -46,9 +46,9 @@ class ChallengeForm extends React.Component {
     handleFile(e) {
         // events has built in currentTarget and files methods
         const file = e.currentTarget.files[0]
-        console.log(file)
+        
         const fileReader = new FileReader();
-        console.log(fileReader);
+        
         fileReader.onloadend = () => {
             this.setState({imageFile: file, imageUrl: fileReader.result})
         }
