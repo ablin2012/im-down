@@ -37,7 +37,7 @@ class ChallengesIndex extends React.Component {
                 challenge.title.match(new RegExp(this.state.filter, "i")) || 
                 challenge.description.match(new RegExp(this.state.filter, "i")) ||
                 challenge.category.match(new RegExp(this.state.filter, "i")))
-        }
+    }
     }
 
     categorizeChallenge(category) {
@@ -50,7 +50,7 @@ class ChallengesIndex extends React.Component {
                         title={challenge.title}
                         description={challenge.description}
                         category={challenge.category}
-                        imageUrl={challenge.challengeImage} />
+                        imageUrl={challenge.imageUrl} />
                 </Link>
             ))
         )
