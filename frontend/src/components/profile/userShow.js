@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
+import { fetchCUOutgoingFR } from '../../actions/userActions';
 import NavBarContainer from './../nav/navBarContainer';
 class UserShow extends React.Component {
     // constructor(props) {
@@ -61,7 +62,7 @@ class UserShow extends React.Component {
         if (!this.props.user || !this.props.achievements || !this.props.participations) {
             return null
         } else {
-            const { user, achievements, participations, friendships, currentUser, openModal, sendFriendRequest } = this.props
+            const { user, achievements, participations, friendships, currentUser, openModal, sendFriendRequest, unsendFriendRequest, CUOutgoingFR, fetchCUOutgoingFR } = this.props
             let { username, imageUrl } = user
             
             console.log("participations",participations)
@@ -75,9 +76,14 @@ class UserShow extends React.Component {
                 )
             }).sort(function(a, b){return new Date(a.challenge.endDate) - new Date(b.challenge.endtDate)})
 
-            const isFriend = friendships.filter(friendship => (friendship.user1 === currentUser.id || friendship.user2 === currentUser.id ))
+            const isFriend = friendships.filter(friendship => (friendship.user1 === currentUser.id || friendship.user2 === currentUser.id )).length > 0
+
+            const sentFriendRequest = CUOutgoingFR.filter(FR => FR.receiver === user._id).length > 0
 
             console.log("isfriend", isFriend)
+            console.log("sentFriendRequest", sentFriendRequest)
+            console.log("CUOutgoingFR", CUOutgoingFR)
+            console.log("user._id", user._id)
 
             console.log("effectiveParticipations",effectiveParticipations)
             console.log(currentUser)
@@ -101,8 +107,10 @@ class UserShow extends React.Component {
                                         <button className="edit-profile-button" onClick={() => openModal('updateCurrentUser')}>Edit Profile</button> 
                                         ): isFriend? (
                                         <button className="friend-button inactive">Friend</button> 
-                                        ):(
-                                        <button className="add-friend-button" onClick={() => sendFriendRequest(user._id)}>Add Friend</button> 
+                                        ): sentFriendRequest? (
+                                            <button className="unsend-friend-request-button" onClick={() => unsendFriendRequest(user._id).then(() => fetchCUOutgoingFR())}>Unsend Friend Request</button> 
+                                            ): (
+                                        <button className="add-friend-button" onClick={() => sendFriendRequest(user._id).then(() => fetchCUOutgoingFR())}>Add Friend</button> 
                                         )
                                     }
                                 </div>

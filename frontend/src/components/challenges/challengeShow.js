@@ -34,6 +34,7 @@ class ChallengeShow extends React.Component {
             this.props.fetchChallenge(this.props.match.params.challengeId)
                 .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
                 .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
+                .then(this.props.fetchUser(this.props.currentUser.id))
         }
     }
 

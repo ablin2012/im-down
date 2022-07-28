@@ -1,4 +1,4 @@
-import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS, RECEIVE_FRIENDSHIPS, RECEIVE_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, REMOVE_FRIEND_REQUEST } from "../actions/userActions";
+import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS, RECEIVE_FRIENDSHIPS, RECEIVE_FRIEND_REQUESTS, RECEIVE_INCOMING_FRIEND_REQUESTS, RECEIVE_OUTGOING_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, REMOVE_FRIEND_REQUEST } from "../actions/userActions";
 import { JOIN_CHALLENGE } from "../actions/challengeActions";
 
 const UsersReducer = (state = {index: {}, participations: [], achievements: []}, action) => {
@@ -11,6 +11,8 @@ const UsersReducer = (state = {index: {}, participations: [], achievements: []},
             newState["participations"] = []
             newState["friendships"] = []
             newState["friendRequests"] = []
+            newState["CUOutgoingFR"] = []
+            newState["CUIncomingFR"] = []
             return newState;
         case RECEIVE_ACHIEVEMENTS:
             console.log("this is reducer achievements",action.achievements.data)
@@ -29,13 +31,21 @@ const UsersReducer = (state = {index: {}, participations: [], achievements: []},
             console.log("this is reducer receive friend requests",action.friendRequests.data)
             newState.friendRequests = action.friendRequests.data;
             return newState;
+        case RECEIVE_INCOMING_FRIEND_REQUESTS:
+            console.log("this is reducer receive incomoing friend requests",action.friendRequests.data)
+            newState.CUIncomingFR = action.friendRequests.data;
+            return newState;
+        case RECEIVE_OUTGOING_FRIEND_REQUESTS:
+                console.log("this is reducer receive  outgoing friend requests",action.friendRequests.data)
+                newState.CUOutgoingFR = action.friendRequests.data;
+                return newState;
         case RECEIVE_FRIEND_REQUEST:
             console.log("this is reducer receive friendRequest",action.friendRequest.data)
             newState.friendRequests = action.friendRequest.data;
             return newState;
         case REMOVE_FRIEND_REQUEST:
-            console.log("this is reducer remove friendshipRequest",action.friendshipRequest.data)
-            newState.friendshipRequests = action.friendshipRequest.data;
+            console.log("this is reducer remove friendshipRequest",action.friendRequestId)
+            newState.CUOutgoingFR.filter((request) => request.receiver !== action.friendshipRequestId )
             return newState;
         case JOIN_CHALLENGE:
             newState["participations"].push(action.participation.data);
