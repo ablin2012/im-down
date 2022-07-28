@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import ChallengeShow from './challengeShow';
-import { fetchChallenge } from '../../actions/challengeActions';
+import { addParticipation, fetchChallenge, removeParticipation } from '../../actions/challengeActions';
 import { fetchChallengePost } from '../../actions/postActions';
-import { fetchUser } from '../../actions/userActions';
+import { fetchUser, fetchUserParticipations } from '../../actions/userActions';
 import { composePost } from '../../actions/postActions';
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,8 +12,8 @@ const mapStateToProps = (state, ownProps) => {
         challenge: state.challenges.index[ownProps.match.params.challengeId],
         challengePosts: state.posts.challenge,
         currentUser: state.session.user,
-        users: state.users
-
+        users: state.users,
+        participations: state.users.participations
     }
 }
 
@@ -22,7 +22,10 @@ const mapDispatchToProps = (dispatch) => {
         fetchChallenge: (challengeId) => dispatch(fetchChallenge(challengeId)),
         fetchChallengePosts: (challengeId) => dispatch(fetchChallengePost(challengeId)),
         fetchUser: (id) => dispatch(fetchUser(id)),
-        composePost: (post, challengeId) => dispatch(composePost({post, challengeId}))
+        composePost: (post, challengeId) => dispatch(composePost({post, challengeId})),
+        fetchUserParticipations: id => dispatch(fetchUserParticipations(id)),
+        addParticipation: id => dispatch(addParticipation(id)),
+        removeParticipation: id => dispatch(removeParticipation(id))
     }
 }
 
