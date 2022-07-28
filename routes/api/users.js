@@ -302,7 +302,8 @@ router.delete('/current',
 
 
 router.get('/:id/friendships', (req, res) => {
-  Friendship.find({$or: [{ requester: req.params.id }, { receiver: req.params.id }] })
+  console.log("backend friendships",req.params.id)
+  Friendship.find({$or: [{ user1: req.params.id }, { user2: req.params.id }] })
       .then(friendships => res.json(friendships))
       .catch(err =>
           res.status(404).json({ nofriendshipsfound: 'No friends found for this user' })
