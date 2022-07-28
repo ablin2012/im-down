@@ -78,7 +78,7 @@ class PostIndexItem extends React.Component {
                 </div>
             )
         } else {
-            return (<div>notworking</div>)
+            return (null)
         }
     }
 }
