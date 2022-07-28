@@ -8,10 +8,12 @@ import { composePost } from '../../actions/postActions';
 const mapStateToProps = (state, ownProps) => {
     
     return {
+
         challenge: state.challenges.index[ownProps.match.params.challengeId],
         challengePosts: state.posts.challenge,
         currentUser: state.session.user,
         users: state.users
+
     }
 }
 

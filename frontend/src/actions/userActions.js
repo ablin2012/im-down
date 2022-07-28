@@ -32,9 +32,9 @@ export const removeUser = (userId) => ({
     userId
 })
 
-export const receiveFriendships = userId => ({
+export const receiveFriendships = friendships => ({
     type: RECEIVE_FRIENDSHIPS,
-    userId
+    friendships
 })
 
 export const receiveFriendRequests = (friendRequests) => ({
@@ -69,6 +69,9 @@ export const fetchUser = (id) => dispatch => {
                 // console.log("trying to get id",user.data._id)
                 dispatch(receiveUser(user))
                 dispatch(fetchUserAchievements(user.data._id))
+                dispatch(fetchUserFriendships(user.data._id))
+                dispatch(fetchCUIncomingFR())
+                dispatch(fetchCUOutgoingFR())
             })
             .catch(err => console.log(err))
     )
@@ -109,6 +112,18 @@ export const deleteCurrentUser = () => dispatch => (
 export const fetchUserFriendships = (id) => dispatch => (
     usersApiUtil.getUserFriendships(id)
         .then(friendships => dispatch(receiveFriendships(friendships)))
+        .catch(err => console.log(err))
+)
+
+export const fetchCUIncomingFR = () => dispatch => (
+    usersApiUtil.getCurrentUserIncomingFriendRequests()
+        .then(friendRequests => dispatch(receiveFriendRequest(friendRequests)))
+        .catch(err => console.log(err))
+)
+
+export const fetchCUOutgoingFR = () => dispatch => (
+    usersApiUtil.getCurrentUserOutgoingFriendRequests()
+        .then(friendRequests => dispatch(receiveFriendRequests(friendRequests)))
         .catch(err => console.log(err))
 )
 
