@@ -240,17 +240,20 @@ router.patch('/current', upload.single('imageUrl'),
                         // console.log("data.location", data.Location)
                         updateUser.imageUrl = data.Location
                         updateUser.save()
+                        .then(user => res.status(200).json(user))
+                        .catch(err => res.status(400).json(err));
                         // console.log("updateUser.imageUrl", updateUser.imageUrl)
                       })
+                    } else {
+                      updateUser
+                        .save()
+                        .then(user => {
+                          return res.status(200).json(user)
+                        })
+                        .catch(err => res.status(400).json(err));
                     }
     
-                    updateUser
-                      .save()
-                      .then(user => {
-                        return res.status(200).json(user)
           
-                      })
-                      .catch(err => res.status(400).json(err));
                   });
                 });
 
