@@ -1,5 +1,6 @@
 import React from 'react';
 import ChallengesIndexItem from '../challenges/challengesIndexItem';
+import { withRouter } from 'react-router-dom'
 
 class Profile extends React.Component {
     constructor(props) {
@@ -11,8 +12,10 @@ class Profile extends React.Component {
     }
 
     componentWillMount() {
-        console.log(this.props.currentUser.id)
-        this.props.fetchUserChallenges(this.props.currentUser.id);
+        // console.log(this.props.currentUser.id)
+        // this.props.fetchUserChallenges(this.props.currentUser.id);
+        console.log(this.props)
+        this.props.history.push(`/users/${this.props.currentUser.id}`)
     }
 
     componentWillReceiveProps(newState) {
@@ -38,4 +41,4 @@ class Profile extends React.Component {
     }
 }
 
-export default Profile;
+export default withRouter(Profile);

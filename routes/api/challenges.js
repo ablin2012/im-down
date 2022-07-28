@@ -36,7 +36,7 @@ const s3 = new Aws.S3({
 // Routes
 router.get('/', (req, res) => {
     Challenge.find()
-        .sort({ date: -1 })
+        .sort({ createdAt: -1 })
         .then(challenges => res.json(challenges))
         .catch(err => res.status(404).json({ nochallengesfound: 'No challenges found' }));
 });

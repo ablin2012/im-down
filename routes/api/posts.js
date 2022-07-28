@@ -40,7 +40,7 @@ const s3 = new Aws.S3({
 // Routes
 router.get('/', (req, res) => {
   Post.find()
-  .sort({ date: -1 })
+  .sort({ createdAt: -1 })
   .then(posts => res.json(posts))
   .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
 });
@@ -120,7 +120,16 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
     }
     
     )}
-    newPost.save().then(post => res.json(post));
+    newPost.save().then(post => {
+     if (post.type === "complete"){
+      Participation.findOne({challenge: post.challenge, participant: post.user})
+      .then(participation => {
+        participation.complete = true;
+        participation.save()
+      })
+     }
+      return res.json(post)
+    });
 });
 
 router.patch('/:id', upload.single('imageUrl'),
@@ -187,7 +196,7 @@ router.delete('/:id',
 
 router.get('/:id/comments', (req, res) => {
   Comment.find()
-  .sort({ date: -1 })
+  .sort({ createdAt: -1 })
   .then(comments => res.json(comments))
   .catch(err => res.status(404).json({ nocommentsfound: 'No comments found' }));
 });
@@ -248,7 +257,7 @@ router.delete('/:id/comment/:comment_id',
 
 router.get('/:id/likes', (req, res) => {
   Like.find()
-  .sort({ date: -1 })
+  .sort({ createdAt: -1 })
   .then(likes => res.json(likes))
   .catch(err => res.status(404).json({ nolikesfound: 'No likes found' }));
 });

@@ -4,11 +4,15 @@ const Schema = mongoose.Schema;
 const ParticipationSchema = new Schema({
   participant: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   },
   challenge: {
     type: Schema.Types.ObjectId,
-    ref: 'challenges'
+    ref: 'Challenge'
+  },
+  complete:{
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true
