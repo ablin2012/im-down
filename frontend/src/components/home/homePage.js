@@ -35,8 +35,6 @@ class HomePage extends React.Component {
     }
 
     render() {
-        console.log('state', this.state)
-        console.log('props', this.props)
         let icon;
         if (this.props.currentUser.imageUrl) {
             icon = (<img className="icon" src={this.props.currentUser.imageUrl} />)

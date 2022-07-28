@@ -10,8 +10,6 @@ class ChallengeShow extends React.Component {
         this.dateParser = this.dateParser.bind(this)
     }
 
-    
-
     componentDidMount() {
         console.log("hit state?", this.props.challenge)
         this.props.fetchChallenge(this.props.match.params.challengeId)
