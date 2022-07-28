@@ -67,6 +67,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/achievements', (req, res) => {
   Post.find({user: req.params.id, type: "complete"})
+      .sort({ createdAt: -1 })
       .populate("challenge")
       .then(posts => res.json(posts))
       .catch(err =>

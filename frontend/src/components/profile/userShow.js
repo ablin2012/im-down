@@ -1,6 +1,6 @@
 import React from 'react';
-import ChallengesIndexItem from '../challenges/challengesIndexItem';
-
+import { withRouter } from 'react-router-dom'
+import NavBarContainer from './../nav/navBarContainer';
 class UserShow extends React.Component {
     // constructor(props) {
     //     super(props);
@@ -24,15 +24,19 @@ class UserShow extends React.Component {
     //     this.setState({ challenges: newState.challenges, achievements: newState.user.achievements });
     // }
 
+    linkToChallenge(challengeId){
+        return () => this.props.history.push(`/challenges/${challengeId}`)
+    }
+
     renderAchievement(achievement){
         console.log("rendering achievement - achievements", this.props.achievements)
         if (!achievement.challenge) {return null}
         return (
-        <div className="achievement-item-container" key={achievement._id}>
-            <div>
+        <div className="user-achievement-item" key={achievement._id} onClick={this.linkToChallenge(achievement.challenge._id)}>
+            <img className="user-achievement-image" src={achievement.imageUrl|| "" } alt="achievement-image"/>
+            <p>
                 {achievement.challenge.title ||= ""}
-            </div>
-            <img src={achievement.imageUrl|| ""}/>
+            </p>
         </div>
 
         )
@@ -42,11 +46,11 @@ class UserShow extends React.Component {
         console.log("rendering achievement - challenges", this.props.participation)
         if (!participation.challenge) {return null}
         return (
-        <div className="participation-item-container" key={participation._id}> 
-            <div>
+        <div className="user-participation-item" key={participation._id} onClick={this.linkToChallenge(participation.challenge._id)}> 
+            <img className="user-participation-image" src={participation.challenge.imageUrl || ""} alt="participation-image"/>
+            <p>
                 {participation.challenge.title ||= ""}
-            </div>
-            <img src={participation.imageUrl || ""}/>
+            </p>
         </div>
 
         )
@@ -57,37 +61,64 @@ class UserShow extends React.Component {
         if (!this.props.user || !this.props.achievements || !this.props.participations) {
             return null
         } else {
-            const { user, achievements, participations } = this.props
+            const { user, achievements, participations, currentUser } = this.props
             let { username, imageUrl } = user
             
             console.log("participations",participations)
+            
             
             imageUrl ||= ""
             const effectiveParticipations = participations.filter((participation) => {
                 // debugger
                 return (
-                    participation.challenge && !participation.complete && new Date(participation.challenge.endDate) < new Date(new Date() + (24+9) * 60 * 60 * 1000)
+                    participation.challenge && !participation.complete && new Date(participation.challenge.endDate) > new Date(new Date() - (24+9) * 60 * 60 * 1000)
                 )
             })
 
             console.log("effectiveParticipations",effectiveParticipations)
+            console.log(currentUser)
+            console.log(achievements)
             // console.log("this is all achievements" , achievements)
             return (
-                <div>
-                    <img src={imageUrl}/>
-                    <div>{username}</div>
-                    {
-                        achievements.map((achievement) => this.renderAchievement(achievement))
-                    }
+                <>
+                    <header>
+                        <NavBarContainer parentCallback={this.handleCallback}/>
+                    </header>
 
-                    {
-                        effectiveParticipations.map((participation) => this.renderParticipation(participation))
-                    }
+                    <div className="user-show-container">
+                        <div className="user-header">
+                            <img className="user-profile-image" src={imageUrl}/>
+                            <div className="user-profile-info">
+                                <div className='user-profile-info-sub'>
+                                    <div className="user-profile-username">{username}</div>
+                                    {
+                                        currentUser.id === user._id? (
+                                        <button className="edit-profile-button">Edit Profile</button> 
+                                        ): null
+                                    }
 
-                </div>
+                                </div>
+                                <div className='user-profile-info-sub'>
+                                    <div> <span className="bold">{effectiveParticipations.length}</span> Current Challenges</div>
+                                    <div> <span className="bold">{achievements.length}</span> Achievements</div>
+                                    <div> <span className="bold">999</span> Friends</div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 className="section-header">Current Challenges</h2>
+                        <div className="user-participations-container">{
+                            effectiveParticipations.map((participation) => this.renderParticipation(participation))
+                        }</div>
+                        <h2 className="section-header">Achievements</h2>
+                        <div className="user-achievements-container">{
+                            achievements.map((achievement) => this.renderAchievement(achievement))
+                        }</div>
+
+                    </div>
+                </>
             );
         }
     }
 }
 
-export default UserShow;
+export default withRouter(UserShow);
