@@ -111,6 +111,7 @@ class ChallengeShow extends React.Component {
     render() {
         console.log('showstate',this.state)
         let joinButton = null;
+        let index = null;
         const { challenge, challengePosts, currentUser, users} = this.props
         if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id] || users.index[currentUser.id].imageUrl === undefined) return null;
         
@@ -124,13 +125,24 @@ class ChallengeShow extends React.Component {
                     {/* <button className="remove-img-x">X</button> */}
                     <img src={this.state.imageUrl}/>
                 </div> : null
-        if (this.state.participations.includes(this.state.challenge._id)) {
-            joinButton = <button onClick={this.handleLeave()} className="join-button joined">Joined</button>
-        } else if (this.state.btn) {
+        if (this.state.btn) {
             joinButton = this.state.btn;
+        } else if (this.state.participations.includes(this.state.challenge._id)) {
+            joinButton = <button onClick={this.handleLeave()} className="join-button joined">Joined</button>
         } else {
             joinButton = <button onClick={this.handleJoin()} className="join-button">Join the Challenge!</button>
         }
+        if (this.state.participations.includes(this.state.challenge._id)) {
+            index =
+                        <div className="challenge-show-posts">
+                            <ChallengePostsIndexContainer 
+                                challengePosts={challengePosts}
+                                fetchChallenge={this.props.fetchChallenge}
+                                fetchUser={this.props.fetchUser}
+                                />
+                        </div>
+        }
+
         return (
             <>
                 <header>
@@ -213,13 +225,7 @@ class ChallengeShow extends React.Component {
                             {postPreviewImg}
                         </div>
 
-                        <div className="challenge-show-posts">
-                            <ChallengePostsIndexContainer 
-                                challengePosts={challengePosts}
-                                fetchChallenge={this.props.fetchChallenge}
-                                fetchUser={this.props.fetchUser}
-                                />
-                        </div>
+                        {index}
                     </div>
                     
                 </div>
