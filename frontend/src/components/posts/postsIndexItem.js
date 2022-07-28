@@ -13,20 +13,22 @@ class PostIndexItem extends React.Component {
     }
 
     componentWillMount() {
-        console.log('dfsdfsaf',this.props)
         this.props.fetchChallenge(this.props.challengeId);
         this.props.fetchUser(this.props.userId);
     }
 
     componentWillReceiveProps(newState) {
-        // console.log('index item',newState)
+        console.log('index item',newState)
         this.setState({challenge: newState.challenge, user: newState.user})
     }
 
+    handleJoin() {
+        return () => this.props.addParticipation(this.props.challengeId);
+    }
+
     render() {
-        console.log('render state', this.state)
-        console.log('render props', this.props)
         let {imageUrl, challengeId, userId} = this.props;
+        let joinButton = null;
         if (this.state.challenge && this.state.user) {
             const profilePic = (this.state.user.imageUrl) ? (
                 <img className="icon" src={this.state.user.imageUrl} />
@@ -50,6 +52,9 @@ class PostIndexItem extends React.Component {
             const title = (this.state.challenge.title) ? (
                 shortenStr(this.state.challenge.title, 30)
             ) : ( null )
+            if (this.props.type === 'create') {
+                joinButton = <button onClick={this.handleJoin()} className="join-btn">Join the Challenge!</button>
+            }
             return (
                 <div className="post-item photo">
                     <div className="post-item-header">
@@ -73,6 +78,7 @@ class PostIndexItem extends React.Component {
                     </div>
                     <div className="post-text">
                         <h3>{this.props.text}</h3>
+                        {joinButton}
                     </div>
                     {image}
                 </div>

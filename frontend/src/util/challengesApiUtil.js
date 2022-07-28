@@ -18,5 +18,5 @@ export const getChallenge = (id) => {
 }
 
 export const joinChallenge = (id) => {
-    return axios.post(`/api/participation/challenge/${id}`)
+    return axios.post(`/api/participations/challenge/${id}`)
 }

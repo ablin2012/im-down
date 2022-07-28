@@ -1,5 +1,6 @@
 import React from "react";
-import './profile.css'
+import './profile.css';
+import { Link } from "react-router-dom";
 
 class ProfileCard extends React.Component {
     render () {
@@ -10,11 +11,15 @@ class ProfileCard extends React.Component {
             <div className="profile-card">
                 <div className="profile-card-head">
                     <div className="user-icon card">
-                        {profilePic}
+                        <Link to={`/users/${this.props.currentUser.id}`}>
+                            {profilePic}
+                        </Link>
                     </div>
                 </div>
                 <div className="profile-card-body">
-                    <h3 className="highlight">{this.props.currentUser.username}</h3>
+                    <Link to={`/users/${this.props.currentUser.id}`}>
+                        <h3 className="highlight">{this.props.currentUser.username}</h3>
+                    </Link>
                     <div className="data-container">
                         <div className="data-names">
                             <div className="data-text">Challenges Complete</div>
