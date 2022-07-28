@@ -29,7 +29,7 @@ class HomePage extends React.Component {
         if (newState.participations) {
             parts = newState.participations.map(parts => (parts.challenge))
         }
-        this.setState({ challenges: newState.challenges, participations: parts})
+        this.setState({ challenges: newState.challenges, participations: parts});
     }
     
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
