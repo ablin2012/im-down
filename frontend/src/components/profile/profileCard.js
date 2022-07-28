@@ -3,6 +3,19 @@ import './profile.css';
 import { Link } from "react-router-dom";
 
 class ProfileCard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            participations: [],
+            achievements: [],
+            createdChallenges: []
+        }
+    }
+
+    componentWillReceiveProps(newState) {
+        console.log('profilecard', newState)
+        this.setState({createdChallenges: newState.createdChallenges, participations: newState.participations })
+    }
     render () {
         const profilePic = (this.props.currentUser.imageUrl) ? (
             <img className="icon card" src={this.props.currentUser.imageUrl} />
@@ -23,14 +36,14 @@ class ProfileCard extends React.Component {
                     <div className="data-container">
                         <div className="data-names">
                             <div className="data-text">Challenges Complete</div>
-                            <div className="data-text">Longest Streak</div>
-                            <div className="data-text">Current Streak</div>
+                            <div className="data-text">Challenges Created</div>
+                            <div className="data-text">Current Challenges</div>
                             <div className="data-text">Friends</div>
                         </div>
                         <div className="data-values">
-                            <div className="data-text">val</div>
-                            <div className="data-text">val</div>
-                            <div className="data-text">val</div>
+                            <div className="data-text">{this.state.achievements.length}</div>
+                            <div className="data-text">{this.state.createdChallenges.length}</div>
+                            <div className="data-text">{this.state.participations.length}</div>
                             <div className="data-text">val</div>
                         </div>
                     </div>

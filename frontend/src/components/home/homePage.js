@@ -11,7 +11,8 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            challenges: []
+            challenges: [],
+            participations: []
         }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
@@ -19,10 +20,17 @@ class HomePage extends React.Component {
 
     componentWillMount() {
         this.props.fetchUserChallenges(this.props.currentUser.id);
+        this.props.fetchUserParticipations(this.props.currentUser.id);
+        this.props.fetchUserAchievements(this.props.currentUser.id);
     }
 
     componentWillReceiveProps(newState) {
-        this.setState({ challenges: newState.challenges})
+        console.log('homepage', newState)
+        let parts = [];
+        if (newState.participations) {
+            parts = newState.participations.map(parts => (parts._id))
+        }
+        this.setState({ challenges: newState.challenges, participations: parts})
     }
     
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -36,6 +44,7 @@ class HomePage extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         let icon;
         if (this.props.currentUser.imageUrl) {
             icon = (<img className="icon" src={this.props.currentUser.imageUrl} />)
@@ -49,7 +58,7 @@ class HomePage extends React.Component {
                 </header>
                 <div className="home-page">
                     <div className="sticky-bar">
-                        <ProfileCardContainer />
+                        <ProfileCardContainer participations={this.state.participations} createdChallenges={this.state.challenges}/>
                         <div className="category-links">
                             <div className="category-links-body">
                                 <h3 className="highlight">My Categories</h3>
@@ -71,7 +80,7 @@ class HomePage extends React.Component {
                             </div>
                             <button className="false-input" onClick={() => this.props.openModal('createChallenge')}>Start a challenge</button>
                         </div>
-                        <PostIndexContainer />
+                        <PostIndexContainer participations={this.state.participations}/>
                     </div>
                     <div className="sticky-bar scrollable">
                         <h3>My Challenges</h3>
