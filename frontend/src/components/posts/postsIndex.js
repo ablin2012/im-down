@@ -46,6 +46,7 @@ class PostsIndex extends React.Component {
                             challenge={this.state.challenges[post.challenge]}
                             user={this.state.users[post.user]}
                             addParticipation={this.props.addParticipation}
+                            removeParticipation={this.props.removeParticipation}
                             participations={this.state.participations}
                             />
                     ))}

@@ -78,6 +78,26 @@ router.delete('/:id',
         })
 });
 
+router.delete('/challenge/:challenge_id', 
+    passport.authenticate('jwt', { session: false }),
+      (req, res) => {
+        Participation.findOne({challenge: req.params.challenge_id, participant: req.user.id})
+        .then(participation => {
+          if (participation.participant.toString() === req.user.id){
+            Post.remove({challenge: req.params.challenge_id, user: req.user.id, type: 'participate'})
+            Participation.remove({challenge: req.params.challenge_id, participant: req.user.id}, (err, participation) => {
+              return res.status(200).json(participation)
+            })
+          } else 
+          {
+            return res.status(422).json({ invalidcredentials: `invalid credentials for withdrawing participation for this user` })
+          }
+        })
+        .catch(err => {
+          return res.status(422).json({ noparticipationfound: `No participation found with that ID` })
+        })
+});
+
 router.post('/challenge/:challenge_id',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
