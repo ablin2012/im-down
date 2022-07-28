@@ -3,16 +3,27 @@ import { withRouter } from 'react-router-dom';
 import PostIndexContainer from '../posts/postsIndexContainer';
 import ProfileCardContainer from '../profile/profileCardContainer';
 import './home.css';
+import ChallengeCard from "../challenges/challengeCard";
 
 import NavBarContainer from '../nav/navBarContainer';
 
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            challenges: []
+        }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
     }
 
+    componentWillMount() {
+        this.props.fetchUserChallenges(this.props.currentUser.id);
+    }
+
+    componentWillReceiveProps(newState) {
+        this.setState({ challenges: newState.challenges})
+    }
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
 
     handleSearch() {
@@ -24,6 +35,14 @@ class HomePage extends React.Component {
     }
 
     render() {
+        console.log('state', this.state)
+        console.log('props', this.props)
+        let icon;
+        if (this.props.currentUser.imageUrl) {
+            icon = (<img className="icon" src={this.props.currentUser.imageUrl} />)
+        } else {
+            icon = (<div className="letter-icon">{this.props.currentUser.username.slice(0,1)}</div>)
+        }
         return (
             <>
                 <header>
@@ -46,7 +65,21 @@ class HomePage extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <PostIndexContainer />
+                    <div>
+                        <div className="false-input-container">
+                            <div className="user-icon">
+                                {icon}
+                            </div>
+                            <button className="false-input" onClick={() => this.props.openModal('createChallenge')}>Start a challenge</button>
+                        </div>
+                        <PostIndexContainer />
+                    </div>
+                    <div className="sticky-bar scrollable">
+                        <h3>My Challenges</h3>
+                        {this.state.challenges.map((challenge) => (
+                            <ChallengeCard challenge={challenge} />
+                        ))}
+                    </div>
                 </div>
             </>
         )

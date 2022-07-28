@@ -16,3 +16,7 @@ export const createChallenge = data => {
 export const getChallenge = (id) => {
     return axios.get(`/api/challenges/${id}`)
 }
+
+export const getJoinedChallenge = (userId) => {
+    
+}

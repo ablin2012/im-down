@@ -31,29 +31,41 @@
     padding-left: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .header-top {
     display: flex;
 }
 
+.fa-caret-right {
+    font-size: 20px;
+}
 .challenge {
     padding-left: 20px;
+    font-size: 20px;
 }
 
 .username {
     padding-right: 20px;
+    font-size: 20px;
 }
 .post-type {
     display: flex;
     justify-content: center;
     font-size: 12px;
-    padding: 3px;
+    padding: 5px;
     background-color: #af8fe9;
     color: #ebebeb;
     border-radius: 2px;
     margin-top: 8px;
-    max-width: 60px;
+    max-width: 160px;
+}
+
+.letter-icon {
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .post-text { 
@@ -62,6 +74,9 @@
 }
 
 .user-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 64px;
     width: 64px;
     background-color: bisque;
