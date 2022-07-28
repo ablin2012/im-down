@@ -24,6 +24,7 @@ class PostIndexItem extends React.Component {
     }
 
     render() {
+        console.log('render state', this.state)
         console.log('render props', this.props)
         let {imageUrl, challengeId, userId} = this.props;
         if (this.state.challenge && this.state.user) {
@@ -77,7 +78,7 @@ class PostIndexItem extends React.Component {
                 </div>
             )
         } else {
-            return (<div>notworking</div>)
+            return (null)
         }
     }
 }
