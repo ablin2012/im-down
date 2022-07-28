@@ -7,7 +7,8 @@ const mapStateToProps = (state, ownProps) => {
     
     return {
         challenge: state.challenges[ownProps.match.params.challengeId],
-        challengePosts: state.posts.all
+        challengePosts: state.posts.all,
+        
     }
 }
 

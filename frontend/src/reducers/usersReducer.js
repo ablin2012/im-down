@@ -1,4 +1,4 @@
-import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS } from "../actions/userActions";
+import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS, RECEIVE_FRIENDSHIPS } from "../actions/userActions";
 import { JOIN_CHALLENGE } from "../actions/challengeActions";
 
 const UsersReducer = (state = {index: {}}, action) => {
@@ -9,6 +9,7 @@ const UsersReducer = (state = {index: {}}, action) => {
             newState.index[action.user.data._id] = action.user.data;
             newState["achievements"] ||= []
             newState["participations"] ||= []
+            newState["friendships"] ||= []
             return newState;
         case RECEIVE_ACHIEVEMENTS:
             console.log("this is reducer achievements",action.achievements.data)
@@ -19,6 +20,11 @@ const UsersReducer = (state = {index: {}}, action) => {
             console.log("this is reducer participations",action.participations.data)
             // newState.index[action.achievements.data[0].user]["achievements"] = action.achievements.data;
             newState.participations = action.participations.data;
+            return newState;
+        case RECEIVE_FRIENDSHIPS:
+            console.log("this is reducer friendships",action.friendships.data)
+            // newState.index[action.achievements.data[0].user]["achievements"] = action.achievements.data;
+            newState.friendships = action.friendships.data;
             return newState;
         case JOIN_CHALLENGE:
             newState["participations"].push(action.participation.data);
