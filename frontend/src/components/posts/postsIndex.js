@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from 'react-router-dom';
 import PostIndexItem from "./postsIndexItem";
 
-class PostIndex extends React.Component {
+class PostsIndex extends React.Component {
     constructor(props) {
         super(props);
 
@@ -15,14 +15,16 @@ class PostIndex extends React.Component {
     
     componentWillMount() {
         this.props.fetchPosts();
+        this.props.fetchChallenges();
     }
 
     componentWillReceiveProps(newState) {
+        console.log('index', newState)
         this.setState({ posts: newState.posts, challenges: newState.challenges, users: newState.users});
     }
 
     render() {
-        // console.log(this.state);
+        console.log('help', this.state);
         if (this.state.posts.length === 0) {
             return (<div>There are no Posts</div>)
         } else {
@@ -48,4 +50,4 @@ class PostIndex extends React.Component {
     }
 }
 
-export default withRouter(PostIndex);
+export default withRouter(PostsIndex);

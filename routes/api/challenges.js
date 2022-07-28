@@ -4,7 +4,6 @@ const multer = require('multer');              // multer will be used to handle 
 const Aws = require('aws-sdk');                // aws-sdk library will used to upload image to s3 bucket. 
 const mongoose = require('mongoose');
 const passport = require('passport');
-const path = require('path');
 require("dotenv/config");
 
 const Challenge = require('../../models/Challenge');

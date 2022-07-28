@@ -16,7 +16,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchPosts: () => dispatch(fetchPosts()),
         fetchChallenge: (id) => dispatch(fetchChallenge(id)),
-        fetchUser: (id) => dispatch(fetchUser(id))
+        fetchUser: (id) => dispatch(fetchUser(id)),
+        fetchChallenges: () => dispatch(fetchChallenges())
     }
 }
 

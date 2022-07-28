@@ -13,18 +13,20 @@ class PostIndexItem extends React.Component {
     }
 
     componentWillMount() {
+        console.log('dfsdfsaf',this.props)
         this.props.fetchChallenge(this.props.challengeId);
         this.props.fetchUser(this.props.userId);
     }
 
     componentWillReceiveProps(newState) {
+        // console.log('index item',newState)
         this.setState({challenge: newState.challenge, user: newState.user})
     }
 
     render() {
+        console.log('render props', this.props)
         let {imageUrl, challengeId, userId} = this.props;
         if (this.state.challenge && this.state.user) {
-
             const profilePic = (this.state.user.imageUrl) ? (
                 <img className="icon" src={this.state.user.imageUrl} />
             ) : (null)
@@ -75,7 +77,7 @@ class PostIndexItem extends React.Component {
                 </div>
             )
         } else {
-            return (null)
+            return (<div>notworking</div>)
         }
     }
 }
