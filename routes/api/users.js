@@ -67,6 +67,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/achievements', (req, res) => {
   Post.find({user: req.params.id, type: "complete"})
+      .populate("challenge")
       .then(posts => res.json(posts))
       .catch(err =>
           res.status(404).json({ noachievementsfound: 'No achievements found for that user' })
@@ -363,6 +364,23 @@ router.post('/:id/friendshipRequests',
 });
 
 //tested
+router.delete('/:id/friendshipRequests',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    FriendshipRequest.findOne({receiver: req.params.id, requester: req.user.id})
+    .then(friendshipRequest => {
+      FriendshipRequest.findByIdAndRemove(friendshipRequest.id)
+      .then(friendshipRequest => res.status(200).json("successfully unsent friend request"))
+      .catch(err => res.status(400).json(err));
+    })
+    .catch(err => {
+        return res.status(400).send("no outgoing requests to this user")
+    })
+  }
+);
+
+
+//tested
 router.delete('/current/friendshipRequest/outgoing/:friendshipRequest_id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
@@ -373,7 +391,7 @@ router.delete('/current/friendshipRequest/outgoing/:friendshipRequest_id',
       .catch(err => res.status(400).json(err));
     })
     .catch(err => {
-        return res.status(400).send("no outgoing requests to this user")
+        return res.status(400).send("no outgoing requests with this ID")
     })
   }
 );

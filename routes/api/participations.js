@@ -8,7 +8,7 @@ const Participation = require('../../models/Participation');
 
 router.get('/', (req, res) => {
     Participation.find()
-        .sort({ date: -1 })
+        .sort({ createdAt: -1 })
         .then(participations => res.json(participations))
         .catch(err => res.status(404).json({ noparticipationsfound: 'No participations found' }));
 });
@@ -21,23 +21,38 @@ router.get('/:id', (req, res) => {
         );
 });
 
+// router.get('/user/:user_id', (req, res) => {
+//     Participation.find({participant: req.params.user_id})
+//         .then(participations => res.json(participations))
+//         .catch(err =>
+//             res.status(404).json({ noparticipationsfound: 'No participations found for that user' }
+//         )
+//     );
+// });
+
 router.get('/user/:user_id', (req, res) => {
-    Participation.find({participant: req.params.user_id})
-        .then(participations => res.json(participations))
-        .catch(err =>
-            res.status(404).json({ noparticipationsfound: 'No participations found for that user' }
-        )
-    );
+  Participation.find({participant: req.params.user_id})
+      .populate("challenge")
+      .then(data => res.json(data))
+      .catch(err => res.json(err))
 });
 
 router.get('/challenge/:challenge_id', (req, res) => {
-    Participation.find({challenge: req.params.challenge_id})
-        .then(participations => res.json(participations))
-        .catch(err =>
-            res.status(404).json({ noparticipationsfound: 'No participations found for that challenge' }
-        )
-    );
+  Participation.find({challenge: req.params.challenge_id})
+      .populate("user")
+      .then(data => res.json(data))
+      .catch(err => res.json(err))
 });
+
+
+// router.get('/challenge/:challenge_id', (req, res) => {
+//     Participation.find({challenge: req.params.challenge_id})
+//         .then(participations => res.json(participations))
+//         .catch(err =>
+//             res.status(404).json({ noparticipationsfound: 'No participations found for that challenge' }
+//         )
+//     );
+// });
 
 router.delete('/:id', 
     passport.authenticate('jwt', { session: false }),
@@ -88,6 +103,12 @@ router.post('/challenge/:challenge_id',
             }
             return res.status(400).send(err)
         })
+    })
+    .catch(err => {
+      if (err.code = 11000) {
+          return res.status(422).send("already participating in this challenge");
+      }
+      return res.status(400).send(err)
     })
 });
 

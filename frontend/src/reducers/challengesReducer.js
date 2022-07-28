@@ -13,7 +13,11 @@ const ChallengesReducer = (state = { all: {}, user: {}, new: undefined, index: {
             newState[action.challenge.data._id] = action.challenge.data
             return newState
         case RECEIVE_USER_CHALLENGES:
-            newState.user = action.challenges.data;
+            const userChallenges = {}
+            action.challenges.data.forEach((challenge) => {
+                userChallenges[challenge._id] = challenge
+            })
+            newState.user = userChallenges;
             return newState;
         case RECEIVE_NEW_CHALLENGE:
             newState.new = action.challenge.data;

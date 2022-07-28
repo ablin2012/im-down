@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const FriendshipRequestSchema = new Schema({
   requester: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   },
   receiver: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   }
 }, {
   timestamps: true

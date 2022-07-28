@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 const FriendshipSchema = new Schema({
   user1: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   },
   user2: {
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   }
 }, {
   timestamps: true

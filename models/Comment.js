@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const CommentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'User'
     },
     post: {
         type: Schema.Types.ObjectId,
-        ref: 'posts'
+        ref: 'Post'
     },
     text: {
         type: String,
