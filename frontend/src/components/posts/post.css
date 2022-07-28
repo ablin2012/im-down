@@ -101,3 +101,24 @@
     height: 300px;
     object-fit: cover;
 }
+
+.join-btn {
+    border: none;
+    margin-top: 20px;
+    height: 40px;
+    width: 97%;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.join-btn:hover {
+    border: white 1px solid;
+    color: white;
+    background-color: rgb(46, 51, 56);
+}
+
+.join-btn.joined {
+    border: white 1px solid;
+    color: white;
+    background-color: rgb(46, 51, 56);
+}

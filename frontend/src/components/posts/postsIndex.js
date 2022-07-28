@@ -15,7 +15,6 @@ class PostsIndex extends React.Component {
     
     componentWillMount() {
         this.props.fetchPosts();
-        this.props.fetchChallenges();
     }
 
     componentWillReceiveProps(newState) {
@@ -42,6 +41,7 @@ class PostsIndex extends React.Component {
                             fetchUser={this.props.fetchUser}
                             challenge={this.state.challenges[post.challenge]}
                             user={this.state.users[post.user]}
+                            addParticipation={this.props.addParticipation}
                             />
                     ))}
                 </div>
