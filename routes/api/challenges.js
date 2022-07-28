@@ -76,45 +76,6 @@ router.delete('/:id',
         })
 });
 
-// router.delete('/:id', 
-//     passport.authenticate('jwt', { session: false }),
-//       (req, res) => {
-//         const challenge = Challenge.findById(req.params.id);
-//         // console.log('challenge', challenge);
-//         const keyName = path.basename(challenge.imageUrl)
-//         Challenge.findById(req.params.id)
-//         .then(challenge => {
-//           if (challenge.creator.toString() === req.user.id){
-//             Challenge.findByIdAndRemove(req.params.id)
-//               .then(data => {
-//                 if (!data) {
-//                   return res.status(404).json({
-//                     success: false,
-//                     message: "Challenge not found with id " + req.params.id
-//                   });
-//                 }
-//               }).then(() => {
-//                 //Deleting the Image from the S3 bucket
-//                 deleteFileStream(keyName, (error, data) => {
-//                   if (error) {
-//                     return res.status(500).json({
-//                       success: false,
-//                       message: error.message
-//                     });
-//                   } 
-//                   res.json({
-//                     success: true,
-//                     message: "successfully deleted"
-//                   });
-//                 })
-//               })
-//           }
-//         })
-//         .catch(err => {
-//           return res.status(422).json({ nochallengefound: `No challenge found with that ID` })
-//         })
-// });
-
 router.post('/', upload.single('imageUrl'),
     passport.authenticate('jwt', { session: false }),
     (req, res) => {

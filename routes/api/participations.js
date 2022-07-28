@@ -39,7 +39,7 @@ router.get('/user/:user_id', (req, res) => {
 
 router.get('/challenge/:challenge_id', (req, res) => {
   Participation.find({challenge: req.params.challenge_id})
-      .populate("user")
+      .populate("participant")
       .then(data => res.json(data))
       .catch(err => res.json(err))
 });

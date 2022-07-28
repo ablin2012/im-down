@@ -15,7 +15,8 @@ class NavBar extends React.Component {
 
     logoutUser(e) {
         e.preventDefault();
-        this.props.logout();
+        this.props.logout()
+            .then(this.props.history.push('/login'))
     }
 
     updateSearch() {
@@ -68,7 +69,7 @@ class NavBar extends React.Component {
 
 
     render() {
-        console.log("nav-challenges", this.props.challenges)
+        
         return (
             <div className='nav-bar'>
                 <div className='nav-logo-wrap'>

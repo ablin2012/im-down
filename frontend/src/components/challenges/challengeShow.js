@@ -21,9 +21,11 @@ class ChallengeShow extends React.Component {
     componentDidMount() {
         this.props.fetchChallenge(this.props.match.params.challengeId)
             .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
+            // .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
             // .then(() => {this.props.fetchChallengePosts(this.props.challenge.id)})
         
         this.props.fetchUser(this.props.currentUser.id)
+        this.props.getChallengeParticipants(this.props.match.params.challengeId)
     }
 
     componentDidUpdate(prevProps){
@@ -31,6 +33,7 @@ class ChallengeShow extends React.Component {
         if(prevProps.match.params.challengeId !== this.props.match.params.challengeId) {
             this.props.fetchChallenge(this.props.match.params.challengeId)
                 .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
+                .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
         }
     }
 
@@ -76,8 +79,6 @@ class ChallengeShow extends React.Component {
             .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
     
         )
-            // .then(res => console.log("this ocnsole?",res))
-            // .then((res) => this.props.history.push(`/challenges/${res.post.data.challenge}`))
     }
 
 
@@ -86,12 +87,11 @@ class ChallengeShow extends React.Component {
         const { challenge, challengePosts, currentUser, users} = this.props
         if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id] || users.index[currentUser.id].imageUrl === undefined) return null;
         
-        console.log(challengePosts)
+        
         const userImgSrc = this.props.users.index[currentUser.id].imageUrl
         const profilePic = (userImgSrc) ? (
             <img className="icon" src={userImgSrc} />
         ) : (null)
-        // console.log("imageFile", this.state.imageUrl)
         const postPreviewImg = this.state.imageUrl ? <div className="img-post-preview">
                     {/* <button className="remove-img-x">X</button> */}
                     <img src={this.state.imageUrl}/>
@@ -126,6 +126,10 @@ class ChallengeShow extends React.Component {
                                     <div>
                                         <label>End</label>
                                         <p>{this.dateParser(challenge.endDate)}</p>
+                                    </div>
+                                    <div>
+                                        <h2>Participants:</h2>
+                                        <h2>{this.props.challengeParticipants.length}</h2>
                                     </div>
                                 </div>
                             </div>

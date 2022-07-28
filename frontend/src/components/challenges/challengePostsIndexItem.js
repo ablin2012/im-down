@@ -12,15 +12,19 @@ class ChallengePostsIndexItem extends React.Component {
 
     componentDidMount() {
         this.props.fetchUser(this.props.userId)
-            .then(rep => this.setState({user: rep.user.data}))
+            .then(rep => (this.setState({user: rep.user.data})))
+            .then(rep => console.log("what the rep", rep))
     }
 
+    componentWillReceiveProps(newState) {
+        this.setState({ user: newState.user })
+    }
 
     render() {
         const { imageUrl, userId } = this.props;
         
-        if (!this.state.user) return null
-
+        if (this.state.user === undefined) return null
+        // console.log("user fetching", this.props.fetchUser())
         const profilePic = (this.state.user.imageUrl) ? (
             <img className="icon" src={this.state.user.imageUrl} />
         ) : (null)
