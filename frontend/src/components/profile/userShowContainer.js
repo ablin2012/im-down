@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         // fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
         fetchUser: id => dispatch(fetchUser(id)),
         openModal: modal => dispatch(openModal(modal)),
-        sendFriendRequest: id => dispatch(sendFriendRequest(id))
+        // sendFriendRequest: id => dispatch(sendFriendRequest(id))
     };
 };
 

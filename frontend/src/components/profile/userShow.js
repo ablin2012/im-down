@@ -99,10 +99,7 @@ class UserShow extends React.Component {
                                     {
                                         currentUser.id === user._id? (
                                         <button className="edit-profile-button" onClick={() => openModal('updateCurrentUser')}>Edit Profile</button> 
-                                        ): null
-                                    }
-                                    {
-                                        isFriend? (
+                                        ): isFriend? (
                                         <button className="friend-button inactive">Friend</button> 
                                         ):(
                                         <button className="add-friend-button" onClick={() => sendFriendRequest(user._id)}>Add Friend</button> 

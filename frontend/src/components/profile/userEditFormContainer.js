@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import { updateCurrentUser, fetchUser } from '../../actions/userActions';
+import { updateCurrentUser, fetchUser, sendFriendRequest } from '../../actions/userActions';
 import UserEditForm from './userEditForm'
 import { closeModal } from './../../actions/modalActions'
 import { clearErrors } from './../../actions/sessionActions';
+// import { sendFriendRequest } from '../../util/usersApiUtil';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -18,7 +19,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         updateCurrentUser: data => dispatch(updateCurrentUser(data)),
         closeModal: () => dispatch(closeModal()),
         clearErrors: () => dispatch(clearErrors()),
-        fetchUser: (id) => dispatch(fetchUser(id))
+        fetchUser: (id) => dispatch(fetchUser(id)),
+        sendFriendRequest: (id) => dispatch(sendFriendRequest(id))
     };
 };
 
