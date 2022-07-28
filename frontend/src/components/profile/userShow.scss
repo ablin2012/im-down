@@ -176,7 +176,9 @@ h2.section-header  {
 .user-achievements-container {
     @include center(row);
     // align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-wrap:wrap;
+    column-gap: 5%;
 }
 
 .user-achievement-item{
@@ -187,6 +189,7 @@ h2.section-header  {
     width: 30%;
     // margin-right: 24px;
     cursor: pointer;
+    margin-bottom: 24px
 }
 
 .user-achievement-item > p {

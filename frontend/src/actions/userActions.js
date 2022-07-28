@@ -1,4 +1,5 @@
 import * as usersApiUtil from "../util/usersApiUtil";
+import { receiveErrors } from "./sessionActions"
 
 export const RECEIVE_USER = "RECEIVE_USER";
 export const RECEIVE_ACHIEVEMENTS = "RECEIVE_ACHIEVEMENTS";
@@ -58,16 +59,20 @@ export const removeFriendRequest = friendRequestId => ({
 // })
 
 
-export const fetchUser = (id) => dispatch => (
-    usersApiUtil.getUser(id)
-        .then(user => {
-            // console.log("returned get user",user)
-            // console.log("trying to get id",user.data._id)
-            dispatch(receiveUser(user))
-            dispatch(fetchUserAchievements(user.data._id))
-        })
-        .catch(err => console.log(err))
-)
+export const fetchUser = (id) => dispatch => {
+    // console.log(id)
+    // debugger
+    return (
+        usersApiUtil.getUser(id)
+            .then(user => {
+                // console.log("returned get user",user)
+                // console.log("trying to get id",user.data._id)
+                dispatch(receiveUser(user))
+                dispatch(fetchUserAchievements(user.data._id))
+            })
+            .catch(err => console.log(err))
+    )
+}
 
 export const fetchUserAchievements = (id) => dispatch => (
     usersApiUtil.getUserAchievements(id)
@@ -89,8 +94,10 @@ export const fetchUserParticipations = (id) => dispatch => (
 
 export const updateCurrentUser = (user) => dispatch => (
     usersApiUtil.patchCurrentUser(user)
-        .then(user => dispatch(receiveUser(user)))
-        .catch(err => console.log(err))
+        .then(
+            user => dispatch(receiveUser(user)), 
+            err => dispatch(receiveErrors(err.response.data))
+        )
 )
 
 export const deleteCurrentUser = () => dispatch => (

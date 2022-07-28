@@ -64,7 +64,7 @@ router.delete('/:id',
         .then(challenge => {
           if (challenge.creator.toString() === req.user.id){
             Challenge.findByIdAndRemove(req.params.id, (err, challenge) => {
-              return res.status(200).json(`sucessfully deleted`)
+              return res.status(200).json(challenge)
             })
           } else 
           {
@@ -88,7 +88,7 @@ router.delete('/:id',
 //             Challenge.findByIdAndRemove(req.params.id)
 //               .then(data => {
 //                 if (!data) {
-//                   return res.status(404).send({
+//                   return res.status(404).json({
 //                     success: false,
 //                     message: "Challenge not found with id " + req.params.id
 //                   });
@@ -97,12 +97,12 @@ router.delete('/:id',
 //                 //Deleting the Image from the S3 bucket
 //                 deleteFileStream(keyName, (error, data) => {
 //                   if (error) {
-//                     return res.status(500).send({
+//                     return res.status(500).json({
 //                       success: false,
 //                       message: error.message
 //                     });
 //                   } 
-//                   res.send({
+//                   res.json({
 //                     success: true,
 //                     message: "successfully deleted"
 //                   });
@@ -134,7 +134,7 @@ router.post('/', upload.single('imageUrl'),
 
       s3.upload(params,(error,data)=>{
         if(error){
-            res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+            res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
         }
 
 
@@ -169,7 +169,7 @@ router.post('/', upload.single('imageUrl'),
     }
 );
 
-router.patch('/:id', 
+router.patch('/:id', upload.single('imageUrl'),
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Challenge.findOne({_id: req.params.id, creator: req.user.id})
@@ -185,6 +185,24 @@ router.patch('/:id',
         challenge.startDate = req.body.startDate
         challenge.endDate = req.body.endDate
         challenge.category = req.body.category
+
+        const params = {
+          Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+          Key:req.file.originalname,               // Name of the image
+          Body:req.file.buffer,                    // Body which will contain the image in buffer format
+          ACL:"public-read-write",                 // defining the permissions to get the public link
+          ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+        };
+  
+
+        s3.upload(params,(error,data)=>{
+          if(error){
+              res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
+          }
+          
+          challenge.imageUrl = data.Location;
+          challenge.save();
+        })
 
       challenge.save().then(challenge => res.json(challenge));
   })
