@@ -92,7 +92,7 @@ router.post('/challenge/:challenge_id',
             text: `${req.user.username} just joined the challenge!`,
             type: `participate`,
             user: req.user.id,
-            challenge: participation.participant
+            challenge: participation.challenge._id
         })
   
         newPost.save()

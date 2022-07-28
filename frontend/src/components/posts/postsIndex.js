@@ -10,6 +10,7 @@ class PostsIndex extends React.Component {
             posts: [],
             challenges: {},
             users: {},
+            participations: []
         }
     }
     
@@ -19,7 +20,10 @@ class PostsIndex extends React.Component {
 
     componentWillReceiveProps(newState) {
         console.log('index', newState)
-        this.setState({ posts: newState.posts, challenges: newState.challenges, users: newState.users});
+        this.setState({ posts: newState.posts, 
+            challenges: newState.challenges, 
+            users: newState.users, 
+            participations: newState.participations});
     }
 
     render() {
@@ -42,6 +46,7 @@ class PostsIndex extends React.Component {
                             challenge={this.state.challenges[post.challenge]}
                             user={this.state.users[post.user]}
                             addParticipation={this.props.addParticipation}
+                            participations={this.state.participations}
                             />
                     ))}
                 </div>

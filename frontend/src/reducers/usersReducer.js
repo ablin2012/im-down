@@ -1,7 +1,7 @@
 import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS, RECEIVE_FRIENDSHIPS, RECEIVE_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, REMOVE_FRIEND_REQUEST } from "../actions/userActions";
 import { JOIN_CHALLENGE } from "../actions/challengeActions";
 
-const UsersReducer = (state = {index: {}}, action) => {
+const UsersReducer = (state = {index: {}, participations: [], achievements: []}, action) => {
     Object.freeze(state);
     let newState = Object.assign({}, state);
     switch (action.type) {
