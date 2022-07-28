@@ -142,7 +142,7 @@ h2.section-header  {
     @include center(row);
     align-items: flex-start;
     justify-content: flex-start;
-    // overflow: auto;
+    overflow: auto;
     flex-wrap: nowrap;
     // margin: 24px 0 24px 0;
     padding-bottom: 24px;
@@ -156,9 +156,13 @@ h2.section-header  {
     flex-wrap: wrap;
     height: auto;
     width: 100px;
-    margin-right: 54px;
+    margin-left: 48px;
     cursor: pointer;
+    &:first-of-type{
+        margin-left: 0px;
+    }
 }
+
 
 .user-participation-item > p {
     text-align: center;
