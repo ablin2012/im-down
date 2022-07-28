@@ -61,7 +61,7 @@ class UserShow extends React.Component {
         if (!this.props.user || !this.props.achievements || !this.props.participations) {
             return null
         } else {
-            const { user, achievements, participations, currentUser, openModal } = this.props
+            const { user, achievements, participations, friendships, currentUser, openModal, sendFriendRequest } = this.props
             let { username, imageUrl } = user
             
             console.log("participations",participations)
@@ -75,9 +75,14 @@ class UserShow extends React.Component {
                 )
             }).sort(function(a, b){return new Date(a.challenge.endDate) - new Date(b.challenge.endtDate)})
 
+            const isFriend = friendships.filter(friendship => (friendship.user1 === currentUser.id || friendship.user2 === currentUser.id ))
+
+            console.log("isfriend", isFriend)
+
             console.log("effectiveParticipations",effectiveParticipations)
             console.log(currentUser)
             console.log(achievements)
+            console.log(friendships)
             // console.log("this is all achievements" , achievements)
             return (
                 <>
@@ -94,14 +99,17 @@ class UserShow extends React.Component {
                                     {
                                         currentUser.id === user._id? (
                                         <button className="edit-profile-button" onClick={() => openModal('updateCurrentUser')}>Edit Profile</button> 
-                                        ): null
+                                        ): isFriend? (
+                                        <button className="friend-button inactive">Friend</button> 
+                                        ):(
+                                        <button className="add-friend-button" onClick={() => sendFriendRequest(user._id)}>Add Friend</button> 
+                                        )
                                     }
-
                                 </div>
                                 <div className='user-profile-info-sub'>
                                     <div> <span className="bold">{effectiveParticipations.length}</span> Current Challenges</div>
                                     <div> <span className="bold">{achievements.length}</span> Achievements</div>
-                                    <div> <span className="bold">999</span> Friends</div>
+                                    <div> <span className="bold">{friendships.length}</span> Friends</div>
                                 </div>
                             </div>
                         </div>

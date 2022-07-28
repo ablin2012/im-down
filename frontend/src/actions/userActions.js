@@ -32,9 +32,9 @@ export const removeUser = (userId) => ({
     userId
 })
 
-export const receiveFriendships = userId => ({
+export const receiveFriendships = friendships => ({
     type: RECEIVE_FRIENDSHIPS,
-    userId
+    friendships
 })
 
 export const receiveFriendRequests = (friendRequests) => ({
@@ -69,6 +69,9 @@ export const fetchUser = (id) => dispatch => {
                 // console.log("trying to get id",user.data._id)
                 dispatch(receiveUser(user))
                 dispatch(fetchUserAchievements(user.data._id))
+                dispatch(fetchUserFriendships(user.data._id))
+                dispatch(fetchCUIncomingFR())
+                dispatch(fetchCUOutgoingFR())
             })
             .catch(err => console.log(err))
     )
@@ -102,7 +105,7 @@ export const updateCurrentUser = (user) => dispatch => (
 
 export const deleteCurrentUser = () => dispatch => (
     usersApiUtil.deleteCurrentUser()
-        .then(user => dispatch(removeUser(user)))
+        .then(user => dispatch(removeUser(user._id)))
         .catch(err => console.log(err))
 )
 
@@ -111,5 +114,31 @@ export const fetchUserFriendships = (id) => dispatch => (
         .then(friendships => dispatch(receiveFriendships(friendships)))
         .catch(err => console.log(err))
 )
+
+export const fetchCUIncomingFR = () => dispatch => (
+    usersApiUtil.getCurrentUserIncomingFriendRequests()
+        .then(friendRequests => dispatch(receiveFriendRequest(friendRequests)))
+        .catch(err => console.log(err))
+)
+
+export const fetchCUOutgoingFR = () => dispatch => (
+    usersApiUtil.getCurrentUserOutgoingFriendRequests()
+        .then(friendRequests => dispatch(receiveFriendRequests(friendRequests)))
+        .catch(err => console.log(err))
+)
+
+export const sendFriendRequest = (id) => dispatch => (
+    usersApiUtil.sendFriendRequest(id)
+        .then(friendRequest => dispatch(receiveFriendRequest(friendRequest)))
+        .catch(err => console.log(err))
+)
+
+export const unsendFriendRequest = (id) => dispatch => (
+    usersApiUtil.unsendFriendRequest(id)
+        .then(friendRequest => dispatch(removeFriendRequest(friendRequest._id)))
+        .catch(err => console.log(err))
+)
+
+
 
 
