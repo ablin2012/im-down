@@ -4,6 +4,7 @@ import PostsIndex from "./postsIndex";
 import { fetchChallenge, fetchChallenges } from '../../actions/challengeActions';
 import { fetchUser } from '../../actions/userActions';
 
+
 const mapStateToProps = (state) => {
     return {
         posts: Object.values(state.posts.all),
