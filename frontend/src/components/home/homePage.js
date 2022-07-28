@@ -24,6 +24,7 @@ class HomePage extends React.Component {
     componentWillReceiveProps(newState) {
         this.setState({ challenges: newState.challenges})
     }
+    
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
 
     handleSearch() {

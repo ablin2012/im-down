@@ -23,7 +23,7 @@ const ChallengesReducer = (state = { all: {}, user: {}, new: undefined, index: {
             newState.new = action.challenge.data;
             return newState;
         case RECEIVE_CHALLENGE:
-            newState.index[action.challenge.data.id] = action.challenge.data;
+            newState.index[action.challenge.data._id] = action.challenge.data;
             return newState;
         case CLEAR_CHALLENGES:
             newState.index = {};
