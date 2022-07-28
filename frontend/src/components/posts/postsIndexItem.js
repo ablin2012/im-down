@@ -18,7 +18,7 @@ class PostIndexItem extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        console.log('index item',newState)
+        // console.log('index item',newState)
         this.setState({challenge: newState.challenge, user: newState.user})
     }
 
