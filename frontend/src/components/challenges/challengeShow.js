@@ -16,6 +16,7 @@ class ChallengeShow extends React.Component {
         this.dateParser = this.dateParser.bind(this)
         this.handleFile = this.handleFile.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this)
     }
 
     componentDidMount() {
@@ -79,6 +80,14 @@ class ChallengeShow extends React.Component {
             .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
     
         )
+    }
+
+    handleCheckbox(e) {
+        e.preventDefault()
+
+        if (e.target.checked) {
+            this.setState({ ["postType"]: "complete" })
+        }
     }
 
 
@@ -167,10 +176,7 @@ class ChallengeShow extends React.Component {
                                         </div>
                                         <div className="complete-toggle-container">
                                             <label className="complete-label">Challenge Completed?</label>
-                                            <label className="switch">
-                                                <input type="checkbox"/>
-                                                <span className="slider round"></span>
-                                            </label>
+                                            <input type="checkbox" onChange={this.handleCheckbox} />    
                                         </div>
                                     </div>
                                     <input 
@@ -191,7 +197,6 @@ class ChallengeShow extends React.Component {
                                 />
                         </div>
                     </div>
-                    
                 </div>
             </>
         )

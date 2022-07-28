@@ -5,7 +5,8 @@ import { fetchChallenge, fetchUserChallenges } from '../../actions/challengeActi
 
 const mapStateToProps = (state) => {
     return {
-        posts: state.posts
+        posts: state.posts,
+        users: state.users.index
     }
 }
 
