@@ -13,6 +13,6 @@ export const getChallengePosts = (id) => {
 }
 
 export const createPost = ({post, challengeId}) => {
-    // axios.defaults.headers.common['Content-Type'] = "multipart/form-data";
+    axios.defaults.headers.common['Content-Type'] = "multipart/form-data";
     return axios.post(`/api/posts/challenge/${challengeId}`, post)
 }
