@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
-import { fetchUserChallenges } from '../../actions/challengeActions';
+
+import { fetchChallenge } from '../../actions/challengeActions';
 import { fetchUser, fetchUserAchievements, fetchUserParticipations } from '../../actions/userActions';
 import UserShow from './userShow';
+import "./userShow.scss"
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -16,9 +17,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchUserParticipations: id => dispatch(fetchUserParticipations(id)),
+        // fetchChallenge: (challengeId) => dispatch(fetchChallenge(challengeId)),
         // fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
         fetchUser: id => dispatch(fetchUser(id)),
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserShow));
+export default connect(mapStateToProps, mapDispatchToProps)(UserShow);

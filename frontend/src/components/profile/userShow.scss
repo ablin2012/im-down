@@ -1,0 +1,202 @@
+
+$default-purple-gradient: linear-gradient(to right, #7b2cbf, #5a189a);
+$default-purple: rgb(110, 80, 202);
+$default-dark-gray: rgb(34, 37, 41);
+$default-gray: rgb(46, 51, 56);
+$default-light: #ebebeb;
+
+@mixin center($direction) {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: $direction;
+  padding: 0;
+}
+
+@mixin cover() {
+    object-fit: cover;
+    object-position: 50% 50%
+  }
+
+@mixin button($bg-color, $color) {
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  color: $color;
+  background: $bg-color;
+  border-radius: 6px;
+  margin: 5px;
+  width: auto;
+  text-align: center;
+  min-width: 90px;
+  white-space: nowrap;
+  //   border-radius: 50px;
+    padding: 5px 9px 5px 9px;
+//   border: 1px solid #EBEBEB;
+  color: black;
+  background: white;
+  cursor: pointer;
+
+  &:hover {
+    color: $color;
+    background: $bg-color;
+  }
+  // margin-bottom: 24px;
+  // margin-bottom: 16px;
+  // border: 1px solid black;
+
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h2.section-header  {
+    font-size: 22px;
+    text-align: left;
+    width: 100%;
+    padding-bottom: 24px;
+    padding-top: 24px;
+    // font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.user-show-container {
+    box-sizing: border-box;
+    padding: 46px 46px 46px 46px;
+    height: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $default-dark-gray;
+    margin-top: 60px;
+    max-width: 935px;
+}
+
+.user-header {
+    box-sizing: border-box;
+    width: 100%;
+    height: 200px;
+    padding: 25px;
+    background-color:$default-gray;
+    margin: 10px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-profile-image {
+    @include cover();
+    background-color: transparent;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border: 0;
+    border-radius: 50%;
+}
+
+.user-profile-info {
+    @include center(column);
+    justify-content: flex-start;
+    width: 100%;
+    height: 150px;
+    background-color:$default-gray;
+    margin: 10px;
+    border-radius: 6px;
+    margin-left: 48px;
+}
+
+.user-profile-info-sub {
+    @include center(row);
+    justify-content: flex-start;
+    margin-top: 24px;
+}
+.user-profile-info-sub > * {
+    margin-right: 24px;
+}
+
+.user-profile-username {
+    font-size: 28px;
+    text-align: left;
+    width: auto;
+    margin-right: 24px;
+}
+
+.edit-profile-button {
+    @include button($default-purple-gradient, white);
+    height: auto;
+}
+
+.user-participations-container {
+    @include center(row);
+    align-items: flex-start;
+    justify-content: flex-start;
+    // overflow: auto;
+    flex-wrap: nowrap;
+    // margin: 24px 0 24px 0;
+    padding-bottom: 24px;
+    // background-color: white;
+    border-bottom: 1px solid $default-gray;
+}
+
+.user-participation-item{
+    @include center(column);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    height: auto;
+    width: 100px;
+    margin-right: 54px;
+    cursor: pointer;
+}
+
+.user-participation-item > p {
+    text-align: center;
+    padding-top: 12px;
+}
+
+.user-participation-image {
+    @include cover;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+
+}
+
+.user-achievements-container {
+    @include center(row);
+    // align-items: flex-start;
+    justify-content: space-between;
+}
+
+.user-achievement-item{
+    @include center(column);
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    height: auto;
+    width: 30%;
+    // margin-right: 24px;
+    cursor: pointer;
+}
+
+.user-achievement-item > p {
+    text-align: center;
+    padding-top: 12px;
+}
+
+.user-achievement-image {
+    @include cover;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 6px;
+}
