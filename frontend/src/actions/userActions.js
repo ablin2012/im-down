@@ -105,7 +105,7 @@ export const updateCurrentUser = (user) => dispatch => (
 
 export const deleteCurrentUser = () => dispatch => (
     usersApiUtil.deleteCurrentUser()
-        .then(user => dispatch(removeUser(user)))
+        .then(user => dispatch(removeUser(user._id)))
         .catch(err => console.log(err))
 )
 
@@ -126,5 +126,19 @@ export const fetchCUOutgoingFR = () => dispatch => (
         .then(friendRequests => dispatch(receiveFriendRequests(friendRequests)))
         .catch(err => console.log(err))
 )
+
+export const sendFriendRequest = (id) => dispatch => (
+    usersApiUtil.sendFriendRequest(id)
+        .then(friendRequest => dispatch(receiveFriendRequest(friendRequest)))
+        .catch(err => console.log(err))
+)
+
+export const unsendFriendRequest = (id) => dispatch => (
+    usersApiUtil.unsendFriendRequest(id)
+        .then(friendRequest => dispatch(removeFriendRequest(friendRequest._id)))
+        .catch(err => console.log(err))
+)
+
+
 
 

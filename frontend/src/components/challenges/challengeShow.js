@@ -71,6 +71,11 @@ class ChallengeShow extends React.Component {
         formData.append("challenge", this.props.challenge._id)
 
         this.props.composePost(formData, this.props.challenge._id)
+        .then((res) => 
+            this.props.fetchChallenge(this.props.match.params.challengeId)
+            .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
+    
+        )
             // .then(res => console.log("this ocnsole?",res))
             // .then((res) => this.props.history.push(`/challenges/${res.post.data.challenge}`))
     }
@@ -79,8 +84,9 @@ class ChallengeShow extends React.Component {
     render() {
         
         const { challenge, challengePosts, currentUser, users} = this.props
-        if (challenge === undefined || challengePosts === undefined || this.props.users.index[currentUser.id].imageUrl === undefined) return null;
+        if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id] || users.index[currentUser.id].imageUrl === undefined) return null;
         
+        console.log(challengePosts)
         const userImgSrc = this.props.users.index[currentUser.id].imageUrl
         const profilePic = (userImgSrc) ? (
             <img className="icon" src={userImgSrc} />
