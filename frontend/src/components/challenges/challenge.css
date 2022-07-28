@@ -132,3 +132,48 @@
     outline: none;
     border-style: none;
 }
+
+.challenge-icon {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 20vw;
+    height: 100px;
+    background-color: rgb(46, 51, 56);
+    border-radius: 8px;
+    -webkit-filter: brightness(100%);
+}
+
+.challenge-icon:hover {
+    -webkit-filter: brightness(60%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.icon-img-container {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 20vw;
+    height: 75px;
+    background-color: #ebebeb;
+}
+
+.challenge-icon-img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 75px;
+    width: 20vw;
+    object-fit: cover;
+}
+
+.challenge-icon-text {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    width: 20vw;
+    height: 25px;
+}
