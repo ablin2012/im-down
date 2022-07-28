@@ -64,6 +64,7 @@ router.get('/user/:user_id', (req, res) => {
 
 router.get('/challenge/:challenge_id', (req, res) => {
     Post.find({challenge: req.params.challenge_id})
+        .sort({ createdAt: -1 })
         .then(posts => res.json(posts))
         .catch(err =>
             res.status(404).json({ nopostsfound: 'No posts for this challenge' }
@@ -115,20 +116,21 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
         }
   
       newPost.imageUrl = data.Location
-      newPost.save();
+      newPost.save().then(post => res.json(post));
     }
     
-    )}
-    newPost.save().then(post => {
-     if (post.type === "complete"){
-      Participation.findOne({challenge: post.challenge, participant: post.user})
+    )} else if(newPost.type === "complete"){
+      Participation.findOne({challenge: newPost.challenge, participant: newPost.user})
       .then(participation => {
         participation.complete = true;
         participation.save()
+        .then((participation) => 
+          newPost.save().then(post => res.json(post))
+        )
       })
+     } else {
+       newPost.save().then(post => res.json(post))
      }
-      return res.json(post)
-    });
 });
 
 router.patch('/:id', upload.single('imageUrl'),

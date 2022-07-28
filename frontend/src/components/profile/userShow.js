@@ -14,8 +14,8 @@ class UserShow extends React.Component {
     componentDidMount() {
         // console.log(this.props.currentUser.id)
         // console.log(this.props.match.params)
-        this.props.fetchUserParticipations(this.props.match.params.user_id);
         this.props.fetchUser(this.props.match.params.user_id)
+        // debugger
 
     }
 
@@ -107,20 +107,28 @@ class UserShow extends React.Component {
                                     }
                                 </div>
                                 <div className='user-profile-info-sub'>
-                                    <div> <span className="bold">{effectiveParticipations.length}</span> Current Challenges</div>
-                                    <div> <span className="bold">{achievements.length}</span> Achievements</div>
-                                    <div> <span className="bold">{friendships.length}</span> Friends</div>
+                                    <div> <span className="bold">{effectiveParticipations.length}</span>{` Current Challenge${effectiveParticipations.length>1 ? "s" : ""}`}</div>
+                                    <div> <span className="bold">{achievements.length}</span>{` Achievement${achievements.length>1 ? "s" : ""}`}</div>
+                                    <div> <span className="bold">{friendships.length}</span>{` Friend${friendships.length>1 ? "s" : ""}`}</div>
                                 </div>
                             </div>
                         </div>
-                        <h2 className="section-header">Current Challenges</h2>
-                        <div className="user-participations-container">{
-                            effectiveParticipations.map((participation) => this.renderParticipation(participation))
-                        }</div>
-                        <h2 className="section-header">Achievements</h2>
-                        <div className="user-achievements-container">{
-                            achievements.map((achievement) => this.renderAchievement(achievement))
-                        }</div>
+                        {effectiveParticipations.length>0 ? 
+                        <>
+                            <h2 className="section-header">Current challenges</h2>
+                            <div className="user-participations-container">{
+                                effectiveParticipations.map((participation) => this.renderParticipation(participation))
+                            }</div>
+                        </> : <h2 className="section-header">No current challenges</h2>
+                        }
+                        {achievements.length>0 ? 
+                        <>
+                            <h2 className="section-header">Achievements</h2>
+                            <div className="user-achievements-container">{
+                                achievements.map((achievement) => this.renderAchievement(achievement))
+                            }</div>
+                        </> :  <h2 className="section-header">No achievements</h2>
+                        }
 
                     </div>
                 </>
