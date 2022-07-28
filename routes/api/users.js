@@ -120,7 +120,7 @@ router.post("/register", upload.single('imageUrl'), (req, res) => {
               
               s3.upload(params,(error,data)=>{
                 if(error){
-                  res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                  res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
                 }
 
                 // console.log("data.location", data.Location)
@@ -234,7 +234,7 @@ router.patch('/current', upload.single('imageUrl'),
                       
                       s3.upload(params,(error,data)=>{
                         if(error){
-                          res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                          res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
                         }
         
                         // console.log("data.location", data.Location)
@@ -247,7 +247,7 @@ router.patch('/current', upload.single('imageUrl'),
                     updateUser
                       .save()
                       .then(user => {
-                        return res.status(200).json("sucessfully updated user information")
+                        return res.status(200).json(user)
           
                       })
                       .catch(err => res.status(400).json(err));
@@ -256,7 +256,7 @@ router.patch('/current', upload.single('imageUrl'),
 
               } else {
 
-                errors.password = "Incorrect password";
+                errors.passwordConfirm = "Incorrect current password";
                 return res.status(400).json(errors);
 
               };
@@ -282,7 +282,7 @@ router.delete('/current',
             //Deleting the Image from the S3 bucket
             deleteFileStream(keyName, (error, data) => {
               if (error) {
-                return res.status(500).send({
+                return res.status(500).json({
                   success: true,
                   message: "User sucessfully deleted, but issue with deleting image",
                   error: error.message
@@ -290,10 +290,7 @@ router.delete('/current',
               } 
             })
           }
-          res.send({
-            success: true,
-            message: "successfully deleted user"
-          })
+          res.json(user)
         })
       .catch(err => {
         return res.status(422).json({ nouserfound: `No user found` })
@@ -359,7 +356,7 @@ router.post('/:id/friendshipRequests',
       newFriendshipRequest.save()
       .then(friendshipRequest => res.json(friendshipRequest))
       .catch(err => {
-          return res.status(400).send(err)
+          return res.status(400).json(err)
       })
     })
 });
@@ -375,7 +372,7 @@ router.delete('/:id/friendshipRequests',
       .catch(err => res.status(400).json(err));
     })
     .catch(err => {
-        return res.status(400).send("no outgoing requests to this user")
+        return res.status(400).json("no outgoing requests to this user")
     })
   }
 );
@@ -392,7 +389,7 @@ router.delete('/current/friendshipRequest/outgoing/:friendshipRequest_id',
       .catch(err => res.status(400).json(err));
     })
     .catch(err => {
-        return res.status(400).send("no outgoing requests with this ID")
+        return res.status(400).json("no outgoing requests with this ID")
     })
   }
 );
@@ -437,9 +434,9 @@ router.patch('/current/friendshipRequest/incoming/:friendshipRequest_id/:respons
           return res.status(200).json("friend request rejected")
         }
       })
-      .catch(err => res.status(404).send("something went wrong"))
+      .catch(err => res.status(404).json("something went wrong"))
     })
-    .catch(err => res.status(404).send("no friendship request found from this user"))
+    .catch(err => res.status(404).json("no friendship request found from this user"))
 });
 
 module.exports = router;

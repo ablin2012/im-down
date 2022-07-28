@@ -4,6 +4,7 @@ import { fetchChallenge } from '../../actions/challengeActions';
 import { fetchUser, fetchUserAchievements, fetchUserParticipations } from '../../actions/userActions';
 import UserShow from './userShow';
 import "./userShow.scss"
+import { openModal } from './../../actions/modalActions';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -20,6 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         // fetchChallenge: (challengeId) => dispatch(fetchChallenge(challengeId)),
         // fetchUserAchievements: id => dispatch(fetchUserAchievements(id)),
         fetchUser: id => dispatch(fetchUser(id)),
+        openModal: modal => dispatch(openModal(modal)),
     };
 };
 

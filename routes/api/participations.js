@@ -99,16 +99,16 @@ router.post('/challenge/:challenge_id',
         .then(post => res.json(participation))
         .catch(err => {
             if (err.code = 11000) {
-                return res.status(422).send("already participating in this challenge");
+                return res.status(422).json("already participating in this challenge");
             }
-            return res.status(400).send(err)
+            return res.status(400).json(err)
         })
     })
     .catch(err => {
       if (err.code = 11000) {
-          return res.status(422).send("already participating in this challenge");
+          return res.status(422).json("already participating in this challenge");
       }
-      return res.status(400).send(err)
+      return res.status(400).json(err)
     })
 });
 

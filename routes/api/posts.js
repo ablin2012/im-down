@@ -111,7 +111,7 @@ router.post('/challenge/:challenge_id',  upload.single('imageUrl'),
 
       s3.upload(params,(error,data) => {
         if(error){
-            res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+            res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
         }
   
       newPost.imageUrl = data.Location
@@ -158,7 +158,7 @@ router.patch('/:id', upload.single('imageUrl'),
 
             s3.upload(params,(error,data) => {
               if(error){
-                  res.status(500).send({"err":error})  // if we get any error while uploading error message will be returned.
+                  res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
               }
         
             post.imageUrl = data.Location
@@ -181,7 +181,7 @@ router.delete('/:id',
         .then(post => {
           if (post.user.toString() === req.user.id){
             Post.findByIdAndRemove(req.params.id, (err, post) => {
-              return res.status(200).json(`sucessfully deleted`)
+              return res.status(200).json(post)
             })
           } else 
           {
@@ -219,7 +219,7 @@ router.post('/:id/comments',
   
       newComment.save()
       .then(comment => res.json(comment))
-      .catch(err => res.status(400).send(err))
+      .catch(err => res.status(400).json(err))
     }
 );
 
@@ -275,9 +275,9 @@ router.post('/:id/likes',
       .then(like => res.json(like))
       .catch(err => {
           if (err.code = 11000) {
-              return res.status(422).send("already liked this post");
+              return res.status(422).json("already liked this post");
           }
-          return res.status(400).send(err)
+          return res.status(400).json(err)
       })
     }
 );

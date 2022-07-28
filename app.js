@@ -22,7 +22,7 @@ require('./config/passport')(passport);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => res.send("I'm Down!"));
+app.get("/", (req, res) => res.json("I'm Down!"));
 app.use("/api/users", users);
 app.use("/api/challenges", challenges);
 app.use("/api/posts", posts);

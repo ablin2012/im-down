@@ -2,6 +2,7 @@ import React from 'react';
 import { closeModal } from '../../actions/modalActions';
 import { connect } from 'react-redux';
 import ChallengeFormContainer from '../challenges/challengeFormContainer';
+import UserEditFormContainer from '../profile/userEditFormContainer'
 import './modal.css'
 
 const Modal = ({modal, closeModal}) => {
@@ -16,6 +17,10 @@ const Modal = ({modal, closeModal}) => {
         case 'createChallenge':
             component = <ChallengeFormContainer />
         divName = "challenge-form-container"
+            break;
+        case 'updateCurrentUser':
+            component = <UserEditFormContainer />
+            divName = "challenge-form-container"
             break;
         default:
             return null;

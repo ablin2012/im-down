@@ -61,7 +61,7 @@ class UserShow extends React.Component {
         if (!this.props.user || !this.props.achievements || !this.props.participations) {
             return null
         } else {
-            const { user, achievements, participations, currentUser } = this.props
+            const { user, achievements, participations, currentUser, openModal } = this.props
             let { username, imageUrl } = user
             
             console.log("participations",participations)
@@ -93,7 +93,7 @@ class UserShow extends React.Component {
                                     <div className="user-profile-username">{username}</div>
                                     {
                                         currentUser.id === user._id? (
-                                        <button className="edit-profile-button">Edit Profile</button> 
+                                        <button className="edit-profile-button" onClick={() => openModal('updateCurrentUser')}>Edit Profile</button> 
                                         ): null
                                     }
 
