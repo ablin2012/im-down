@@ -77,8 +77,9 @@ class ChallengeShow extends React.Component {
 
 
     render() {
+        
         const { challenge, challengePosts, currentUser, users} = this.props
-        if (challenge === undefined || challengePosts === undefined || users === undefined) return null;
+        if (challenge === undefined || challengePosts === undefined || this.props.users.index[currentUser.id].imageUrl === undefined) return null;
         
         const userImgSrc = this.props.users.index[currentUser.id].imageUrl
         const profilePic = (userImgSrc) ? (
