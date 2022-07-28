@@ -10,8 +10,8 @@ class ChallengePostsIndex extends React.Component {
 
     render() {
         const {challengePosts} = this.props
-
-        if (!challengePosts) return null
+        
+        if (!challengePosts || !this.props.users) return null
 
         if (challengePosts.length === 0) {
             return (<div>There are no Posts</div>)
@@ -30,6 +30,7 @@ class ChallengePostsIndex extends React.Component {
                                 imageUrl={post.imageUrl}
                                 fetchChallenge={this.props.fetchChallenge}
                                 fetchUser={this.props.fetchUser}
+                                usersIndex={this.props.users}
                             />
                         )
             })}
