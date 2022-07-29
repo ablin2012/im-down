@@ -24,6 +24,7 @@ class HomePage extends React.Component {
         this.props.fetchUserParticipations(this.props.currentUser.id);
         this.props.fetchUserAchievements(this.props.currentUser.id);
         this.props.fetchUserFriendships(this.props.currentUser.id);
+        //check
     }
 
     componentWillReceiveProps(newState) {
