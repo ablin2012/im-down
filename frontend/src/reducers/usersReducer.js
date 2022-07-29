@@ -48,11 +48,11 @@ const UsersReducer = (state = {index: {}, participations: [], achievements: []},
             newState.CUOutgoingFR.filter((request) => request.receiver !== action.friendshipRequestId )
             return newState;
         case JOIN_CHALLENGE:
-            newState["participations"].push(action.participation.data);
+            // newState["participations"].push(action.participation.data);
             return newState;
         case LEAVE_CHALLENGE:
-            let index = newState["participations"].indexOf(action.participation.data);
-            newState["participations"].splice(index, 1);
+            // let index = newState["participations"].indexOf(action.participation.data);
+            // newState["participations"].splice(index, 1);
             return newState;
         default:
             return state;

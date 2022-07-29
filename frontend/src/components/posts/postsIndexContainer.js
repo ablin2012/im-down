@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { fetchPosts } from "../../actions/postActions";
 import PostsIndex from "./postsIndex";
 import { fetchChallenge, fetchUserChallenges, addParticipation, removeParticipation} from '../../actions/challengeActions';
-import { fetchUser } from '../../actions/userActions';
+import { fetchUser, fetchUserParticipations } from '../../actions/userActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -20,7 +20,8 @@ const mapDispatchToProps = dispatch => {
         // fetchChallenge: (id) => dispatch(fetchChallenge(id)),
         // fetchUser: (id) => dispatch(fetchUser(id)),
         addParticipation: (id) => dispatch(addParticipation(id)),
-
+        removeParticipation: (id) => dispatch(removeParticipation(id)),
+        fetchUserParticipations: (id) => dispatch(fetchUserParticipations(id))
 
     }
 }

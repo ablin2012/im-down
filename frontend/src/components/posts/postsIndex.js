@@ -20,17 +20,17 @@ class PostsIndex extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        console.log('index', newState)
+        console.log('postindex newstate', newState)
         this.setState({ 
-            // posts: newState.posts, 
             challenges: newState.challenges, 
             users: newState.users, 
-            participations: newState.participations,
+            participations: newState.participations.map((part) => part._id),
             friendships: newState.friendships
         });
 
-        //implement post filter for friend and own posts
-        if (newState.friendships){
+        //implement post filter for friend and own posts on home page
+       
+        if (newState.friendships && newState.challenges){
             const friendIds = newState.friendships.map((friendship) => {
                 if (friendship.user1 === newState.currentUser.id){
                     return friendship.user2
@@ -38,40 +38,38 @@ class PostsIndex extends React.Component {
                     return friendship.user1
                 }
             })
-            console.log("FRIEND IDS", friendIds)
-            console.log("CU ID", newState.currentUser.id)
+
+            // const challengeIds = newState.challenges.map((challenge) => challenge._id)
+
             const filteredPosts = newState.posts.filter((post)=> {
-                // console.log(post.user)
-                // console.log(friendIds.includes(post.user))
-                // console.log(post.user === newState.currentUser.id)
-                return (friendIds.includes(post.user._id) || post.user._id === newState.currentUser.id)
+                return (friendIds.includes(post.user._id) || post.user._id === newState.currentUser.id) 
+                // || challengeIds.includes(post.challenge._id)
             })
     
-            console.log("BEFORE FILTER", newState.posts)
             this.setState({posts: filteredPosts})
-            console.log("AFTER FILTER", filteredPosts)
         }
     }
 
     render() {
-        console.log('help', this.state);
         if (!this.state.friendships){
             return null
         }
         if (this.state.posts.length === 0) {
             return (<div>There are no Posts</div>)
         } else {
-            
+
             return (
                 <div className="post-index">
                     <h2>All Posts</h2>
-                    {this.state.posts.map(post => (
+                    {this.state.posts.map(post => {
+                        if (!post.user || !post.challenge) {return null}
+                        return (
                         <PostIndexItem key={post._id} 
                             post={post}
                             text={post.text} 
                             type={post.type}
-                            userId={post.user} 
-                            challengeId={post.challenge}
+                            userId={post.user._id} 
+                            challengeId={post.challenge._id}
                             imageUrl={post.imageUrl}
                             // fetchChallenge={this.props.fetchChallenge}
                             // fetchUser={this.props.fetchUser}
@@ -80,8 +78,11 @@ class PostsIndex extends React.Component {
                             addParticipation={this.props.addParticipation}
                             removeParticipation={this.props.removeParticipation}
                             participations={this.state.participations}
+                            fetchUserParticipations={this.props.fetchUserParticipations}
+                            currentUser={this.props.currentUser}
                             />
-                    ))}
+                    )}
+                    )}
                 </div>
             )
         }

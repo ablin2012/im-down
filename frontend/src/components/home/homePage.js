@@ -30,7 +30,10 @@ class HomePage extends React.Component {
         if (newState.participations) {
             parts = newState.participations.map(parts => (parts.challenge))
         }
-        this.setState({ challenges: newState.challenges, participations: parts})
+
+
+        this.setState({ challenges: newState.challenges, participations: parts, friendships: newState.friendships})
+
     }
     
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -44,7 +47,6 @@ class HomePage extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         let icon;
         if (this.props.currentUser.imageUrl) {
             icon = (<img className="icon" src={this.props.currentUser.imageUrl} />)

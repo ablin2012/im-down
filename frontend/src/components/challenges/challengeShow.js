@@ -41,8 +41,10 @@ class ChallengeShow extends React.Component {
             parts = newState.participations.map(part => (part.challenge._id))
         }
         this.setState({participations: parts, challenge: newState.challenge})
-        // this.props.getChallengeParticipants(this.props.match.params.challengeId) keep this out
+        // console.log("challenge show participations", newState.participations)
+        // this.props.getChallengeParticipants(this.props.match.params.challengeId)
     }
+
 
     componentDidUpdate(prevProps){
         if(prevProps.match.params.challengeId !== this.props.match.params.challengeId) {
@@ -123,10 +125,10 @@ class ChallengeShow extends React.Component {
         let joinButton = null;
         let index = null;
         const { challenge, challengePosts, currentUser, users} = this.props
-        if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id] || users.index[currentUser.id].imageUrl === undefined) return null;
+        if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id]) return null;
         
         
-        const userImgSrc = this.props.users.index[currentUser.id].imageUrl
+        const userImgSrc = this.props.users.index[currentUser.id].imageUrl || window.defaultUserImgURL
         const profilePic = (userImgSrc) ? (
             <img className="icon" src={userImgSrc} />
         ) : (null)

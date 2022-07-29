@@ -85,8 +85,10 @@ router.delete('/challenge/:challenge_id',
         .then(participation => {
           if (participation.participant.toString() === req.user.id){
             Post.remove({challenge: req.params.challenge_id, user: req.user.id, type: 'participate'})
-            Participation.remove({challenge: req.params.challenge_id, participant: req.user.id}, (err, participation) => {
-              return res.status(200).json(participation)
+            .then(() => {
+              Participation.remove({challenge: req.params.challenge_id, participant: req.user.id}, (err, participation) => {
+                return res.status(200).json(participation)
+              })
             })
           } else 
           {

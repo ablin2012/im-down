@@ -13,6 +13,9 @@ class ChallengePostsIndex extends React.Component {
         
         if (!challengePosts || !this.props.users) return null
 
+        console.log("Challenge Posts Index", challengePosts)
+        
+
         if (challengePosts.length === 0) {
             return (<div>There are no Posts</div>)
         } else {
@@ -25,8 +28,8 @@ class ChallengePostsIndex extends React.Component {
                             <ChallengePostsIndexItem key={post._id}
                                 text={post.text}
                                 type={post.type}
-                                userId={post.user}
-                                challengeId={post.challenge}
+                                user={post.user}
+                                challenge={post.challenge}
                                 imageUrl={post.imageUrl}
                                 fetchChallenge={this.props.fetchChallenge}
                                 fetchUser={this.props.fetchUser}
