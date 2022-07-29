@@ -12,6 +12,7 @@ import UserShowContainer from './profile/userShowContainer'
 import UserEditFormContainer from './profile/userEditFormContainer'
 import ChallengeForm from './challenges/challengeForm';
 import PostsIndexContainer from './posts/postsIndexContainer';
+import CategoryIndexContainer from './challenges/categoryIndexContainer';
 
 import ChallengeShowContainer from './challenges/challengeShowContainer';
 
@@ -23,7 +24,7 @@ import Modal from './modal/modal';
 
 const App = () => (
     <div className='main-wrap'>
-        <Modal />
+    <Modal />
             <Switch>
                 <AuthRoute exact path="/" component={MainPage} />
                 <AuthRoute exact path="/login" component={LoginFormContainer} />
@@ -36,6 +37,7 @@ const App = () => (
 
                 <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
+                <ProtectedRoute exact path="challenges/category" component={CategoryIndexContainer}/>
                 <ProtectedRoute exact path="/profile" component={ProfileContainer} />
                 <Route exact path="/users/:user_id" component={UserShowContainer} />
                 <ProtectedRoute exact path="/users/current/edit" component={UserEditFormContainer} />
