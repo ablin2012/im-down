@@ -18,13 +18,12 @@ class ChallengesIndex extends React.Component {
         this.categorizeChallenge = this.categorizeChallenge.bind(this)
     }
 
-    componentWillMount() {
+    componentDidMount(){
         this.props.fetchChallenges();
     }
 
     componentWillReceiveProps(newState) {
         this.setState({ challenges: newState.challenges });
-        
     }
 
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -58,13 +57,8 @@ class ChallengesIndex extends React.Component {
 
     render() {
         const categories = ["fitness", "learning", "travel", "cooking", "fun", "self-care", "creative"]
-        if (this.state.challenges.length === 0) {
-            return (
-                <div className='body-wrap'>
-                    <div>There are no Challenges</div>
-                </div>
-                )
-        } else {
+        if (this.state.challenges.length === 0) return null
+            console.log("my props", this.props)
             return (
                 <>
                     <header>
@@ -89,13 +83,12 @@ class ChallengesIndex extends React.Component {
                                         
                                     </div>
                                 ))}
-
                             </div>
                         </div>
                     </div>
                 </>
             );
-        }
+        
     }
 }
 
