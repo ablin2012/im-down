@@ -38,9 +38,18 @@ const s3 = new Aws.S3({
 
 
 // Routes
+// router.get('/', (req, res) => {
+//   Post.find()
+//   .sort({ createdAt: -1 })
+//   .then(posts => res.json(posts))
+//   .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
+// });
+
 router.get('/', (req, res) => {
   Post.find()
   .sort({ createdAt: -1 })
+  .populate("challenge")
+  .populate("user")
   .then(posts => res.json(posts))
   .catch(err => res.status(404).json({ nopostsfound: 'No posts found' }));
 });

@@ -9,17 +9,19 @@ const mapStateToProps = (state) => {
         posts: Object.values(state.posts.all),
         challenges: state.challenges.index,
         users: state.users.index,
-        currentUser: state.session.user
+        currentUser: state.session.user,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchPosts: () => dispatch(fetchPosts()),
-        fetchChallenge: (id) => dispatch(fetchChallenge(id)),
-        fetchUser: (id) => dispatch(fetchUser(id)),
+
+        // fetchChallenge: (id) => dispatch(fetchChallenge(id)),
+        // fetchUser: (id) => dispatch(fetchUser(id)),
         addParticipation: (id) => dispatch(addParticipation(id)),
-        removeParticipation: (id) => dispatch(removeParticipation(id))
+
+
     }
 }
 

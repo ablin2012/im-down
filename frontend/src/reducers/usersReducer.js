@@ -20,7 +20,7 @@ const UsersReducer = (state = {index: {}, participations: [], achievements: []},
             newState.achievements = action.achievements.data;
             return newState;
         case RECEIVE_PARTICIPATIONS:
-            console.log("this is reducer participations",action.participations.data)
+            console.log("THIS IS REDUCER PARTICIPATIONS",action.participations.data)
             newState.participations = action.participations.data;
             return newState;
         case RECEIVE_FRIENDSHIPS:

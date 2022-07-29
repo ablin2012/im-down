@@ -16,13 +16,20 @@ class PostIndexItem extends React.Component {
         this.handleLeave = this.handleLeave.bind(this);
     }
 
-    componentWillMount() {
-        this.props.fetchChallenge(this.props.challengeId);
-        this.props.fetchUser(this.props.userId);
-    }
+    // componentWillMount() {
+    //     this.props.fetchChallenge(this.props.challengeId);
+    //     this.props.fetchUser(this.props.userId);
+    // }
 
-    componentWillReceiveProps(newState) {
-        this.setState({challenge: newState.challenge, user: newState.user, participations: newState.participations.map(part => (part._id))})
+    // componentWillReceiveProps(newState) {
+    //     this.setState({challenge: newState.posts.challenge, user: newState.posts.user, participations: newState.participations.map(part => (part._id))})
+    // }
+
+    componentDidMount() {
+        if (this.props.post){
+            this.setState({challenge: this.props.post.challenge, user: this.props.post.user})
+            // console.log("this state!!",this.state)
+        }
     }
 
     handleJoin() {
@@ -40,6 +47,9 @@ class PostIndexItem extends React.Component {
     }
 
     render() {
+
+        // console.log('indexitemstate', this.state)
+
         let {imageUrl, challengeId, userId, participations} = this.props;
         let joinButton = null;
         if (this.state.challenge && this.state.user) {
@@ -75,7 +85,7 @@ class PostIndexItem extends React.Component {
                 }
             }
             return (
-                <div className="post-item photo">
+                <div key ={this.props.post._id} className="post-item photo">
                     <div className="post-item-header">
                         <div className="user-icon">
                             {profPic}
