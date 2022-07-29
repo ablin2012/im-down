@@ -12,8 +12,7 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             challenges: [],
-            participations: [],
-            friendships:[]
+            participations: []
         }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
@@ -23,19 +22,15 @@ class HomePage extends React.Component {
         this.props.fetchUserChallenges(this.props.currentUser.id);
         this.props.fetchUserParticipations(this.props.currentUser.id);
         this.props.fetchUserAchievements(this.props.currentUser.id);
-        this.props.fetchUserFriendships(this.props.currentUser.id);
     }
 
     componentWillReceiveProps(newState) {
+        console.log('homepage', newState)
         let parts = [];
         if (newState.participations) {
-            parts = newState.participations.map(parts => (parts.challenge._id))
+            parts = newState.participations.map(parts => (parts.challenge))
         }
-
-        console.log("CHECK NEWSTATE PARTICIPATIONS", newState.participations)
-        console.log("parts", parts)
-        this.setState({ challenges: newState.challenges, participations: parts, friendships: newState.friendships})
-
+        this.setState({ challenges: newState.challenges, participations: parts})
     }
     
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -56,8 +51,6 @@ class HomePage extends React.Component {
         } else {
             icon = (<div className="letter-icon">{this.props.currentUser.username.slice(0,1)}</div>)
         }
-        console.log("CHECK STATE PARTICIPATIONS", this.state.participations)
-        console.log("CHECK STATE FRIENDSHIPS", this.state.friendships)
         return (
             <>
                 <header>
@@ -65,7 +58,7 @@ class HomePage extends React.Component {
                 </header>
                 <div className="home-page">
                     <div className="sticky-bar">
-                        <ProfileCardContainer participations={this.state.participations} createdChallenges={this.state.challenges} friendships={this.state.friendships}/>
+                        <ProfileCardContainer participations={this.state.participations} createdChallenges={this.state.challenges}/>
                         <div className="category-links">
                             <div className="category-links-body">
                                 <h3 className="highlight">My Categories</h3>
@@ -87,12 +80,12 @@ class HomePage extends React.Component {
                             </div>
                             <button className="false-input" onClick={() => this.props.openModal('createChallenge')}>Start a challenge</button>
                         </div>
-                        <PostIndexContainer participations={this.state.participations} friendships={this.state.friendships}/>
+                        <PostIndexContainer participations={this.state.participations}/>
                     </div>
                     <div className="sticky-bar scrollable">
-                        <h3>My Current Challenges</h3>
-                        {this.state.participations.map((challenge) => (
-                            <ChallengeCard key={challenge._id} challenge={challenge} />
+                        <h3>My Challenges</h3>
+                        {this.state.challenges.map((challenge) => (
+                            <ChallengeCard challenge={challenge} />
                         ))}
                     </div>
                 </div>
