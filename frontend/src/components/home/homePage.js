@@ -29,7 +29,7 @@ class HomePage extends React.Component {
     componentWillReceiveProps(newState) {
         let parts = [];
         if (newState.participations) {
-            parts = newState.participations.map(parts => (parts.challenge._id))
+            parts = newState.participations.map(parts => (parts.challenge))
         }
 
         console.log("CHECK NEWSTATE PARTICIPATIONS", newState.participations)
