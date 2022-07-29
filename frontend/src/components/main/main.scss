@@ -1,0 +1,77 @@
+
+.splash-container {
+    height: 100%;
+    width: 100%;
+    margin-top: -95px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.splash-background {
+    background: url('https://imdown-photos.s3.us-west-1.amazonaws.com/imdownsplash.jpeg');
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    background-size: 100%;
+    background-position: center;
+}
+
+.splash-overlay, .splash-text-container {
+    background-color: rgba(34, 37, 41, 0.555);
+    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.splash-text-container {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    & h1 {
+            font-size: 55px;
+            font-weight: 600;
+            min-width: 1000px;
+            max-width: 1100px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+    & h2 {
+        font-size: 75px;
+        font-weight: bold;
+        color: #b37ee1;
+        cursor: pointer;
+        margin-bottom: 25px;
+    }
+
+    & h3 {
+
+        font-size: 20px;
+        & span {
+            font-weight: bold;
+        }
+    }
+
+    & h4 {
+        margin-top: 90px;
+        & span {
+                font-weight: bold;
+                cursor: pointer;
+            }
+    }
+}
+
+.body-wrap {
+    height: 100%;
+}

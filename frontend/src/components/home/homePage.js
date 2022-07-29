@@ -12,8 +12,7 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             challenges: [],
-            participations: [],
-            friendships:[]
+            participations: []
         }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
@@ -28,10 +27,13 @@ class HomePage extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
+        console.log('homepage', newState)
         let parts = [];
         if (newState.participations) {
             parts = newState.participations.map(parts => (parts.challenge))
         }
+
+
         this.setState({ challenges: newState.challenges, participations: parts, friendships: newState.friendships})
 
     }
@@ -60,7 +62,7 @@ class HomePage extends React.Component {
                 </header>
                 <div className="home-page">
                     <div className="sticky-bar">
-                        <ProfileCardContainer participations={this.state.participations} createdChallenges={this.state.challenges} friendships={this.state.friendships}/>
+                        <ProfileCardContainer participations={this.state.participations} createdChallenges={this.state.challenges}/>
                         <div className="category-links">
                             <div className="category-links-body">
                                 <h3 className="highlight">My Categories</h3>
@@ -82,12 +84,12 @@ class HomePage extends React.Component {
                             </div>
                             <button className="false-input" onClick={() => this.props.openModal('createChallenge')}>Start a challenge</button>
                         </div>
-                        <PostIndexContainer participations={this.state.participations} friendships={this.state.friendships}/>
+                        <PostIndexContainer participations={this.state.participations}/>
                     </div>
                     <div className="sticky-bar scrollable">
-                        <h3>My Current Challenges</h3>
-                        {this.state.participations.map((challenge) => (
-                            <ChallengeCard key={challenge._id} challenge={challenge} />
+                        <h3>My Challenges</h3>
+                        {this.state.challenges.map((challenge) => (
+                            <ChallengeCard challenge={challenge} />
                         ))}
                     </div>
                 </div>

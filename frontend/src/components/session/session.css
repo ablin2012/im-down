@@ -53,6 +53,7 @@
 
 .session-button {
     background-color: rgba(255, 255, 255, 0.1);
+    -webkit-filter: brightness(100%);
     width: 200px;
     border: none;
     vertical-align: middle;
@@ -64,8 +65,21 @@
     cursor: pointer;
 }
 
+.session-button.purple {
+    background-color: #8029ba;
+}
+
+.session-button.blue {
+    background-color: #4437b3;
+}
+
 .session-button:hover {
-    background-color: rgba(255, 255, 255, 0.200);
+    -webkit-filter: brightness(110%);
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
 }
 
 .session-errors {
