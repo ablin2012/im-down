@@ -27,14 +27,15 @@ class HomePage extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        console.log('homepage', newState)
         let parts = [];
         if (newState.participations) {
-            parts = newState.participations.map(parts => (parts.challenge))
+            parts = newState.participations.map(parts => (parts.challenge._id))
         }
+
         console.log("CHECK NEWSTATE PARTICIPATIONS", newState.participations)
         console.log("parts", parts)
         this.setState({ challenges: newState.challenges, participations: parts, friendships: newState.friendships})
+
     }
     
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})

@@ -1,5 +1,5 @@
 import { RECEIVE_USER, RECEIVE_ACHIEVEMENTS, RECEIVE_PARTICIPATIONS, RECEIVE_FRIENDSHIPS, RECEIVE_FRIEND_REQUESTS, RECEIVE_INCOMING_FRIEND_REQUESTS, RECEIVE_OUTGOING_FRIEND_REQUESTS, RECEIVE_FRIEND_REQUEST, REMOVE_FRIEND_REQUEST } from "../actions/userActions";
-import { JOIN_CHALLENGE } from "../actions/challengeActions";
+import { JOIN_CHALLENGE, LEAVE_CHALLENGE  } from "../actions/challengeActions";
 
 const UsersReducer = (state = {index: {}, participations: [], achievements: []}, action) => {
     Object.freeze(state);
@@ -49,6 +49,10 @@ const UsersReducer = (state = {index: {}, participations: [], achievements: []},
             return newState;
         case JOIN_CHALLENGE:
             newState["participations"].push(action.participation.data);
+            return newState;
+        case LEAVE_CHALLENGE:
+            let index = newState["participations"].indexOf(action.participation.data);
+            newState["participations"].splice(index, 1);
             return newState;
         default:
             return state;

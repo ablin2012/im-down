@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { createChallenge } from '../../actions/challengeActions';
 import ChallengeForm from './challengeForm'
+import { closeModal } from '../../actions/modalActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -11,7 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        createChallenge: data => dispatch(createChallenge(data))
+        createChallenge: data => dispatch(createChallenge(data)),
+        closeModal: () => dispatch(closeModal())
     };
 };
 

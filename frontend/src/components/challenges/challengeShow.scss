@@ -62,23 +62,6 @@
         font-size: 25px;
         font-weight: 700;
     }
-
-    & button {
-        width: 120px;
-        height: 40px;
-        border-radius: 12px;
-        background-image: linear-gradient(to right, #7b2cbf, #5a189a);
-        outline: none;
-        border-style: none;
-        font-size: 15px;
-        color: white;
-        font-weight: 700;
-        cursor: pointer;
-
-        &:hover {
-            background-image: linear-gradient(to right, #5a189a, #3c096c);
-        }
-    }
 }
 
 #show-description {
@@ -107,7 +90,7 @@
     justify-content: center;
 }
 
-.post-index {
+.chal-post-index {
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -413,5 +396,33 @@
     &:hover {
         background-image: linear-gradient(to right, #5a189a, #3c096c);
     }
+}
+.join-button {
+    width: 120px;
+    height: 40px;
+    border-radius: 12px;
+    background-image: linear-gradient(to right, #7b2cbf, #5a189a);
+    outline: none;
+    border-style: none;
+    font-size: 15px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        background-image: linear-gradient(to right, #5a189a, #3c096c);
+    }
+}
+
+.join-button:hover {
+    border: 1px white solid;
+    background-color: rgb(46, 51, 56);
+    background-image: none;
+}
+
+.join-button.joined {
+    border: 1px white solid;
+    background-color: rgb(46, 51, 56);
+    background-image: none;
 }
 

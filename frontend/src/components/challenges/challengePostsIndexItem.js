@@ -5,28 +5,31 @@ import './challengeShow.scss'
 class ChallengePostsIndexItem extends React.Component {
     constructor(props){
         super(props)
-        this.state = {
-            user: {}
-        }
+        // this.state = {
+        //     user: undefined
+        // }
     }
 
-    componentDidMount() {
-        this.props.fetchUser(this.props.userId)
-            .then(rep => (this.setState({user: rep.user.data})))
-            .then(rep => console.log("what the rep", rep))
-    }
+    // componentDidMount() {
+    //     this.props.fetchUser(this.props.userId)
+    //         .then(rep => {
+    
+    //             this.setState({user: rep.user.data})})
+    
+    // }
 
-    componentWillReceiveProps(newState) {
-        this.setState({ user: newState.user })
-    }
+    // componentWillReceiveProps(newState) {
+    //     this.setState({ user: newState.user })
+    // }
 
     render() {
         const { imageUrl, userId } = this.props;
         
-        if (this.state.user === undefined) return null
-        // console.log("user fetching", this.props.fetchUser())
-        const profilePic = (this.state.user.imageUrl) ? (
-            <img className="icon" src={this.state.user.imageUrl} />
+        const user = this.props.usersIndex[userId]
+        
+        if (user === undefined) return null
+        const profilePic = (user.imageUrl) ? (
+            <img className="icon" src={user.imageUrl} />
         ) : (null)
 
         const image = (imageUrl) ? (
@@ -46,7 +49,7 @@ class ChallengePostsIndexItem extends React.Component {
                     <div className="chal-header-info">
                         <div className="chal-header-top">
                             <Link to={`/users/${userId}`} >
-                                <div className="chal-username">{this.state.user.username}</div>
+                                <div className="chal-username">{user.username}</div>
                             </Link>
                             <p className="chal-post-type">{this.props.type.toUpperCase()}</p>
                         </div>

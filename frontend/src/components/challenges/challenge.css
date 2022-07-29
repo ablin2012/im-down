@@ -151,12 +151,25 @@
     align-items: center;
 }
 
-.options button {
+.options .option-btn {
     width: 60px;
     height: 30px;
     border-radius: 6px;
     outline: none;
     border-style: none;
+    cursor: pointer;
+}
+
+.options .option-btn:hover {
+    background-color:  rgb(46, 51, 56);
+    border: 1px white solid;
+    color: white;
+}
+
+.options .option-btn.joined {
+    background-color:  rgb(46, 51, 56);
+    border: 1px white solid;
+    color: white;
 }
 
 .challenge-icon {

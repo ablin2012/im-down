@@ -9,6 +9,7 @@ export const RECEIVE_NEW_CHALLENGE = "RECEIVE_NEW_CHALLENGE";
 export const RECEIVE_CHALLENGE = "RECEIVE_CHALLENGE";
 export const CLEAR_CHALLENGES = "CLEAR_CHALLENGES";
 export const JOIN_CHALLENGE = "JOIN_CHALLENGE";
+export const LEAVE_CHALLENGE = "LEAVE_CHALLENGE";
 export const RECEIVE_CHALLENGE_PARTICIPANTS = "RECEIVE_CHALLENGE_PARTICIPANTS";
 
 export const receiveChallenges = challenges => ({
@@ -39,6 +40,11 @@ export const joinChallenge = (participation) => ({
     type: JOIN_CHALLENGE,
     participation
 })
+
+export const leaveChallenge = (participation) => ({
+    type: LEAVE_CHALLENGE,
+    participation
+});
 
 export const receiveChallengeParticipants = (participants) => ({
     type: RECEIVE_CHALLENGE_PARTICIPANTS,
@@ -72,6 +78,11 @@ export const fetchChallenge = (id) => dispatch => (
 export const addParticipation = (id) => dispatch => {
     APIUtil.joinChallenge(id)
         .then(participation => dispatch(joinChallenge(participation)))
+}
+
+export const removeParticipation = (id) => dispatch => {
+    APIUtil.leaveChallenge(id)
+        .then(participation => dispatch(leaveChallenge(participation)))
 }
 
 export const getChallengeParticipants = (challengeId) => dispatch => {
