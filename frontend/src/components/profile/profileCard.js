@@ -19,9 +19,9 @@ class ProfileCard extends React.Component {
     }
     render () {
         if (!this.state.friendships){return null}
-        const profilePic = (this.props.currentUser.imageUrl) ? (
-            <img className="icon card" src={this.props.currentUser.imageUrl} />
-        ): (null)
+        const profilePic = 
+            <img className="icon card" src={this.props.currentUser.imageUrl || window.defaultUserImgURL} />
+        
         console.log("PROFIL CARD PARTICIPATION STATE", this.state.participations)
         console.log("PROFIL CARD PARTICIPATION PROP", this.props.participations)
         return (
