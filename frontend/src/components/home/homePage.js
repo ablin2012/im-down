@@ -31,9 +31,6 @@ class HomePage extends React.Component {
         if (newState.participations) {
             parts = newState.participations.map(parts => (parts.challenge))
         }
-
-        console.log("CHECK NEWSTATE PARTICIPATIONS", newState.participations)
-        console.log("parts", parts)
         this.setState({ challenges: newState.challenges, participations: parts, friendships: newState.friendships})
 
     }
@@ -49,15 +46,12 @@ class HomePage extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         let icon;
         if (this.props.currentUser.imageUrl) {
             icon = (<img className="icon" src={this.props.currentUser.imageUrl} />)
         } else {
             icon = (<div className="letter-icon">{this.props.currentUser.username.slice(0,1)}</div>)
         }
-        console.log("CHECK STATE PARTICIPATIONS", this.state.participations)
-        console.log("CHECK STATE FRIENDSHIPS", this.state.friendships)
         return (
             <>
                 <header>

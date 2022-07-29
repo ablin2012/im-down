@@ -28,7 +28,6 @@ class PostIndexItem extends React.Component {
     componentDidMount() {
         if (this.props.post){
             this.setState({challenge: this.props.post.challenge, user: this.props.post.user})
-            // console.log("this state!!",this.state)
         }
     }
 
@@ -48,7 +47,6 @@ class PostIndexItem extends React.Component {
 
     render() {
 
-        // console.log('indexitemstate', this.state)
 
         let {imageUrl, challengeId, userId, participations} = this.props;
         let joinButton = null;

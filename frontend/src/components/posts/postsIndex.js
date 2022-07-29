@@ -20,9 +20,7 @@ class PostsIndex extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
-        console.log('index', newState)
         this.setState({ 
-            // posts: newState.posts, 
             challenges: newState.challenges, 
             users: newState.users, 
             participations: newState.participations,
@@ -39,23 +37,16 @@ class PostsIndex extends React.Component {
                     return friendship.user1
                 }
             })
-            console.log("FRIEND IDS", friendIds)
-            console.log("CU ID", newState.currentUser.id)
+    
             const filteredPosts = newState.posts.filter((post)=> {
-                // console.log(post.user)
-                // console.log(friendIds.includes(post.user))
-                // console.log(post.user === newState.currentUser.id)
                 return (friendIds.includes(post.user._id) || post.user._id === newState.currentUser.id)
             })
     
-            console.log("BEFORE FILTER", newState.posts)
             this.setState({posts: filteredPosts})
-            console.log("AFTER FILTER", filteredPosts)
         }
     }
 
     render() {
-        console.log('help', this.state);
         if (!this.state.friendships){
             return null
         }
