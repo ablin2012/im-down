@@ -98,7 +98,7 @@ class UserShow extends React.Component {
 
                     <div className="user-show-container">
                         <div className="user-header">
-                            <img className="user-profile-image" src={imageUrl}/>
+                            <img className="user-profile-image" src={ imageUrl ? imageUrl : window.defaultUserImgURL}/>
                             <div className="user-profile-info">
                                 <div className='user-profile-info-sub'>
                                     <div className="user-profile-username">{username}</div>

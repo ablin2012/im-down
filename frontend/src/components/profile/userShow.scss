@@ -99,7 +99,7 @@ h2.section-header  {
 
 .user-profile-image {
     @include cover();
-    background-color: transparent;
+    background-color: white;
     height: 100%;
     aspect-ratio: 1/1;
     border: 0;
@@ -143,7 +143,7 @@ h2.section-header  {
     align-items: flex-start;
     justify-content: flex-start;
     overflow: auto;
-    height: 400px;
+    // height: 400px;
     flex-wrap: nowrap;
     // margin: 24px 0 24px 0;
     padding-bottom: 24px;
