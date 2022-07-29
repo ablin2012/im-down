@@ -30,9 +30,8 @@ class ChallengePostsIndexItem extends React.Component {
 
         
         if (user === undefined) return null
-        const profilePic = (user.imageUrl) ? (
-            <img className="icon" src={user.imageUrl} />
-        ) : (null)
+        const profilePic =  <img className="icon" src={user.imageUrl || window.defaultUserImgURL} />
+
 
         const image = (imageUrl) ? (
             <div className="post-image-container">
