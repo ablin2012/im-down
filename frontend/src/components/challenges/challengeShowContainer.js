@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
         challengePosts: state.posts.challenge,
         currentUser: state.session.user,
         users: state.users,
-        participations: state.users.participations
+        participations: state.users.participations,
         challengeParticipants: state.challenges.participants
     }
 }
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
         composePost: (post, challengeId) => dispatch(composePost({post, challengeId})),
         fetchUserParticipations: id => dispatch(fetchUserParticipations(id)),
         addParticipation: id => dispatch(addParticipation(id)),
-        removeParticipation: id => dispatch(removeParticipation(id))
+        removeParticipation: id => dispatch(removeParticipation(id)),
         getChallengeParticipants: (challengeId) => dispatch(getChallengeParticipants(challengeId))
     }
 }
