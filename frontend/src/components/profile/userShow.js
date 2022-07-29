@@ -34,7 +34,7 @@ class UserShow extends React.Component {
         if (!achievement.challenge) {return null}
         return (
         <div className="user-achievement-item" key={achievement._id} onClick={this.linkToChallenge(achievement.challenge._id)}>
-            <img className="user-achievement-image" src={achievement.imageUrl|| "" } alt="achievement-image"/>
+            <img className="user-achievement-image" src={achievement.imageUrl||  window.defaultAchievementImgURL} alt="achievement-image"/>
             <p>
                 {achievement.challenge.title ||= ""}
             </p>
