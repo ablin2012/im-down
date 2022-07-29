@@ -29,7 +29,8 @@ class PostsIndex extends React.Component {
             friendships: newState.friendships
         });
 
-        //implement post filter for friend and own posts
+        //implement post filter for friend and own posts on home page
+       
         if (newState.friendships){
             const friendIds = newState.friendships.map((friendship) => {
                 if (friendship.user1 === newState.currentUser.id){
