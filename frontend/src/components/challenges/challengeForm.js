@@ -37,7 +37,7 @@ class ChallengeForm extends React.Component {
         formData.append("category",this.state.category)
         formData.append("startDate",this.state.startDate)
         formData.append("endDate",this.state.endDate)
-        this.props.createChallenge(formData)
+        this.props.createChallenge(formData).then(() => this.props.closeModal())
 
         this.setState({ title: '', description: '', category: '' })
 

@@ -21,6 +21,10 @@ export const joinChallenge = (id) => {
     return axios.post(`/api/participations/challenge/${id}`)
 }
 
+export const leaveChallenge = (id) => {
+    return axios.delete(`/api/participations/challenge/${id}`)
+}
+
 export const getChallengeParticipants = (challengeId) => {
     return axios.get(`/api/participations/challenge/${challengeId}`)
 }

@@ -8,18 +8,22 @@ class ProfileCard extends React.Component {
         this.state = {
             participations: [],
             achievements: [],
-            createdChallenges: []
+            createdChallenges: [],
+            friendships: []
         }
     }
 
     componentWillReceiveProps(newState) {
         console.log('profilecard', newState)
-        this.setState({createdChallenges: newState.createdChallenges, participations: newState.participations })
+        this.setState({createdChallenges: newState.createdChallenges, participations: newState.participations, friendships: newState.friendships })
     }
     render () {
+        if (!this.state.friendships){return null}
         const profilePic = (this.props.currentUser.imageUrl) ? (
             <img className="icon card" src={this.props.currentUser.imageUrl} />
         ): (null)
+        console.log("PROFIL CARD PARTICIPATION STATE", this.state.participations)
+        console.log("PROFIL CARD PARTICIPATION PROP", this.props.participations)
         return (
             <div className="profile-card">
                 <div className="profile-card-head">
@@ -41,10 +45,10 @@ class ProfileCard extends React.Component {
                             <div className="data-text">Friends</div>
                         </div>
                         <div className="data-values">
-                            <div className="data-text">{this.state.achievements.length}</div>
-                            <div className="data-text">{this.state.createdChallenges.length}</div>
-                            <div className="data-text">{this.state.participations.length}</div>
-                            <div className="data-text">val</div>
+                            <div className="data-text achieved">{this.state.achievements.length}</div>
+                            <div className="data-text created">{this.state.createdChallenges.length}</div>
+                            <div className="data-text participating">{this.state.participations.length}</div>
+                            <div className="data-text friends">{this.state.friendships.length}</div>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,8 @@ class ChallengesIndex extends React.Component {
         super(props);
         this.state = {
             challenges: [],
-            filter: ""
+            filter: "",
+            participations: []
         }
         this.handleCallback = this.handleCallback.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
@@ -20,10 +21,16 @@ class ChallengesIndex extends React.Component {
 
     componentDidMount(){
         this.props.fetchChallenges();
+        this.props.fetchUserParticipations(this.props.currentUser.id);
     }
 
     componentWillReceiveProps(newState) {
-        this.setState({ challenges: newState.challenges });
+        let parts = [];
+        if (newState.participations) {
+            parts = newState.participations.map(parts => (parts.challenge))
+        }
+        this.setState({ challenges: newState.challenges, participations: parts});
+
     }
 
     handleCallback = (navSearchData) => this.setState({'filter': navSearchData})
@@ -46,10 +53,14 @@ class ChallengesIndex extends React.Component {
             categorizedArr.map(challenge => (
                 <Link to={`/challenges/${challenge._id}`} key={challenge._id} >
                     <ChallengesIndexItem
+                        challengeId={challenge._id}
                         title={challenge.title}
                         description={challenge.description}
                         category={challenge.category}
-                        imageUrl={challenge.imageUrl} />
+                        imageUrl={challenge.imageUrl}
+                        participations={this.state.participations}
+                        addParticipation={this.props.addParticipation}
+                        removeParticipation={this.props.removeParticipation} />
                 </Link>
             ))
         )

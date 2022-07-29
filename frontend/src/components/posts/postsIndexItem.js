@@ -13,26 +13,43 @@ class PostIndexItem extends React.Component {
             nullBtn: null,
         }
         this.handleJoin = this.handleJoin.bind(this);
+        this.handleLeave = this.handleLeave.bind(this);
     }
 
-    componentWillMount() {
-        this.props.fetchChallenge(this.props.challengeId);
-        this.props.fetchUser(this.props.userId);
-    }
+    // componentWillMount() {
+    //     this.props.fetchChallenge(this.props.challengeId);
+    //     this.props.fetchUser(this.props.userId);
+    // }
 
-    componentWillReceiveProps(newState) {
-        this.setState({challenge: newState.challenge, user: newState.user, participations: newState.participations.map(part => (part._id))})
+    // componentWillReceiveProps(newState) {
+    //     this.setState({challenge: newState.posts.challenge, user: newState.posts.user, participations: newState.participations.map(part => (part._id))})
+    // }
+
+    componentDidMount() {
+        if (this.props.post){
+            this.setState({challenge: this.props.post.challenge, user: this.props.post.user})
+            // console.log("this state!!",this.state)
+        }
     }
 
     handleJoin() {
         return () => {
-            this.setState({nullBtn: <button className="join-btn joined">Joined</button>});
+            this.setState({nullBtn: <button onClick={this.handleLeave()} className="join-btn joined">Joined</button>});
             this.props.addParticipation(this.props.challengeId);
+        };
+    }
+    
+    handleLeave() {
+        return () => {
+            this.setState({nullBtn: <button onClick={this.handleJoin()} className="join-btn">Join the Challenge!</button>});
+            this.props.removeParticipation(this.props.challengeId);
         };
     }
 
     render() {
-        console.log('indexitemstate', this.state)
+
+        // console.log('indexitemstate', this.state)
+
         let {imageUrl, challengeId, userId, participations} = this.props;
         let joinButton = null;
         if (this.state.challenge && this.state.user) {
@@ -60,7 +77,7 @@ class PostIndexItem extends React.Component {
             ) : ( null )
             if (this.props.type === 'create') {
                 if (this.state.participations.includes(challengeId)) {
-                    joinButton = <button className="join-btn joined">Joined</button>
+                    joinButton = <button onClick={this.handleLeave()} className="join-btn joined">Joined</button>
                 } else if (this.state.nullBtn) {
                     joinButton = this.state.nullBtn;
                 } else {
@@ -68,7 +85,7 @@ class PostIndexItem extends React.Component {
                 }
             }
             return (
-                <div className="post-item photo">
+                <div key ={this.props.post._id} className="post-item photo">
                     <div className="post-item-header">
                         <div className="user-icon">
                             {profPic}

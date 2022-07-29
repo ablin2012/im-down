@@ -78,6 +78,7 @@ export const fetchUser = (id) => dispatch => {
                 dispatch(receiveUser(user))
                 dispatch(fetchUserAchievements(user.data._id))
                 dispatch(fetchUserFriendships(user.data._id))
+                dispatch(fetchUserParticipations(user.data._id))
                 dispatch(fetchCUIncomingFR())
                 dispatch(fetchCUOutgoingFR())
             })
