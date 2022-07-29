@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
         // fetchChallenge: (id) => dispatch(fetchChallenge(id)),
         // fetchUser: (id) => dispatch(fetchUser(id)),
         addParticipation: (id) => dispatch(addParticipation(id)),
-
+        removeParticipation: (id) => dispatch(removeParticipation(id))
 
     }
 }

@@ -21,9 +21,9 @@ class PostIndexItem extends React.Component {
     //     this.props.fetchUser(this.props.userId);
     // }
 
-    // componentWillReceiveProps(newState) {
-    //     this.setState({challenge: newState.posts.challenge, user: newState.posts.user, participations: newState.participations.map(part => (part._id))})
-    // }
+    componentWillReceiveProps(newState) {
+        this.setState({challenge: newState.posts.challenge, user: newState.posts.user, participations: newState.participations.map(part => (part._id))})
+    }
 
     componentDidMount() {
         if (this.props.post){
