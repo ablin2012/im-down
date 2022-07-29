@@ -20,10 +20,11 @@ class PostsIndex extends React.Component {
     }
 
     componentWillReceiveProps(newState) {
+        console.log('postindex newstate', newState)
         this.setState({ 
             challenges: newState.challenges, 
             users: newState.users, 
-            participations: newState.participations,
+            participations: newState.participations.map(part => part._id),
             friendships: newState.friendships
         });
 
@@ -62,8 +63,8 @@ class PostsIndex extends React.Component {
                             post={post}
                             text={post.text} 
                             type={post.type}
-                            userId={post.user} 
-                            challengeId={post.challenge}
+                            userId={post.user._id} 
+                            challengeId={post.challenge._id}
                             imageUrl={post.imageUrl}
                             // fetchChallenge={this.props.fetchChallenge}
                             // fetchUser={this.props.fetchUser}

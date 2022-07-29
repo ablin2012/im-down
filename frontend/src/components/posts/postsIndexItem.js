@@ -17,13 +17,14 @@ class PostIndexItem extends React.Component {
     }
 
     // componentWillMount() {
-    //     this.props.fetchChallenge(this.props.challengeId);
-    //     this.props.fetchUser(this.props.userId);
+    //     // this.props.fetchChallenge(this.props.challengeId);
+    //     // this.props.fetchUser(this.props.userId);
+    //     console.log('indexitem props', this.props)
     // }
 
-    componentWillReceiveProps(newState) {
-        this.setState({challenge: newState.posts.challenge, user: newState.posts.user, participations: newState.participations.map(part => (part._id))})
-    }
+    // componentWillReceiveProps(newState) {
+    //     this.setState({participations: newState.participations.map(part => (part._id))})
+    // }
 
     componentDidMount() {
         if (this.props.post){
@@ -74,7 +75,7 @@ class PostIndexItem extends React.Component {
                 shortenStr(this.state.challenge.title, 30)
             ) : ( null )
             if (this.props.type === 'create') {
-                if (this.state.participations.includes(challengeId)) {
+                if (this.props.participations.includes(challengeId)) {
                     joinButton = <button onClick={this.handleLeave()} className="join-btn joined">Joined</button>
                 } else if (this.state.nullBtn) {
                     joinButton = this.state.nullBtn;
