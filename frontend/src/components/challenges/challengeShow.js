@@ -41,8 +41,10 @@ class ChallengeShow extends React.Component {
             parts = newState.participations.map(part => (part.challenge._id))
         }
         this.setState({participations: parts, challenge: newState.challenge})
-        this.props.getChallengeParticipants(this.props.match.params.challengeId)
+        // console.log("challenge show participations", newState.participations)
+        // this.props.getChallengeParticipants(this.props.match.params.challengeId)
     }
+
 
     componentDidUpdate(prevProps){
         if(prevProps.match.params.challengeId !== this.props.match.params.challengeId) {

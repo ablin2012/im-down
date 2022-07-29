@@ -23,9 +23,11 @@ class ChallengePostsIndexItem extends React.Component {
     // }
 
     render() {
-        const { imageUrl, userId } = this.props;
-        
-        const user = this.props.usersIndex[userId]
+        const { imageUrl, user } = this.props;
+
+
+        console.log("user",user)
+
         
         if (user === undefined) return null
         const profilePic = (user.imageUrl) ? (
@@ -48,7 +50,7 @@ class ChallengePostsIndexItem extends React.Component {
                     </div>
                     <div className="chal-header-info">
                         <div className="chal-header-top">
-                            <Link to={`/users/${userId}`} >
+                            <Link to={`/users/${user._id}`} >
                                 <div className="chal-username">{user.username}</div>
                             </Link>
                             <p className="chal-post-type">{this.props.type.toUpperCase()}</p>

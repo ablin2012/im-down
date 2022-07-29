@@ -56,6 +56,8 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     Post.findById(req.params.id)
+        .populate("challenge")
+        .populate("user")
         .then(post => res.json(post))
         .catch(err =>
             res.status(404).json({ nopostfound: 'No post found with that ID' })
@@ -64,6 +66,8 @@ router.get('/:id', (req, res) => {
 
 router.get('/user/:user_id', (req, res) => {
     Post.find({user: req.params.user_id})
+        .sort({ createdAt: -1 })
+        .populate("challenge")
         .then(posts => res.json(posts))
         .catch(err =>
             res.status(404).json({ nopostsfound: 'No posts found from that user' }
@@ -74,6 +78,7 @@ router.get('/user/:user_id', (req, res) => {
 router.get('/challenge/:challenge_id', (req, res) => {
     Post.find({challenge: req.params.challenge_id})
         .sort({ createdAt: -1 })
+        .populate("user")
         .then(posts => res.json(posts))
         .catch(err =>
             res.status(404).json({ nopostsfound: 'No posts for this challenge' }
@@ -83,6 +88,8 @@ router.get('/challenge/:challenge_id', (req, res) => {
 
 router.get('/user/:user_id/challenge/:challenge_id', (req, res) => {
     Post.find({user: req.params.user_id, challenge: req.params.challenge_id})
+        .populate("challenge")
+        .populate("user")
         .then(posts => res.json(posts))
         .catch(err =>
             res.status(404).json({ nopostsfound: 'No posts for this challenge from user' }
