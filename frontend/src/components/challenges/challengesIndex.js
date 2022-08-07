@@ -73,7 +73,7 @@ class ChallengesIndex extends React.Component {
             return (
                 <>
                     <header>
-                        <NavBarContainer parentCallback={this.handleCallback}/>
+                        <NavBarContainer search={true} parentCallback={this.handleCallback}/>
                     </header>
                     <div className='body-wrap'>
                         <div className='challenge-cards-container'>

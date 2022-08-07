@@ -1,0 +1,91 @@
+.about-us {
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        font-size: 30px;
+    }
+}
+
+.dev-card {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 600px;
+    width: 300px;
+    border-radius: 8px;
+    background-color: #444045;
+}
+
+// .dev-card.adam {
+//     background-color: #6b0f18;
+// }
+
+// .dev-card.lucy {
+//     background-color: #60107d;
+// }
+
+// .dev-card.quang {
+//     background-color: #101361;
+// }
+
+.dev-photo {
+    margin-top: 25px;
+    height: 250px;
+    width: 250px;
+    background-color: bisque;
+}
+
+.dev-photo.adam {
+    background-image: url('../../../../assets/adam.jpg');
+    object-fit: cover;
+    background-size: cover;
+}
+
+.dev-photo.lucy {
+    background-image: url('../../../../assets/adam.jpg');
+    object-fit: cover;
+    background-size: cover;
+}
+
+.dev-photo.quang {
+    background-image: url('../../../../assets/adam.jpg');
+    object-fit: cover;
+    background-size: cover;
+}
+
+.fab:hover, .fas:hover{
+    color: #7b2cbf;
+}
+
+.dev-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    h3 {
+        font-size: 24px;
+    }
+    h2 {
+        padding-top: 5px;
+    }
+    p {
+        padding-top: 20px;
+    }
+}
+
+.dev-socials {
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
+}
+.dev-card-container {
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-around;
+    width: 100vw;
+}
+

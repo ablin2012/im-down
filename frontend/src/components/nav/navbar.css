@@ -50,7 +50,7 @@
 }
 
 .session-links-current {
-    width: 300px;
+    width: 500px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
