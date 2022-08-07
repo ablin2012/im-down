@@ -21,9 +21,9 @@ class AboutUs extends React.Component {
                                 <p>Future Goals: "I hope to one day work for a company where I can leverage both my knowledge in software and my skills in mechanical engineering"</p>
                             </div>
                             <div className="dev-socials">
-                                <a href="#"><i className="fab fa-linkedin"></i></a>
-                                <a href="#"><i className="fab fa-github"></i></a>
-                                <a href="#"><i className="fab fa-angellist"></i></a>
+                                <a href="https://www.linkedin.com/in/adam-lin-2020/"><i className="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/ablin2012"><i className="fab fa-github"></i></a>
+                                <a href="https://angel.co/u/adam-lin-10"><i className="fab fa-angellist"></i></a>
                                 <a href="#"><i className="fas fa-folder"></i></a>
                             </div>
                         </div>
@@ -36,9 +36,9 @@ class AboutUs extends React.Component {
                                 <p>Future Goals: ""</p>
                             </div>
                             <div className="dev-socials">
-                                <a href="https://www.linkedin.com/in/adam-lin-2020/"><i className="fab fa-linkedin"></i></a>
-                                <a href="https://github.com/ablin2012"><i className="fab fa-github"></i></a>
-                                <a href="https://angel.co/u/adam-lin-10"><i className="fab fa-angellist"></i></a>
+                                <a href="#"><i className="fab fa-linkedin"></i></a>
+                                <a href="#"><i className="fab fa-github"></i></a>
+                                <a href="#"><i className="fab fa-angellist"></i></a>
                                 <a href="#"><i className="fas fa-folder"></i></a>
                             </div>
                         </div>
