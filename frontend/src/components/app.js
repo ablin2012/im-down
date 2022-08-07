@@ -17,7 +17,7 @@ import CategoryIndexContainer from './challenges/categoryIndexContainer';
 import ChallengeShowContainer from './challenges/challengeShowContainer';
 
 import HomePageContainer from './home/homePageContainer';
-
+import AboutUs from './aboutus/aboutUs';
 
 import Modal from './modal/modal';
 
@@ -34,7 +34,7 @@ const App = () => (
                 <ProtectedRoute exact path="/challenges/:challengeId" component={ChallengeShowContainer} />
 
                 <ProtectedRoute exact path="/home" component={HomePageContainer} />
-
+                <Route exact path="/aboutUs" component={AboutUs} />
                 <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
                 <ProtectedRoute exact path="challenges/category" component={CategoryIndexContainer}/>

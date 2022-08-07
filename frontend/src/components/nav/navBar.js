@@ -27,32 +27,62 @@ class NavBar extends React.Component {
 
     getLinks() {
         if (this.props.loggedIn) {
-            return (
-                <div className='nav-main-wrap'>
-                    <div className='challenge-button-container'>
-                        <button onClick={() => this.props.openModal('createChallenge')}>Create Challenge</button>
+            if (this.props.search) {
+                return (
+                    <div className='nav-main-wrap'>
+                        <div className='challenge-button-container'>
+                            <button onClick={() => this.props.openModal('createChallenge')}>Create Challenge</button>
+                        </div>
+                        <div className="search-bar-container">
+                            <span className="material-symbols-outlined" id="search-icon">
+                                search
+                            </span>
+                            <input 
+                                onChange={this.updateSearch()}
+                                className="search-bar" 
+                                type="text" 
+                                placeholder="Search" />
+                        </div>
+                        <div className='session-links-current'>
+                            
+                            <Link to={'/home'}>Home</Link>
+                            <Link to={'/challenges'}>Challenges</Link>
+                            <Link to={'/profile'}>Profile</Link>
+                            {/* <Link to={'/new_challenge'}>Create a Challenge</Link> */}
+                            <Link to={'/aboutUs'}>Meet The Devs</Link>
+                            <button className='logout-button' onClick={this.logoutUser}>Logout</button>
+                        </div>
                     </div>
-                    <div className="search-bar-container">
-                        <span className="material-symbols-outlined" id="search-icon">
-                            search
-                        </span>
-                        <input 
-                            onChange={this.updateSearch()}
-                            className="search-bar" 
-                            type="text" 
-                            placeholder="Search" />
+                );
+            } else {
+                return (
+                    <div className='nav-main-wrap'>
+                        <div className='challenge-button-container'>
+                            <button onClick={() => this.props.openModal('createChallenge')}>Create Challenge</button>
+                        </div>
+                        <Link to={'/challenges'}>
+                            <div className="search-bar-container">
+                                <span className="material-symbols-outlined" id="search-icon">
+                                    search
+                                </span>
+                                <input 
+                                    onChange={this.updateSearch()}
+                                    className="search-bar" 
+                                    type="text" 
+                                    placeholder="Search" />
+                            </div>
+                        </Link>
+                        <div className='session-links-current'>
+                            <Link to={'/home'}>Home</Link>
+                            <Link to={'/challenges'}>Challenges</Link>
+                            <Link to={'/profile'}>Profile</Link>
+                            <Link to={'/aboutUs'}>Meet The Devs</Link>
+                            {/* <Link to={'/new_challenge'}>Create a Challenge</Link> */} 
+                            <button className='logout-button' onClick={this.logoutUser}>Logout</button>
+                        </div>
                     </div>
-                    <div className='session-links-current'>
-                        
-                        <Link to={'/home'}>Home</Link>
-                        <Link to={'/challenges'}>Challenges</Link>
-                        <Link to={'/profile'}>Profile</Link>
-                        {/* <Link to={'/new_challenge'}>Create a Challenge</Link> */}
-                        
-                        <button className='logout-button' onClick={this.logoutUser}>Logout</button>
-                    </div>
-                </div>
-            );
+                );
+            }
         } else {
             return (
                 <div className='session-links'>
