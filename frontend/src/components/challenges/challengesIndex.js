@@ -43,7 +43,7 @@ class ChallengesIndex extends React.Component {
                 challenge.title.match(new RegExp(this.state.filter, "i")) || 
                 challenge.description.match(new RegExp(this.state.filter, "i")) ||
                 challenge.category.match(new RegExp(this.state.filter, "i")))
-    }
+        }
     }
 
     categorizeChallenge(category) {
