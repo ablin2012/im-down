@@ -32,7 +32,7 @@ class AboutUs extends React.Component {
                             <div className="dev-info">
                                 <h3>Lucy Luo</h3>
                                 <h2>Backend Lead</h2>
-                                <p>Fun Fact: "I once won second place in a pair badminton competition... but there was only two teams."</p>
+                                <p>Fun Fact: "I once won second place in a pair badminton competition... but there were only two teams."</p>
                                 <p>Future Goals: "To leverage my technical expertise on projects that improve people's lives."</p>
                             </div>
                             <div className="dev-socials">
@@ -47,8 +47,8 @@ class AboutUs extends React.Component {
                             <div className="dev-info">
                                 <h3>Quang Tran</h3>
                                 <h2>Frontend Lead</h2>
-                                <p>Fun Fact: ""</p>
-                                <p>Future Goals: ""</p>
+                                <p>Fun Fact: "I was born in France"</p>
+                                <p>Future Goals: "I want to work at a software company and build new products that help a wide variety of people."</p>
                             </div>
                             <div className="dev-socials">
                                 <a href="#"><i className="fab fa-linkedin"></i></a>

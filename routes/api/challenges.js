@@ -68,16 +68,9 @@ router.delete('/:id',
             //     return res.status(200).json(challenge)
             //   }))
               Participation.deleteMany({challenge: req.params.id}, (err, participations) => {
-                // console.log("DELETE PARTICIPATION", participations)
-                // console.log(err)
                 return Challenge.findByIdAndRemove(req.params.id, (err, challenge) => {
-                  // console.log("DELETE CHALLENGE", challenge)
-                  // console.log(err)
                   return res.status(200).json(challenge)})
               })
-              // .catch(err => {
-              //   return res.status(422).json({noparticipationfound: "no participations found"})
-              // })
           } else 
           {
             return res.status(422).json({ invalidcredentials: `invalid credentials for deleting challenge` })
