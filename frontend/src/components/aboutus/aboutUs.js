@@ -51,8 +51,8 @@ class AboutUs extends React.Component {
                                 <p>Future Goals: "I want to work at a software company and build new products that help a wide variety of people."</p>
                             </div>
                             <div className="dev-socials">
-                                <a href="#"><i className="fab fa-linkedin"></i></a>
-                                <a href="#"><i className="fab fa-github"></i></a>
+                                <a href="https://www.linkedin.com/in/quang-tran-2926a78b/"><i className="fab fa-linkedin"></i></a>
+                                <a href="https://github.com/kookumber"><i className="fab fa-github"></i></a>
                                 <a href="#"><i className="fab fa-angellist"></i></a>
                                 <a href="#"><i className="fas fa-folder"></i></a>
                             </div>
