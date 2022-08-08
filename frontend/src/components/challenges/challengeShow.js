@@ -21,7 +21,8 @@ class ChallengeShow extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleJoin = this.handleJoin.bind(this);
         this.handleLeave = this.handleLeave.bind(this);
-        this.handleCheckbox = this.handleCheckbox.bind(this)
+        this.handleCheckbox = this.handleCheckbox.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentDidMount() {
@@ -120,8 +121,18 @@ class ChallengeShow extends React.Component {
         };
     }
 
+    handleDrop() {
+        document.getElementById("my-dropdown").classList.toggle('show')
+    }
+
+    handleDelete(e) {
+        e.preventDefault();
+        this.props.removeChallenge(this.props.challenge._id).then(
+            () => this.props.history.push('/challenges')
+        );
+    }
+
     render() {
-        console.log('showstate',this.state)
         let joinButton = null;
         let index = null;
         const { challenge, challengePosts, currentUser, users} = this.props
@@ -145,53 +156,7 @@ class ChallengeShow extends React.Component {
         }
         if (this.state.participations.includes(this.state.challenge._id)) {
             index =
-                        <div className="challenge-show-posts">
-                            <ChallengePostsIndexContainer 
-                                challengePosts={challengePosts}
-                                fetchChallenge={this.props.fetchChallenge}
-                                fetchUser={this.props.fetchUser}
-                                />
-                        </div>
-        }
-
-        return (
-            <>
-                <header>
-                    <NavBarContainer parentCallback={this.handleCallback} />
-                </header>
-                <div className='body-wrap'>
-                    <div className="challenge-show-container">
-                        <div className="challenge-show-card">
-                            <div className="show-card-img-wrap">
-                                <div>
-                                    <img src={challenge.imageUrl}></img>
-                                </div>
-                            </div>
-                            <div className="show-card-details-wrap">
-                                <div className="detail-line" id="show-title">
-                                    <h1>{challenge.title}</h1>
-                                    {joinButton}
-                                </div>
-                                <div className="detail-line" id="show-description">
-                                    <h1>{challenge.description}</h1>
-                                </div>
-                                <div className="detail-line" id="show-dates">
-                                    <div>
-                                        <label>Start</label>
-                                        <p>{this.dateParser(challenge.startDate)}</p>
-                                    </div>
-                                    <div>
-                                        <label>End</label>
-                                        <p>{this.dateParser(challenge.endDate)}</p>
-                                    </div>
-                                    <div>
-                                        <h2>Participants:</h2>
-                                        <h2>{this.props.challengeParticipants.length}</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <>
                         <div className="add-post-container">
                             <form className="post-form">
                                 <div className="form-header">
@@ -236,7 +201,64 @@ class ChallengeShow extends React.Component {
                             </form>
                             {postPreviewImg}
                         </div>
-
+                        <div className="challenge-show-posts">
+                            <ChallengePostsIndexContainer 
+                                challengePosts={challengePosts}
+                                fetchChallenge={this.props.fetchChallenge}
+                                fetchUser={this.props.fetchUser}
+                                />
+                        </div>   
+                    </>
+        }
+        let deleteButton = (challenge.creator === currentUser.id) ? (
+            <div className="dropdown">
+                <button onClick={this.handleDrop} className="drop-btn">...</button>
+                <div id="my-dropdown" className="dropdown-content">
+                    <button onClick={this.handleDelete}>Delete</button>
+                    <button onClick={this.updateReview}>Update</button>
+                </div>
+            </div>
+        ) : (
+            null
+        )
+        return (
+            <>
+                <header>
+                    <NavBarContainer parentCallback={this.handleCallback} />
+                </header>
+                <div className='body-wrap'>
+                    <div className="challenge-show-container">
+                        <div className="challenge-show-card">
+                            <div className="show-card-img-wrap">
+                                <div>
+                                    <img src={challenge.imageUrl}></img>
+                                </div>
+                            </div>
+                            <div className="show-card-details-wrap">
+                                <div className="detail-line" id="show-title">
+                                    <h1>{challenge.title}</h1>
+                                    {joinButton}
+                                    {deleteButton}
+                                </div>
+                                <div className="detail-line" id="show-description">
+                                    <h1>{challenge.description}</h1>
+                                </div>
+                                <div className="detail-line" id="show-dates">
+                                    <div>
+                                        <label>Start</label>
+                                        <p>{this.dateParser(challenge.startDate)}</p>
+                                    </div>
+                                    <div>
+                                        <label>End</label>
+                                        <p>{this.dateParser(challenge.endDate)}</p>
+                                    </div>
+                                    <div>
+                                        <h2>Participants:</h2>
+                                        <h2>{this.props.challengeParticipants.length}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {index}
                     </div>
                 </div>

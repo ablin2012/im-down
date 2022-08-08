@@ -28,3 +28,7 @@ export const leaveChallenge = (id) => {
 export const getChallengeParticipants = (challengeId) => {
     return axios.get(`/api/participations/challenge/${challengeId}`)
 }
+
+export const deleteChallenge = (id) => {
+    return axios.delete(`/api/challenges/${id}`)
+}
