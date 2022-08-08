@@ -68,7 +68,6 @@ export const removeFriendRequest = friendRequestId => ({
 
 export const fetchUser = (id) => dispatch => {
     // console.log(id)
-    // debugger
     return (
         usersApiUtil.getUser(id)
             .then(user => {

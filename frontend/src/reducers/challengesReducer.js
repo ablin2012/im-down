@@ -1,5 +1,5 @@
 
-import { RECEIVE_CHALLENGES, RECEIVE_USER_CHALLENGES, RECEIVE_NEW_CHALLENGE, RECEIVE_CHALLENGE, CLEAR_CHALLENGES, RECEIVE_CHALLENGE_PARTICIPANTS} from "../actions/challengeActions";
+import { RECEIVE_CHALLENGES, RECEIVE_USER_CHALLENGES, RECEIVE_NEW_CHALLENGE, RECEIVE_CHALLENGE, CLEAR_CHALLENGES, RECEIVE_CHALLENGE_PARTICIPANTS, DELETE_CHALLENGE} from "../actions/challengeActions";
 
 
 const ChallengesReducer = (state = { all: {}, user: {}, new: undefined, index: {}, participants: {} }, action) => {
@@ -27,6 +27,8 @@ const ChallengesReducer = (state = { all: {}, user: {}, new: undefined, index: {
             return newState;
         case RECEIVE_CHALLENGE_PARTICIPANTS:
             newState.participants = action.participants.data
+            return newState;
+        case DELETE_CHALLENGE:
             return newState;
         default:
             return state;

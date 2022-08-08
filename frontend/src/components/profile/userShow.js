@@ -16,8 +16,6 @@ class UserShow extends React.Component {
         // console.log(this.props.currentUser.id)
         // console.log(this.props.match.params)
         this.props.fetchUser(this.props.match.params.user_id)
-        // debugger
-
     }
 
     // componentWillReceiveProps(newState) {
@@ -70,7 +68,6 @@ class UserShow extends React.Component {
             
             imageUrl ||= ""
             const effectiveParticipations = participations.filter((participation) => {
-                // debugger
                 return (
                     participation.challenge && !participation.complete && new Date(participation.challenge.endDate) > new Date(new Date() - (24+9) * 60 * 60 * 1000)
                 )

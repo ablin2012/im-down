@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ChallengeShow from './challengeShow';
-import { addParticipation, fetchChallenge, removeParticipation, getChallengeParticipants } from '../../actions/challengeActions';
+import { addParticipation, fetchChallenge, removeParticipation, getChallengeParticipants, removeChallenge} from '../../actions/challengeActions';
 import { fetchChallengePost } from '../../actions/postActions';
 import { fetchUser, fetchUserParticipations } from '../../actions/userActions';
 import { composePost } from '../../actions/postActions';
@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchUserParticipations: id => dispatch(fetchUserParticipations(id)),
         addParticipation: id => dispatch(addParticipation(id)),
         removeParticipation: id => dispatch(removeParticipation(id)),
-        getChallengeParticipants: (challengeId) => dispatch(getChallengeParticipants(challengeId))
+        getChallengeParticipants: (challengeId) => dispatch(getChallengeParticipants(challengeId)),
+        removeChallenge: (challengeId) => dispatch(removeChallenge(challengeId)),
     }
 }
 
