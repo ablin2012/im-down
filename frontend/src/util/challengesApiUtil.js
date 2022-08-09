@@ -32,3 +32,9 @@ export const getChallengeParticipants = (challengeId) => {
 export const deleteChallenge = (id) => {
     return axios.delete(`/api/challenges/${id}`)
 }
+
+export const patchChallenge = (id, data) => {
+    axios.defaults.headers.common['Content-Type'] = "multipart/form-data";
+    console.log('dada', data)
+    return axios.patch(`/api/challenges/${id}`, data)
+}

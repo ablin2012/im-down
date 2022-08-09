@@ -71,9 +71,6 @@ export const fetchUser = (id) => dispatch => {
     return (
         usersApiUtil.getUser(id)
             .then(user => {
-                console.log("returned get user",user)
-                console.log("trying to get id",user.data._id)
-
                 dispatch(receiveUser(user))
                 dispatch(fetchUserAchievements(user.data._id))
                 dispatch(fetchUserFriendships(user.data._id))
@@ -88,7 +85,6 @@ export const fetchUser = (id) => dispatch => {
 export const fetchUserAchievements = (id) => dispatch => (
     usersApiUtil.getUserAchievements(id)
         .then(achievements => {
-            // console.log("get back achievements", achievements)
             dispatch(receiveAchievements(achievements))
         })
         .catch(err => console.log(err))
@@ -120,8 +116,6 @@ export const deleteCurrentUser = () => dispatch => (
 export const fetchUserFriendships = (id) => dispatch => (
     usersApiUtil.getUserFriendships(id)
         .then(friendships => {
-            console.log("fetch User Friendship action from backend", friendships)
-            console.log("user id used", id)
             dispatch(receiveFriendships(friendships))
         })
         .catch(err => console.log(err))

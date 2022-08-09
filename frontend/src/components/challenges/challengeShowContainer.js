@@ -4,6 +4,7 @@ import { addParticipation, fetchChallenge, removeParticipation, getChallengePart
 import { fetchChallengePost } from '../../actions/postActions';
 import { fetchUser, fetchUserParticipations } from '../../actions/userActions';
 import { composePost } from '../../actions/postActions';
+import { openModal } from '../../actions/modalActions';
 
 const mapStateToProps = (state, ownProps) => {
     
@@ -29,6 +30,7 @@ const mapDispatchToProps = (dispatch) => {
         removeParticipation: id => dispatch(removeParticipation(id)),
         getChallengeParticipants: (challengeId) => dispatch(getChallengeParticipants(challengeId)),
         removeChallenge: (challengeId) => dispatch(removeChallenge(challengeId)),
+        openModal: modal => dispatch(openModal(modal))
     }
 }
 

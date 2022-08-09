@@ -1,20 +1,21 @@
 import React from 'react';
 import axios, { post } from 'axios';
-// import ChallengesIndexItem from './challengesIndexItem';
+import { withRouter } from 'react-router-dom';
 import './challengeModal.css'
 
-class ChallengeForm extends React.Component {
+class ChallengeEditForm extends React.Component {
     constructor(props) {
         super(props);
-
+        
+        // debugger
         this.state = {
-            title: "",
-            description: "",
+            title: this.props.challenge.title,
+            description: this.props.challenge.description,
             newChallenge: "",
-            category: "",
-            startDate: Date.now,
-            endDate: Date.now,
-            imageFile: null,
+            category: this.props.challenge.category,
+            startDate: this.props.challenge.startDate.slice(0,10),
+            endDate: this.props.challenge.endDate.slice(0,10),
+            imageFile: this.props.challenge.imageUrl,
             imageUrl: null,
             url: null
         }
@@ -24,13 +25,11 @@ class ChallengeForm extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('nextprops', nextProps)
         this.setState({ newChallenge: nextProps.newChallenge.title });
     }
 
     handleSubmit(e) {
         e.preventDefault();
-
         const formData = new FormData() 
         formData.append("imageUrl",this.state.imageFile)
         formData.append("title",this.state.title)
@@ -38,10 +37,10 @@ class ChallengeForm extends React.Component {
         formData.append("category",this.state.category)
         formData.append("startDate",this.state.startDate)
         formData.append("endDate",this.state.endDate)
-        this.props.createChallenge(formData).then(() => this.props.closeModal())
-
-        this.setState({ title: '', description: '', category: '', imageUrl: null, startDate: Date.now, endDate: Date.now})
-
+        this.props.updateChallenge(this.props.challenge._id, formData)
+            .then(() => {
+                    this.props.fetchChallenge(this.props.challenge._id)
+                }).then(this.props.closeModal())
     }
 
     handleFile(e) {
@@ -66,6 +65,7 @@ class ChallengeForm extends React.Component {
     }
 
     render() {
+        if (!this.props.challenge) {return null}
         const previewImg = this.state.imageUrl ? <div className="image-preview"><img src={this.state.imageUrl} /></div> : null;
         const uploadBox = (
             <div className='dotted-border'>
@@ -104,8 +104,8 @@ class ChallengeForm extends React.Component {
                                 onChange={this.update('title')}
                                 placeholder="Name your challenge"
                             />
-                            <select className='challenge-categories' onChange={this.update('category')}>
-                                <option value="">--Choose a Category--</option>
+                            <select className='challenge-categories' value={this.state.category} onChange={this.update('category')}>
+                                <option disabled value="">--Choose a Category--</option>
                                 <option value="Fitness">Fitness</option>
                                 <option value="Learning">Learning</option>
                                 <option value="Cooking">Cooking</option>
@@ -125,11 +125,11 @@ class ChallengeForm extends React.Component {
                                 <div className='challenge-inputs'>
                                     <div>
                                         <label>Start</label>
-                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('startDate')}/>
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} value={this.state.startDate} onChange={this.update('startDate')}/>
                                     </div>
                                     <div>
                                         <label>End</label>
-                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} onChange={this.update('endDate')}/>
+                                        <input type="date" min={new Date().toLocaleDateString('en-ca')} value={this.state.endDate} onChange={this.update('endDate')}/>
                                     </div>
                                 </div>
                             </div>
@@ -146,4 +146,4 @@ class ChallengeForm extends React.Component {
     }
 }
 
-export default ChallengeForm;
+export default withRouter(ChallengeEditForm);

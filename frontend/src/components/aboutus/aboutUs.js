@@ -39,7 +39,7 @@ class AboutUs extends React.Component {
                             <a href="https://www.linkedin.com/in/lucyluo08/"><i className="fab fa-linkedin"></i></a>
                                 <a href="https://github.com/xlucyluo"><i className="fab fa-github"></i></a>
                                 <a href="https://angel.co/u/lucyluo"><i className="fab fa-angellist"></i></a>
-                                <a href="https://xlucyluo.github.io/portfolio/"><i className="fas fa-folder"></i></a>
+                                <a href="https://xlucyluo.github.io/Portfolio/"><i className="fas fa-folder"></i></a>
                             </div>
                         </div>
                         <div className="dev-card quang">
