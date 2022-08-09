@@ -18,7 +18,7 @@ const storage = multer.memoryStorage({
 });
 
 const filefilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif' || file.mimetype === 'image/webp' || file.mimetype === 'image/tiff') {
       cb(null, true)
   } else {
       cb(null, false)
@@ -152,28 +152,55 @@ router.patch('/:id', upload.single('imageUrl'),
         challenge.endDate = req.body.endDate
         challenge.category = req.body.category
 
-        const params = {
-          Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
-          Key:req.file.originalname,               // Name of the image
-          Body:req.file.buffer,                    // Body which will contain the image in buffer format
-          ACL:"public-read-write",                 // defining the permissions to get the public link
-          ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
-        };
+        if (req.file) {
+          const params = {
+            Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+            Key:req.file.originalname,               // Name of the image
+            Body:req.file.buffer,                    // Body which will contain the image in buffer format
+            ACL:"public-read-write",                 // defining the permissions to get the public link
+            ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+          };
+          
+          s3.upload(params,(error,data)=>{
+            if(error){
+              res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
+            }
+
+            challenge.imageUrl = data.Location
+            challenge.save()
+            .then(challenge => res.status(200).json(challenge))
+            .catch(err => res.status(400).json(err));
+          })
+        } else {
+          challenge
+            .save()
+            .then(challenge => {
+              return res.status(200).json(challenge)
+            })
+            .catch(err => res.status(400).json(err));
+        }
+//         const params = {
+//           Bucket:process.env.AWS_BUCKET_NAME,      // bucket that we made earlier
+//           Key:req.file.originalname,               // Name of the image
+//           Body:req.file.buffer,                    // Body which will contain the image in buffer format
+//           ACL:"public-read-write",                 // defining the permissions to get the public link
+//           ContentType:"image/jpeg"                 // Necessary to define the image content-type to view the photo in the browser with the link
+//         };
   
 
-        s3.upload(params,(error,data)=>{
-          if(error){
-              res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
-          }
+//         s3.upload(params,(error,data)=>{
+//           if(error){
+//               res.status(500).json({"err":error})  // if we get any error while uploading error message will be returned.
+//           }
           
-          challenge.imageUrl = data.Location;
-          challenge.save();
-        })
+//           challenge.imageUrl = data.Location;
+//           challenge.save();
+//         })
 
-      challenge.save().then(challenge => res.json(challenge));
+//       challenge.save().then(challenge => res.json(challenge));
   })
-  .catch(err =>
-    res.status(422).json({ nochallengefound: 'No editable challenge found with that ID' }))
+//   .catch(err =>
+//     res.status(422).json({ nochallengefound: 'No editable challenge found with that ID' }))
 });
 
 

@@ -23,12 +23,14 @@ class ChallengePostsIndexItem extends React.Component {
     // }
 
     render() {
-        const { imageUrl, user } = this.props;
-
-
-        console.log("user",user)
-
+        const { imageUrl, user, type} = this.props;
         
+        const typeDisplay = (type === 'complete') ? (
+            <p className="chal-post-type">{this.props.type.toUpperCase()}</p>
+        ) : (
+            null
+        )
+
         if (user === undefined) return null
         const profilePic =  <img className="icon" src={user.imageUrl || window.defaultUserImgURL} />
 
@@ -52,7 +54,7 @@ class ChallengePostsIndexItem extends React.Component {
                             <Link to={`/users/${user._id}`} >
                                 <div className="chal-username">{user.username}</div>
                             </Link>
-                            <p className="chal-post-type">{this.props.type.toUpperCase()}</p>
+                            {typeDisplay}
                         </div>
                         <div className="chal-post-text">
                             <h3>{this.props.text}</h3>

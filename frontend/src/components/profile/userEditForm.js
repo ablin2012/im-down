@@ -46,10 +46,7 @@ class UserEditForm extends React.Component {
 
         this.props.updateCurrentUser(formData)
         .then((res) => {
-            console.log(res)
-            console.log(this.props.currentUser)
-            console.log("check",this.props.currentUser.id)
-            if (res.user) {
+          if (res.user) {
                 this.props.clearErrors()
                 this.props.fetchUser(this.props.currentUser.id)
                 this.props.closeModal()
@@ -63,9 +60,7 @@ class UserEditForm extends React.Component {
     handleFile(e) {
         // events has built in currentTarget and files methods
         const file = e.currentTarget.files[0]
-        console.log(file)
         const fileReader = new FileReader();
-        console.log(fileReader);
         fileReader.onloadend = () => {
             this.setState({imageFile: file, imageUrl: fileReader.result})
         }

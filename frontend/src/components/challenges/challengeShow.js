@@ -53,13 +53,13 @@ class ChallengeShow extends React.Component {
                 .then(this.props.fetchChallengePosts(this.props.match.params.challengeId))
                 .then(this.props.getChallengeParticipants(this.props.match.params.challengeId))
                 .then(this.props.fetchUser(this.props.currentUser.id))
-        }
+        } 
     }
 
     dateParser(date){
         const dateStr = date.slice(0, 10)
         const dateSplit = dateStr.split('-')
-        const newDateStr = new Date(dateSplit[0], dateSplit[1], dateSplit[2])
+        const newDateStr = new Date(dateSplit[0], dateSplit[1]-1, dateSplit[2])
         const parsedDateStr = newDateStr.toDateString()
         return parsedDateStr.slice(parsedDateStr.indexOf(" ") + 1)
     }
@@ -136,6 +136,7 @@ class ChallengeShow extends React.Component {
         let joinButton = null;
         let index = null;
         const { challenge, challengePosts, currentUser, users} = this.props
+        if (!challenge) {return null};
         if (challenge === undefined || challengePosts === undefined || !users || !users.index[currentUser.id]) return null;
         
         
@@ -215,7 +216,7 @@ class ChallengeShow extends React.Component {
                 <button onClick={this.handleDrop} className="drop-btn">...</button>
                 <div id="my-dropdown" className="dropdown-content">
                     <button onClick={this.handleDelete}>Delete</button>
-                    <button onClick={this.updateReview}>Update</button>
+                    <button onClick={() => {this.props.openModal('updateChallenge')}}>Update</button>
                 </div>
             </div>
         ) : (
@@ -230,9 +231,7 @@ class ChallengeShow extends React.Component {
                     <div className="challenge-show-container">
                         <div className="challenge-show-card">
                             <div className="show-card-img-wrap">
-                                <div>
                                     <img src={challenge.imageUrl}></img>
-                                </div>
                             </div>
                             <div className="show-card-details-wrap">
                                 <div className="detail-line" id="show-title">

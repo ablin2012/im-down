@@ -15,7 +15,7 @@ import PostsIndexContainer from './posts/postsIndexContainer';
 import CategoryIndexContainer from './challenges/categoryIndexContainer';
 
 import ChallengeShowContainer from './challenges/challengeShowContainer';
-
+import ChallengeEditFormContainer from './challenges/challengeEditFormContainer';
 import HomePageContainer from './home/homePageContainer';
 import AboutUs from './aboutus/aboutUs';
 
@@ -32,16 +32,15 @@ const App = () => (
 
 
                 <ProtectedRoute exact path="/challenges/:challengeId" component={ChallengeShowContainer} />
-
+                {/* <ProtectedRoute exact path="/challenges/:challengeId" component={ChallengeEditFormContainer} /> */}
                 <ProtectedRoute exact path="/home" component={HomePageContainer} />
                 <Route exact path="/aboutUs" component={AboutUs} />
                 <ProtectedRoute exact path="/posts" component={PostsIndexContainer} />
                 <ProtectedRoute exact path="/challenges" component={ChallengesIndexContainer}/>
-                <ProtectedRoute exact path="challenges/category" component={CategoryIndexContainer}/>
+                <ProtectedRoute exact path="/challenges/category" component={CategoryIndexContainer}/>
                 <ProtectedRoute exact path="/profile" component={ProfileContainer} />
-                <Route exact path="/users/:user_id" component={UserShowContainer} />
-                <ProtectedRoute exact path="/users/current/edit" component={UserEditFormContainer} />
-                {/* <ProtectedRoute exact path="/challenge_form" component={ChallengeForm} /> */}
+                <ProtectedRoute exact path="/users/:user_id" component={UserShowContainer} />
+                {/* <ProtectedRoute exact path="/users/current/edit" component={UserEditFormContainer} /> */}
             </Switch>
 
     </div>
